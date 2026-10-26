@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cougar News Skills</title>
+<meta name="description" content="KHS Cougar News micro-lessons: 21 short skill lessons from the 26-27 Broadcast Handbook.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;700&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--red-dk:#6F1A1D;--red:#B3201F;--red-br:#DD2A2A;--ink:#1E1E21;--ink2:#4A4A50;--line:#E6DCDA;--tint:#FBEFEE;--sand:#F6F2F0;--ok:#1d7a3a;--ok-bg:#E8F4EC}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Lexend,system-ui,sans-serif;color:var(--ink);background:#fff;font-size:17px;line-height:1.55;min-height:100vh;display:flex;flex-direction:column}
+a{color:inherit}
+:focus-visible{outline:3px solid #1A5FB4;outline-offset:2px}
+.band{background:linear-gradient(180deg,var(--red-dk) 0%,#A61E1E 55%,var(--red-br) 100%);color:#fff;padding:26px 16px 22px}
+.in{max-width:900px;margin:0 auto;position:relative}
+.kicker{font-family:Montserrat;font-weight:700;font-size:11px;letter-spacing:.2em;text-transform:uppercase;opacity:.88;padding-right:120px}
+.chip{position:absolute;top:-2px;right:0;background:#fff;color:var(--red-dk);font-family:Montserrat;font-weight:800;font-size:10px;letter-spacing:.14em;padding:4px 9px;border-radius:3px}
+h1{font-family:Montserrat;font-weight:900;font-size:clamp(32px,8vw,52px);line-height:1.02;text-transform:uppercase;margin-top:6px;text-shadow:2px 2px 0 rgba(60,20,20,.55)}
+.sub{font-weight:300;font-size:17px;margin-top:6px;opacity:.95}
+.status{background:var(--ink);color:#fff;padding:14px 16px}
+.status .in{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.hello{font-family:Montserrat;font-weight:800;font-size:15px;flex:1;min-width:200px}
+.bar{flex-basis:100%;height:8px;border-radius:4px;background:#46464c;overflow:hidden}
+.bar span{display:block;height:100%;background:var(--red-br);border-radius:4px;transition:width .3s}
+.cont{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:8px 18px;border-radius:8px;background:var(--red);color:#fff;text-decoration:none;font-family:Montserrat;font-weight:800;font-size:14px;letter-spacing:.06em;text-transform:uppercase}
+.cont:hover{background:var(--red-br)}
+main{flex:1;width:100%;max-width:900px;margin:0 auto;padding:22px 16px 36px}
+section+section{margin-top:26px}
+h2{font-family:Montserrat;font-weight:800;font-size:18px;color:var(--red-dk);text-transform:uppercase;letter-spacing:.05em;display:flex;align-items:center;gap:10px;margin-bottom:12px}
+h2 .n{display:inline-flex;align-items:center;justify-content:center;min-width:32px;height:32px;padding:0 6px;border-radius:16px;background:var(--red);color:#fff;font-size:14px;letter-spacing:0;flex:none}
+h2::after{content:"";flex:1;height:2px;background:var(--line);margin-left:6px}
+h2 .cnt{font-family:Lexend;font-weight:400;font-size:13px;color:var(--ink2);text-transform:none;letter-spacing:0;order:3}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+.card{display:flex;gap:12px;align-items:flex-start;text-decoration:none;background:var(--sand);border:2px solid transparent;border-radius:12px;padding:14px;min-height:104px;transition:border-color .15s,background .15s}
+.card:hover{border-color:var(--red);background:#fff}
+.card.done{background:var(--ok-bg)}
+.card.done:hover{border-color:var(--ok)}
+.num{flex:none;width:44px;height:44px;border-radius:10px;background:var(--ink);color:#fff;font-family:Montserrat;font-weight:900;font-size:17px;display:flex;align-items:center;justify-content:center}
+.card.done .num{background:var(--ok)}
+.txt{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.t{font-family:Montserrat;font-weight:800;font-size:16px;line-height:1.25}
+.s{font-size:14px;color:var(--ink2);line-height:1.35}
+.meta{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:6px;font-size:12px}
+.pill{font-family:Montserrat;font-weight:800;letter-spacing:.08em;text-transform:uppercase;font-size:10px;padding:3px 8px;border-radius:20px;background:#fff;color:var(--ink2);border:1.5px solid var(--line)}
+.pill.ok{background:var(--ok);border-color:var(--ok);color:#fff}
+.note{margin-top:28px;background:var(--tint);border-left:5px solid var(--red);border-radius:0 8px 8px 0;padding:12px 16px;font-size:15px}
+.note b{font-family:Montserrat;font-weight:800;font-size:11px;letter-spacing:.16em;color:var(--red-dk);text-transform:uppercase;display:block;margin-bottom:2px}
+footer{background:var(--ink);color:#fff;padding:12px 16px;font-family:Montserrat;font-size:11px;font-weight:600;letter-spacing:.06em}
+footer .in{display:flex;align-items:center;gap:14px}
+footer .fn{font-weight:900;font-size:22px;color:var(--red-br);line-height:1}
+footer .doc{flex:1;text-transform:uppercase}
+@media (max-width:480px){.grid{grid-template-columns:1fr}.cont{width:100%;justify-content:center}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header class="band"><div class="in">
+  <div class="kicker">KHS Cougar News · Micro-Learning</div>
+  <span class="chip" id="chip">LESSONS</span>
+  <h1>Cougar News Skills</h1>
+  <div class="sub">Short lessons from the Broadcast Handbook. Finish one, earn a press pass.</div>
+</div></header>
+<div class="status" aria-live="polite"><div class="in" id="status"></div></div>
+<main id="app"></main>
+<footer><div class="in"><span class="fn">26·27</span><span class="doc">Based on the 26-27 Broadcast Handbook</span></div></footer>
+<script>
+(function(){
+"use strict";
+const DATA = {"mods": [{"n": "01", "slug": "01-what-makes-it-news", "title": "What Makes It News?", "sub": "The 7 news values · the bullpen test", "min": 8}, {"n": "02", "slug": "02-where-stories-hide", "title": "Where Stories Hide", "sub": "6 places to look before bullpen", "min": 7}, {"n": "03", "slug": "03-find-the-campus-angle", "title": "Find the Campus Angle", "sub": "Topic to story in 5 steps", "min": 9}, {"n": "04", "slug": "04-open-it-up", "title": "Open It Up", "sub": "Open questions · follow-ups · question order", "min": 9}, {"n": "05", "slug": "05-usable-bite", "title": "Is That a Usable Bite?", "sub": "Complete · feeling, not fact · 8–12 seconds", "min": 8}, {"n": "06", "slug": "06-walldo", "title": "WALLDO Spotter", "sub": "Wide · medium · tight, then WALLDO", "min": 9}, {"n": "07", "slug": "07-shoot-it-right", "title": "Shoot It Right", "sub": "Steady shots · real sound · enough of them", "min": 8}, {"n": "08", "slug": "08-which-package", "title": "Which Package Is It?", "sub": "News · Sports · MotS · Feature", "min": 7}, {"n": "09", "slug": "09-focus", "title": "One Focus", "sub": "Focus sentence · noun, verb, noun", "min": 7}, {"n": "10", "slug": "10-two-column", "title": "Two-Column Script", "sub": "Video left · audio right · beginning, middle, end", "min": 9}, {"n": "11", "slug": "11-mots-lab", "title": "MotS Question Lab", "sub": "One open question · tested on 3", "min": 8}, {"n": "12", "slug": "12-write-for-the-ear", "title": "Write for the Ear", "sub": "Short · present · active · numbers you can hear", "min": 9}, {"n": "13", "slug": "13-bite-setup", "title": "Don't Repeat the Bite", "sub": "Name the speaker · set up the idea", "min": 5}, {"n": "14", "slug": "14-time-it", "title": "Time It", "sub": "2.5 words per second · within 2 seconds", "min": 7}, {"n": "15", "slug": "15-j-and-l-cuts", "title": "J Cut + L Cut", "sub": "Sound first · sound stays", "min": 7}, {"n": "16", "slug": "16-feedback", "title": "Feedback That Helps", "sub": "Time · what you saw · one fix", "min": 7}, {"n": "17", "slug": "17-fd-signals", "title": "Floor Director Signals", "sub": "12 hand signals · big, clear, still", "min": 9}, {"n": "18", "slug": "18-switcher", "title": "Run the Switcher", "sub": "REC first · STOP last · never ON AIR", "min": 9}, {"n": "19", "slug": "19-studio-roles", "title": "Studio Roles", "sub": "One job each · quiet on set", "min": 9}, {"n": "20", "slug": "20-approvals", "title": "Approve or Send Back", "sub": "Leadership · every box, then decide with the EP", "min": 9}, {"n": "21", "slug": "21-rundown", "title": "Build the Rundown", "sub": "Leadership · 12 segments · RT + TRT", "min": 9}], "sections": [{"num": "01", "name": "Bullpen & Planning", "ids": ["01", "02", "03"]}, {"num": "02", "name": "Interviews", "ids": ["04", "05"]}, {"num": "03", "name": "Shooting", "ids": ["06", "07"]}, {"num": "04", "name": "Story Packages", "ids": ["08", "09", "10", "11"]}, {"num": "05", "name": "Writing & Editing", "ids": ["12", "13", "14", "15", "16"]}, {"num": "06", "name": "Studio & Show Day", "ids": ["17", "18", "19"]}, {"num": "L", "name": "Leadership", "ids": ["20", "21"]}]};
+const esc = s => String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const byId = Object.fromEntries(DATA.mods.map(m=>[m.n,m]));
+function read(n){ try{ return JSON.parse(localStorage.getItem("khscn-ml-"+n)||"{}")||{}; }catch(e){ return {}; } }
+const prog = Object.fromEntries(DATA.mods.map(m=>[m.n,read(m.n)]));
+const name = (DATA.mods.map(m=>prog[m.n].name).filter(Boolean).pop()||"").trim();
+const done = DATA.mods.filter(m=>prog[m.n].done);
+const next = DATA.mods.find(m=>!prog[m.n].done);
+const total = DATA.mods.length;
+
+document.getElementById("chip").textContent = total+" LESSONS";
+document.getElementById("status").innerHTML = `
+  <span class="hello">${name?`Welcome back, ${esc(name.split(/\s+/)[0])}. `:""}${done.length} of ${total} done</span>
+  ${next?`<a class="cont" href="./${next.slug}/">${done.length?"Continue":"Start"}: ${esc(next.n)} ${esc(next.title)} →</a>`:`<span class="pill ok">All ${total} done</span>`}
+  <span class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="${total}" aria-valuenow="${done.length}" aria-label="Lessons done"><span style="width:${Math.round(done.length/total*100)}%"></span></span>`;
+
+document.getElementById("app").innerHTML = DATA.sections.map(sec=>{
+  const ms=sec.ids.map(i=>byId[i]).filter(Boolean), d=ms.filter(m=>prog[m.n].done).length;
+  return `<section aria-labelledby="h${esc(sec.num)}">
+    <h2 id="h${esc(sec.num)}"><span class="n">${esc(sec.num)}</span>${esc(sec.name)}<span class="cnt">${d}/${ms.length}</span></h2>
+    <div class="grid">${ms.map(m=>{ const p=prog[m.n], ok=!!p.done, b=p.best;
+      return `<a class="card ${ok?"done":""}" href="./${m.slug}/">
+        <span class="num" aria-hidden="true">${ok?"✓":esc(m.n)}</span>
+        <span class="txt"><span class="t">${esc(m.title)}</span><span class="s">${esc(m.sub)}</span>
+          <span class="meta"><span class="pill">Lesson ${esc(m.n)}</span><span class="pill">~${m.min} min</span>${ok?`<span class="pill ok">Done${b?` · best ${b.got}/${b.tot}`:""}</span>`:""}</span></span>
+      </a>`;}).join("")}</div>
+  </section>`;}).join("") + `
+  <div class="note"><b>Your progress</b>Check marks and scores are saved in this browser on this device. Use the same device and browser to keep your progress. Download each press pass, then upload it on the <a href=\"https://khspress.fillout.com/certificate-upload\" target=\"_blank\" rel=\"noopener\">certificate submit form</a>.</div>`;
+})();
+</script>
+</body>
+</html>

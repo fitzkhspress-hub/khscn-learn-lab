@@ -1,0 +1,562 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Where Stories Hide</title>
+<meta name="description" content="KHS Cougar News micro-lesson: 6 places to find story ideas before bullpen.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;700&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --red-dk:#6F1A1D; --red:#B3201F; --red-br:#DD2A2A; --ink:#1E1E21; --ink2:#4A4A50;
+  --line:#E6DCDA; --tint:#FBEFEE; --sand:#F6F2F0; --link:#1A5FB4; --ok:#1d7a3a; --ok-bg:#E8F4EC;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font-family:Lexend,system-ui,sans-serif;color:var(--ink);background:#fff;font-size:17px;line-height:1.55;min-height:100vh;display:flex;flex-direction:column}
+button{font:inherit;color:inherit;cursor:pointer}
+input{font:inherit}
+:focus-visible{outline:3px solid var(--link);outline-offset:2px}
+
+/* header band, after switcher.png */
+.band{background:linear-gradient(180deg,var(--red-dk) 0%,#A61E1E 55%,var(--red-br) 100%);color:#fff;padding:22px 16px 18px}
+.band-in{max-width:760px;margin:0 auto;position:relative}
+.kicker{font-family:Montserrat;font-weight:700;font-size:11px;letter-spacing:.2em;text-transform:uppercase;opacity:.88;padding-right:150px}
+.band h1{font-family:Montserrat;font-weight:900;font-size:clamp(28px,7vw,44px);line-height:1.02;text-transform:uppercase;margin-top:6px;text-shadow:2px 2px 0 rgba(60,20,20,.55)}
+.band .sub{font-weight:300;font-size:16px;margin-top:6px;opacity:.95}
+.chip{position:absolute;top:-2px;right:0;background:#fff;color:var(--red-dk);font-family:Montserrat;font-weight:800;font-size:10px;letter-spacing:.14em;padding:4px 9px;border-radius:3px}
+
+/* progress */
+.prog{background:var(--ink);color:#fff;padding:10px 16px}
+.prog-in{max-width:760px;margin:0 auto;display:flex;gap:6px;align-items:center}
+.prog .seg{flex:1;height:6px;border-radius:3px;background:#46464c}
+.prog .seg.done{background:var(--red-br)}
+.prog .seg.now{background:#fff}
+.prog .lbl{font-family:Montserrat;font-weight:700;font-size:11px;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap;margin-left:8px;opacity:.85}
+
+main{flex:1;width:100%;max-width:760px;margin:0 auto;padding:24px 16px 32px}
+h2{font-family:Montserrat;font-weight:800;font-size:20px;color:var(--red-dk);text-transform:uppercase;letter-spacing:.05em;display:flex;align-items:center;gap:10px;margin-bottom:12px}
+h2 .n{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;background:var(--red);color:#fff;font-size:15px;letter-spacing:0;flex:none}
+h3{font-family:Montserrat;font-weight:800;font-size:16px;margin-bottom:4px}
+p+p{margin-top:10px}
+.lead{font-size:18px}
+b{font-weight:600}
+.muted{color:var(--ink2);font-size:15px}
+
+.box{background:var(--sand);border-radius:8px;padding:14px 16px}
+.callout{background:var(--tint);border-left:5px solid var(--red);border-radius:0 8px 8px 0;padding:12px 16px;margin:16px 0}
+.tag{font-family:Montserrat;font-weight:800;font-size:11px;letter-spacing:.16em;color:var(--red-dk);text-transform:uppercase;display:block;margin-bottom:2px}
+.stack>*+*{margin-top:14px}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:10px 22px;border-radius:8px;border:0;background:var(--red);color:#fff;font-family:Montserrat;font-weight:800;font-size:15px;letter-spacing:.06em;text-transform:uppercase}
+.btn:hover{background:var(--red-dk)}
+.btn[disabled]{background:#c9c3c1;cursor:not-allowed}
+.btn.ghost{background:#fff;color:var(--red-dk);border:2px solid var(--red)}
+.btn.ghost:hover{background:var(--tint)}
+.nav{display:flex;justify-content:space-between;gap:12px;margin-top:24px;flex-wrap:wrap}
+.nav .spacer{flex:1}
+.say-btn{border:1.5px solid var(--line);background:#fff;border-radius:20px;padding:3px 10px;font-size:13px;font-weight:600;color:var(--ink2);display:inline-flex;align-items:center;gap:5px;vertical-align:middle}
+.say-btn:hover{border-color:var(--red);color:var(--red-dk)}
+
+/* value cards */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px}
+.vcard{text-align:left;background:var(--sand);border:2px solid transparent;border-radius:10px;padding:14px;min-height:150px;display:flex;flex-direction:column;gap:6px;transition:border-color .15s,background .15s}
+.vcard:hover{border-color:var(--line)}
+.vcard .easy{font-family:Montserrat;font-weight:900;font-size:12px;letter-spacing:.14em;color:var(--red)}
+.vcard .nm{font-family:Montserrat;font-weight:800;font-size:18px}
+.vcard .hint{font-size:13px;color:var(--ink2);margin-top:auto}
+.vcard .more{display:none;font-size:15px}
+.vcard.open{background:#fff;border-color:var(--red)}
+.vcard.open .more{display:block}
+.vcard.open .hint{display:none}
+.vcard .ex{color:var(--ink2);font-size:14px;margin-top:4px}
+.count{font-family:Montserrat;font-weight:800;font-size:13px;letter-spacing:.1em;color:var(--ink2);text-transform:uppercase;margin:14px 0 0}
+
+/* question */
+.q{background:var(--sand);border-radius:10px;padding:18px 18px 16px}
+.q .qn{font-family:Montserrat;font-weight:800;font-size:12px;letter-spacing:.14em;color:var(--ink2);text-transform:uppercase}
+.q .stem{font-size:19px;font-weight:600;margin:6px 0 4px}
+.opts{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-top:14px}
+.opts.two{grid-template-columns:1fr 1fr}
+.opts.one{grid-template-columns:1fr}
+.opt{text-align:left;background:#fff;border:2px solid var(--line);border-radius:8px;padding:10px 12px;min-height:48px;font-size:15px}
+.opt .e{display:block;font-family:Montserrat;font-weight:900;font-size:11px;letter-spacing:.12em;color:var(--red)}
+.opt:hover:not([disabled]){border-color:var(--red)}
+.opt[disabled]{cursor:default}
+.opt.right{border-color:var(--ok);background:var(--ok-bg)}
+.opt.wrong{border-color:var(--red);background:var(--tint)}
+.opt.dim{opacity:.55}
+.opt.pitch{font-size:16px;padding:14px}
+.opt.pitch b{font-family:Montserrat;font-weight:800;color:var(--red-dk);margin-right:6px}
+.fb{margin-top:14px;border-radius:8px;padding:12px 14px;display:none}
+.fb.show{display:block}
+.fb.ok{background:var(--ok-bg);border-left:5px solid var(--ok)}
+.fb.no{background:var(--tint);border-left:5px solid var(--red)}
+.fb .v{font-family:Montserrat;font-weight:900;font-size:12px;letter-spacing:.12em;text-transform:uppercase;display:block;margin-bottom:2px}
+.fb.ok .v{color:var(--ok)} .fb.no .v{color:var(--red)}
+.pills{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.pill{font-family:Montserrat;font-weight:800;font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding:3px 9px;border-radius:20px;background:var(--red);color:#fff}
+.pill.ink{background:var(--ink)}
+
+/* your turn */
+label.fld{display:block;font-weight:600;margin-bottom:6px}
+.inp{width:100%;border:2px solid var(--line);border-radius:8px;padding:12px;font-size:16px;background:#fff}
+.inp:focus{border-color:var(--red);outline:none}
+.checks{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px}
+.ck{display:flex;align-items:center;gap:10px;background:#fff;border:2px solid var(--line);border-radius:8px;padding:10px 12px;min-height:48px;cursor:pointer;font-size:15px}
+.ck input{width:20px;height:20px;accent-color:var(--red);flex:none}
+.ck:has(input:checked){border-color:var(--red);background:var(--tint)}
+.meter{margin-top:14px;border-radius:8px;padding:12px 14px;background:var(--sand)}
+.meter.go{background:var(--ok-bg);border-left:5px solid var(--ok)}
+.meter.wait{border-left:5px solid #b9b2b0}
+.pitchline{font-size:16px;background:#fff;border:2px dashed var(--line);border-radius:8px;padding:12px;margin-top:10px;white-space:pre-wrap}
+
+/* words to know */
+table{width:100%;border-collapse:collapse;font-size:15px}
+th{font-family:Montserrat;font-weight:800;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--red-dk);text-align:left;padding:8px;border-bottom:2px solid var(--red)}
+td{padding:8px;border-bottom:1px solid var(--line);vertical-align:top}
+td.k{font-family:Montserrat;font-weight:800;white-space:nowrap}
+td input{width:100%;min-width:90px;border:0;border-bottom:1.5px solid #9a9a9a;padding:4px 2px;font-size:15px;background:transparent}
+details{margin-top:18px}
+summary{font-family:Montserrat;font-weight:800;font-size:14px;letter-spacing:.1em;text-transform:uppercase;color:var(--red-dk);cursor:pointer;padding:6px 0;min-height:40px;display:flex;align-items:center}
+
+.walk{display:grid;gap:8px}
+.wk{text-align:left;width:100%;align-items:flex-start}
+.wk .box2{width:22px;height:22px;border:2px solid var(--red);border-radius:4px;flex:none;display:inline-flex;align-items:center;justify-content:center;font-weight:700;color:#fff;margin-top:2px}
+.wk.on{border-color:var(--red);background:var(--tint)}
+.wk.on .box2{background:var(--red)}
+.wk.right{border-color:var(--ok);background:var(--ok-bg)}
+.wk.wrong{border-color:var(--red);background:var(--tint)}
+.wk .why{display:block;font-size:14px;color:var(--ink2);margin-top:4px}
+.wk[disabled]{cursor:default}
+.write{border-bottom:1.5px solid #9a9a9a;padding:0 4px;font-weight:600}
+
+/* done */
+.score{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.big{font-family:Montserrat;font-weight:900;font-size:56px;color:var(--red);line-height:1}
+.dark{background:var(--ink);color:#fff;border-radius:10px;padding:18px}
+.dark .tag{color:#ff8d8d}
+.dark .who{font-family:Montserrat;font-weight:800;font-size:22px;margin-top:4px}
+.dark .row{display:flex;justify-content:space-between;gap:12px;border-top:1px solid #3a3a40;padding-top:8px;margin-top:8px;font-size:15px}
+
+.passwrap{display:flex;flex-direction:column;align-items:center;gap:12px}
+.pass-img{width:100%;max-width:340px;display:block;filter:drop-shadow(0 8px 18px rgba(30,30,33,.25))}
+.passwrap .btn{width:100%;max-width:340px}
+
+footer{background:var(--ink);color:#fff;padding:12px 16px;font-family:Montserrat;font-size:11px;font-weight:600;letter-spacing:.06em}
+footer .in{max-width:760px;margin:0 auto;display:flex;align-items:center;gap:14px}
+footer .num{font-weight:900;font-size:22px;color:var(--red-br);line-height:1}
+footer .doc{flex:1;text-transform:uppercase}
+
+@media (max-width:480px){
+  .opts.two{grid-template-columns:1fr}
+  .nav .btn{flex:1}
+  .nav .spacer{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+@media print{.prog,.nav,.say-btn{display:none!important}}
+</style>
+</head>
+<body>
+
+<header class="band">
+  <div class="band-in">
+    <div class="kicker">KHS Cougar News · 01 Bullpen &amp; Planning</div>
+    <span class="chip">MICRO-LESSON 02</span>
+    <h1>Where Stories Hide</h1>
+    <div class="sub">6 places to look before bullpen</div>
+  </div>
+</header>
+
+<nav class="prog" aria-label="Progress">
+  <div class="prog-in" id="prog"></div>
+</nav>
+
+<main id="app" tabindex="-1"></main>
+
+<footer>
+  <div class="in"><span class="num">01</span><span class="doc">Based on Finding Stories – Handout</span><span>~7 min</span></div>
+</footer>
+
+<script>
+(function(){
+"use strict";
+
+/* ---------- content (from Finding Stories – Handout, section 3: Where to look) ---------- */
+const SOURCES = [
+  {k:"cal",   name:"Calendars",              easy:"DATES",         what:"School calendar, announcements, sports and fine arts schedules, board agendas.", tip:"Look for firsts, lasts, deadlines and changes."},
+  {k:"ppl",   name:"People who hear first",  easy:"ASK",           what:"Front office, counselors, nurse, librarian, custodians, cafeteria staff, coaches, club sponsors.", tip:"Ask: \"What's new this week?\""},
+  {k:"halls", name:"Halls + common spaces",  easy:"LOOK",          what:"New signs, long lines, closed doors, anything moved or broken.", tip:"If you wonder why, viewers do too."},
+  {k:"rules", name:"Rules, money, schedules",easy:"CHANGES",       what:"A change to a policy, a price or the bell schedule.", tip:"It affects many people at once."},
+  {k:"big",   name:"Big news, campus angle", easy:"BRING IT HERE", what:"A district, city or national story.", tip:"Find the person here it touches."},
+  {k:"hear",  name:"What you keep hearing",  easy:"LISTEN",        what:"The same question or complaint.", tip:"From 3 different people, it's a story."}
+];
+const SRC = Object.fromEntries(SOURCES.map(v=>[v.k,v]));
+
+/* Practice 1: trace a story idea back to where it was found. Made-up examples. */
+const TRACE = [
+  {s:"The board agenda for Tuesday includes a vote on new start times.", a:"cal",
+   why:"Board agendas are on the calendar list. Check them before every bullpen."},
+  {s:"There's a new \"Do not enter\" sign on the gym hallway, and nobody knows why.", a:"halls",
+   why:"A new sign and a closed door. You wondered why, so viewers will too."},
+  {s:"The student parking permit goes from $25 to $40 next semester.", a:"rules",
+   why:"A price change. It affects every student who drives."},
+  {s:"Three friends in different classes all ask why the second-floor water fountains are off.", a:"hear",
+   why:"The same question from 3 different people is a story."},
+  {s:"The city adds bike lanes on the road by our school. Who here rides a bike to school?", a:"big",
+   why:"A city story with a campus angle. Find the person here it touches."},
+  {s:"The cafeteria manager mentions the grab-and-go line starts next week.", a:"ppl",
+   why:"Cafeteria staff hear first. One question, \"What's new this week?\", got the tip."},
+  {s:"Volleyball senior night is the last home game for 9 seniors.", a:"cal",
+   why:"A sports schedule, and a last. Calendars are full of firsts and lasts."}
+];
+
+/* Practice 2: who hears first? */
+const PEOPLE = ["Front office","Counselors","Nurse","Librarian","Custodians","Cafeteria staff","Coaches","Club sponsors"];
+const WHO = [
+  {s:"A new menu item starts Monday.", a:"Cafeteria staff"},
+  {s:"The last day to change your class schedule is Friday.", a:"Counselors"},
+  {s:"A team makes the playoffs for the first time in 10 years.", a:"Coaches"},
+  {s:"The library adds a 3D printer students can use.", a:"Librarian"},
+  {s:"New lockers go into the B hall over the break.", a:"Custodians"},
+  {s:"A guest speaker visits campus Friday.", a:"Front office"},
+  {s:"The debate club qualifies for state.", a:"Club sponsors"},
+  {s:"A flu shot clinic comes to campus next week.", a:"Nurse"}
+];
+
+/* Practice 3: hallway walk. Which ones make you ask "why?" */
+const WALK = [
+  {s:"A new sign says the courtyard is closed until further notice.", lead:true,  why:"New sign + closed space. Why is it closed? For how long?"},
+  {s:"Students walk to class during passing period.",                  lead:false, why:"Normal. Nothing is new or changing."},
+  {s:"The line at the second lunch register is twice as long as last week.", lead:true, why:"A long line that wasn't there before. What changed?"},
+  {s:"The trophy case is full of trophies.",                            lead:false, why:"It's always been that way. Nothing is new."},
+  {s:"Lockers from the B hall have been moved to the A hall.",          lead:true,  why:"Something moved. Who moved it, and why?"},
+  {s:"A teacher stands in the hall during passing period.",             lead:false, why:"Normal hall duty. Nothing is new."},
+  {s:"The vending machine by the gym is unplugged and empty.",          lead:true,  why:"Something broken or shut off. Is it coming back?"},
+  {s:"The bell rings at the end of class.",                             lead:false, why:"Normal. It happens every day."}
+];
+
+const WORDS = [
+  ["tip","Information that could become a story."],
+  ["source","A person or place where information comes from."],
+  ["agenda","A list of what a meeting will talk about."],
+  ["deadline","The last day or time to do something."],
+  ["campus angle","How a big story touches someone here."]
+];
+
+/* ---------- state ---------- */
+const STEPS = ["Start","Learn","Trace it","Who hears first","Hallway walk","Your turn","Done"];
+const S = {step:0, opened:new Set(), tIdx:0, tAns:[], wIdx:0, wAns:[], walk:new Set(), walkChecked:false, mine:{src:"",where:"",news:"",who:""}, name:""};
+const KEY = "khscn-ml-02";
+function load(){ try{ const d=JSON.parse(localStorage.getItem(KEY)||"{}"); if(d.lang) S.lang=d.lang; if(d.name) S.name=d.name; if(!S.name){ const o=JSON.parse(localStorage.getItem("khscn-ml-01")||"{}"); if(o.name) S.name=o.name; } }catch(e){} S.lang=S.lang||{}; }
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify({lang:S.lang,name:S.name})); }catch(e){} }
+load();
+
+/* ---------- helpers ---------- */
+const app = document.getElementById("app");
+const esc = s => String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const canSpeak = "speechSynthesis" in window;
+function speak(t){ if(!canSpeak) return; try{ speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(t); u.rate=.92; speechSynthesis.speak(u);}catch(e){} }
+const sayBtn = t => canSpeak ? `<button class="say-btn" data-say="${esc(t)}" aria-label="Listen"><span aria-hidden="true">🔊</span> Listen</button>` : "";
+function go(n){ if(canSpeak) speechSynthesis.cancel(); S.step=n; render(); window.scrollTo({top:0}); app.focus({preventScroll:true}); }
+function renderProg(){
+  document.getElementById("prog").innerHTML =
+    STEPS.map((_,i)=>`<span class="seg ${i<S.step?"done":i===S.step?"now":""}"></span>`).join("") +
+    `<span class="lbl">${S.step+1}/${STEPS.length} · ${esc(STEPS[S.step])}</span>`;
+}
+const walkRight = (it,i) => S.walk.has(i)===it.lead;
+
+/* ---------- screens ---------- */
+const screens = [
+/* 0 start */
+() => `
+  <div class="stack">
+    <h2><span class="n">1</span>Don't come to bullpen empty</h2>
+    <p class="lead">Story ideas don't show up on their own. Reporters go <b>find</b> them. ${sayBtn("Story ideas don't show up on their own. Reporters go find them.")}</p>
+    <p>The Finding Stories handout lists 6 places to look. You'll learn all 6, then practice spotting where a story came from.</p>
+    <div class="callout"><span class="tag">The habit</span>
+      <b>Check one place before every bullpen.</b> Bring back one tip. ${sayBtn("The habit. Check one place before every bullpen. Bring back one tip.")}
+    </div>
+    <details>
+      <summary>Words to know</summary>
+      <table>
+        <thead><tr><th>Word</th><th>What it means</th><th>In my language</th></tr></thead>
+        <tbody>${WORDS.map(([w,m],i)=>`<tr><td class="k">${esc(w)}</td><td>${esc(m)}</td><td><input data-lang="${i}" aria-label="${esc(w)} in my language" value="${esc(S.lang[i]||"")}"></td></tr>`).join("")}</tbody>
+      </table>
+    </details>
+  </div>
+  <div class="nav"><span class="spacer"></span><button class="btn" data-go="1">Start</button></div>`,
+
+/* 1 learn */
+() => `
+  <h2><span class="n">2</span>6 places to look</h2>
+  <p>Tap each card to open it.</p>
+  <div class="grid" style="margin-top:14px">
+    ${SOURCES.map(v=>`
+      <button class="vcard ${S.opened.has(v.k)?"open":""}" data-open="${v.k}" aria-expanded="${S.opened.has(v.k)}">
+        <span class="easy">${v.easy}</span>
+        <span class="nm">${v.name}</span>
+        <span class="more">${esc(v.what)}<span class="ex" style="display:block"><b>${esc(v.tip)}</b></span></span>
+        <span class="hint">Tap to open</span>
+      </button>`).join("")}
+  </div>
+  <p class="count" aria-live="polite">${S.opened.size} of 6 opened</p>
+  <div class="callout"><span class="tag">One question works everywhere</span>"What's new this week?"</div>
+  <div class="nav"><button class="btn ghost" data-go="0">Back</button><span class="spacer"></span>
+    <button class="btn" data-go="2" ${S.opened.size<6?"disabled":""}>${S.opened.size<6?"Open all 6":"Next"}</button></div>`,
+
+/* 2 trace it */
+() => {
+  const i=S.tIdx, q=TRACE[i], ans=S.tAns[i];
+  return `
+  <h2><span class="n">3</span>Trace it back</h2>
+  <p>A reporter found each idea below. Where did they most likely look?</p>
+  <div class="q" style="margin-top:14px">
+    <div class="qn">Idea ${i+1} of ${TRACE.length}</div>
+    <p class="stem">${esc(q.s)} ${sayBtn(q.s)}</p>
+    <div class="opts">${SOURCES.map(v=>{
+      let c=""; if(ans){ c = v.k===q.a?"right":(v.k===ans?"wrong":"dim"); }
+      return `<button class="opt ${c}" data-trace="${v.k}" ${ans?"disabled":""}><span class="e">${v.easy}</span>${v.name}</button>`;}).join("")}
+    </div>
+    <div class="fb ${ans?(ans===q.a?"ok show":"no show"):""}" aria-live="polite">
+      ${ans?`<span class="v">${ans===q.a?"Yes, that's it.":"Not quite. It's "+SRC[q.a].name+"."}</span>${esc(q.why)}`:""}
+    </div>
+  </div>
+  <div class="nav"><button class="btn ghost" data-go="1">Back</button><span class="spacer"></span>
+    ${ans?`<button class="btn" data-next="trace">${i<TRACE.length-1?"Next idea":"Next"}</button>`:""}</div>`;
+},
+
+/* 3 who hears first */
+() => {
+  const i=S.wIdx, q=WHO[i], ans=S.wAns[i];
+  return `
+  <h2><span class="n">4</span>Who hears first?</h2>
+  <p>You want this tip before anyone else. Who do you ask?</p>
+  <div class="q" style="margin-top:14px">
+    <div class="qn">Tip ${i+1} of ${WHO.length}</div>
+    <p class="stem">${esc(q.s)} ${sayBtn(q.s)}</p>
+    <div class="opts">${PEOPLE.map(p=>{
+      let c=""; if(ans){ c = p===q.a?"right":(p===ans?"wrong":"dim"); }
+      return `<button class="opt ${c}" data-who="${esc(p)}" ${ans?"disabled":""}>${esc(p)}</button>`;}).join("")}
+    </div>
+    <div class="fb ${ans?(ans===q.a?"ok show":"no show"):""}" aria-live="polite">
+      ${ans?`<span class="v">${ans===q.a?"Yes.":"Not quite. Ask: "+esc(q.a)+"."}</span>Then ask the question that works everywhere: "What's new this week?"`:""}
+    </div>
+  </div>
+  <div class="nav"><button class="btn ghost" data-go="2">Back</button><span class="spacer"></span>
+    ${ans?`<button class="btn" data-next="who">${i<WHO.length-1?"Next tip":"Next"}</button>`:""}</div>`;
+},
+
+/* 4 hallway walk */
+() => {
+  const done=S.walkChecked;
+  return `
+  <h2><span class="n">5</span>Hallway walk</h2>
+  <p>You walk from the gym to the library. <b>Tap everything that makes you ask "why?"</b> Then check.</p>
+  <div class="walk" style="margin-top:14px">
+    ${WALK.map((it,i)=>{
+      const on=S.walk.has(i); let c=""; if(done) c = walkRight(it,i)?"right":"wrong";
+      return `<button class="ck wk ${on?"on":""} ${c}" data-walk="${i}" aria-pressed="${on}" ${done?"disabled":""}>
+        <span class="box2" aria-hidden="true">${on?"✓":""}</span>
+        <span><span>${esc(it.s)}</span>${done?`<span class="why">${it.lead?"Tip.":"Not a tip."} ${esc(it.why)}</span>`:""}</span>
+      </button>`;}).join("")}
+  </div>
+  ${done?`<div class="fb show ${WALK.every(walkRight)?"ok":"no"}" aria-live="polite"><span class="v">${WALK.filter(walkRight).length} of ${WALK.length} right</span>New, moved, closed, broken or longer than usual: those are tips. Normal, everyday things are not.</div>`:""}
+  <div class="nav"><button class="btn ghost" data-go="3">Back</button><span class="spacer"></span>
+    ${done?`<button class="btn" data-go="5">Next</button>`:`<button class="btn" data-walkcheck>Check</button>`}</div>`;
+},
+
+/* 5 your turn */
+() => `
+  <h2><span class="n">6</span>Your turn</h2>
+  <p>Plan where you'll look before the next bullpen.</p>
+  <div class="stack" style="margin-top:14px">
+    <div>
+      <p class="fld" style="font-weight:600;margin-bottom:6px">I will check…</p>
+      <div class="checks">${SOURCES.map(v=>`<label class="ck"><input type="radio" name="src" data-src="${v.k}" ${S.mine.src===v.k?"checked":""}><span>${v.name}</span></label>`).join("")}</div>
+    </div>
+    <div>
+      <label class="fld" for="where">Exactly where, or who? </label>
+      <input class="inp" id="where" maxlength="120" placeholder="Example: the board agenda, Coach Smith, the B hall" value="${esc(S.mine.where)}">
+    </div>
+    <div class="box"><span class="tag">Say it</span>
+      "Hi, I'm <span class="write">${esc(S.name||"your name")}</span> with Cougar News. What's new this week?" ${sayBtn("Hi, I'm with Cougar News. What's new this week?")}
+    </div>
+    <div>
+      <label class="fld" for="news">After you look: what's new or changing?</label>
+      <input class="inp" id="news" maxlength="200" placeholder="You can fill this in later" value="${esc(S.mine.news)}">
+    </div>
+    <div>
+      <label class="fld" for="whoaff">Who does it affect?</label>
+      <input class="inp" id="whoaff" maxlength="120" placeholder="Example: everyone who drives, the freshman class" value="${esc(S.mine.who)}">
+    </div>
+    <div id="meter"></div>
+  </div>
+  <div class="nav"><button class="btn ghost" data-go="4">Back</button><span class="spacer"></span><button class="btn" data-go="6">Finish</button></div>`,
+
+/* 6 done */
+() => {
+  const n1=TRACE.filter((q,i)=>S.tAns[i]===q.a).length;
+  const n2=WHO.filter((q,i)=>S.wAns[i]===q.a).length;
+  const n3=WALK.filter(walkRight).length;
+  const tot=TRACE.length+WHO.length+WALK.length, got=n1+n2+n3;
+  S.result={got,tot,when:S.result&&S.result.got===got?S.result.when:new Date()};
+  return `
+  <h2><span class="n">7</span>Done</h2>
+  <div class="score"><span class="big">${got}/${tot}</span><span class="muted">first tries correct</span></div>
+  <div class="stack" style="margin-top:16px">
+    <div>
+      <label class="fld" for="nm">Your name</label>
+      <input class="inp" id="nm" maxlength="60" value="${esc(S.name)}" placeholder="First and last name">
+    </div>
+    <div class="passwrap">
+      <img id="passImg" class="pass-img" alt="Your press pass">
+      <button class="btn" id="dlPass" ${S.name.trim()?"":"disabled"}>${S.name.trim()?"Download press pass":"Type your name first"}</button>
+      <a class="btn ghost" href="https://khspress.fillout.com/certificate-upload" target="_blank" rel="noopener" style="text-decoration:none">Submit press pass ↗</a>
+      <p class="muted" style="text-align:center">Download it first, then upload the PNG on the submit form.</p>
+    </div>
+    ${S.mine.src?`<div class="box"><span class="tag">Bring to bullpen</span>${tipText()}</div>`:""}
+    <div class="callout"><span class="tag">Remember</span>Check one place before every bullpen. Ask "What's new this week?" When you have a tip, use the 5 steps on the Finding Stories handout to turn it into a story.</div>
+  </div>
+  <div class="nav"><button class="btn ghost" data-restart>Try again</button><span class="spacer"></span><button class="btn ghost" data-go="5">Back</button></div>`;
+}
+];
+
+function tipText(){
+  const m=S.mine;
+  return `<div class="pitchline">Where I'll look: ${esc(m.src?SRC[m.src].name:"—")}${m.where?" · "+esc(m.where):""}${m.news?`\nWhat's new: ${esc(m.news)}`:""}${m.who?`\nWho it affects: ${esc(m.who)}`:""}</div>`;
+}
+function meter(){
+  const el=document.getElementById("meter"); if(!el) return;
+  const m=S.mine; let cls="wait", msg;
+  if(!m.src) msg="Pick one place to check.";
+  else if(!m.where.trim()) msg="Name exactly where or who. \""+SRC[m.src].name+"\" is too big. Pick one.";
+  else if(!m.news.trim()) { cls="go"; msg="<b>Plan ready.</b> Go look before bullpen, then come back and fill in what's new."; }
+  else if(!m.who.trim()) msg="Good tip. Now: who does it affect?";
+  else { cls="go"; msg="<b>Tip ready for bullpen.</b> Next, run it through the news-value test from Lesson 01."; }
+  el.innerHTML=`<div class="meter ${cls}" aria-live="polite">${msg}</div>${m.src?tipText():""}`;
+}
+
+/* ---------- press pass PNG ---------- */
+const MODULE = {num:"02", title:"Where Stories Hide", skill:"6 places to look before bullpen"};
+function rr(c,x,y,w,h,r){c.beginPath();c.moveTo(x+r,y);c.arcTo(x+w,y,x+w,y+h,r);c.arcTo(x+w,y+h,x,y+h,r);c.arcTo(x,y+h,x,y,r);c.arcTo(x,y,x+w,y,r);c.closePath();}
+function track(c,t,x,y,sp,align){ // letter-spaced text
+  const w=[...t].reduce((a,ch)=>a+c.measureText(ch).width+sp,-sp);
+  let cx = align==="center"? x-w/2 : align==="right"? x-w : x;
+  c.textAlign="left"; for(const ch of t){c.fillText(ch,cx,y);cx+=c.measureText(ch).width+sp;}
+}
+function passId(name,when,got){
+  let h=2166136261; for(const ch of name+"|"+when.toISOString()+"|"+got+"|"+MODULE.num){h^=ch.charCodeAt(0);h=Math.imul(h,16777619);}
+  const s=(h>>>0).toString(36).toUpperCase().padStart(7,"0"); return s.slice(0,4)+"-"+s.slice(4,7);
+}
+let fontsReady=null;
+function loadFonts(){
+  if(!fontsReady){ fontsReady = (document.fonts? Promise.all(["900 40px Montserrat","800 40px Montserrat","700 40px Montserrat","400 40px Lexend","600 40px Lexend"].map(f=>document.fonts.load(f).catch(()=>{}))) : Promise.resolve()).then(()=>new Promise(r=>setTimeout(r,0))); }
+  return fontsReady;
+}
+function drawPass(){
+  const W=1080,H=1500,R=56, c=document.createElement("canvas"); c.width=W; c.height=H; const x=c.getContext("2d");
+  const {got,tot,when}=S.result, name=(S.name.trim()||"Your name");
+  const MS="Montserrat, Arial Black, sans-serif", LX="Lexend, Arial, sans-serif";
+  // card
+  rr(x,0,0,W,H,R); x.save(); x.clip();
+  x.fillStyle="#fff"; x.fillRect(0,0,W,H);
+  const g=x.createLinearGradient(0,0,0,560); g.addColorStop(0,"#6F1A1D"); g.addColorStop(.55,"#A61E1E"); g.addColorStop(1,"#DD2A2A");
+  x.fillStyle=g; x.fillRect(0,0,W,560);
+  // subtle diagonal stripes in band
+  x.globalAlpha=.06; x.fillStyle="#fff"; for(let i=-600;i<W;i+=70){x.beginPath();x.moveTo(i,560);x.lineTo(i+560,0);x.lineTo(i+590,0);x.lineTo(i+30,560);x.fill();} x.globalAlpha=1;
+  // footer
+  x.fillStyle="#1E1E21"; x.fillRect(0,H-150,W,150);
+  x.restore();
+  // lanyard slot (punch out)
+  x.save(); x.globalCompositeOperation="destination-out"; rr(x,W/2-110,46,220,38,19); x.fill(); x.restore();
+  // band text
+  x.fillStyle="#fff"; x.globalAlpha=.9; x.font=`700 30px ${MS}`; track(x,"KHS COUGAR NEWS",W/2,150,9,"center"); x.globalAlpha=1;
+  x.font=`900 200px ${MS}`; x.textAlign="center";
+  x.fillStyle="rgba(60,20,20,.55)"; x.fillText("PRESS",W/2+6,346); x.fillText("PASS",W/2+6,516);
+  x.fillStyle="#fff"; x.fillText("PRESS",W/2,340); x.fillText("PASS",W/2,510);
+  // body
+  const L=90;
+  x.fillStyle="#4A4A50"; x.font=`800 28px ${MS}`; track(x,"ISSUED TO",L,650,6);
+  let fs=96; x.font=`800 ${fs}px ${MS}`; while(x.measureText(name.toUpperCase()).width>W-2*L && fs>40){fs-=4; x.font=`800 ${fs}px ${MS}`;}
+  x.fillStyle="#1E1E21"; x.textAlign="left"; x.fillText(name.toUpperCase(),L,650+20+fs*.85);
+  x.fillStyle="#E6DCDA"; x.fillRect(L,800,W-2*L,4);
+  x.fillStyle="#4A4A50"; x.font=`800 28px ${MS}`; track(x,"CLEARED IN · MICRO-LESSON "+MODULE.num,L,872,6);
+  x.fillStyle="#6F1A1D"; x.font=`800 62px ${MS}`; x.fillText(MODULE.title.toUpperCase(),L,948);
+  x.fillStyle="#4A4A50"; x.font=`400 34px ${LX}`; x.fillText(MODULE.skill,L,1002);
+  // score + date
+  x.fillStyle="#4A4A50"; x.font=`800 28px ${MS}`; track(x,"SCORE",L,1100,6); track(x,"DATE",430,1100,6);
+  x.fillStyle="#B3201F"; x.font=`900 92px ${MS}`; x.fillText(`${got}/${tot}`,L,1195);
+  x.fillStyle="#1E1E21"; x.font=`800 50px ${MS}`; x.fillText(when.toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"}),430,1185);
+  x.fillStyle="#4A4A50"; x.font=`400 30px ${LX}`; x.fillText(when.toLocaleTimeString("en-US",{hour:"numeric",minute:"2-digit"}),430,1232);
+  // stamp
+  x.save(); x.translate(905,1160); x.rotate(-.2); x.strokeStyle="#B3201F"; x.fillStyle="#B3201F"; x.globalAlpha=.9;
+  x.lineWidth=7; x.beginPath(); x.arc(0,0,105,0,Math.PI*2); x.stroke(); x.lineWidth=3; x.beginPath(); x.arc(0,0,88,0,Math.PI*2); x.stroke();
+  x.font=`900 34px ${MS}`; x.textAlign="center"; x.fillText("ON",0,-14); x.fillText("AIR",0,26); x.font=`800 16px ${MS}`; x.fillText("★ CLEARED ★",0,58); x.restore();
+  // footer text
+  x.textAlign="left"; x.fillStyle="#DD2A2A"; x.font=`900 72px ${MS}`; x.fillText(MODULE.num,L,H-50);
+  x.fillStyle="#fff"; x.font=`700 26px ${MS}`; track(x,"KHS COUGAR NEWS · MICRO-LEARNING",L+120,H-84,4);
+  x.globalAlpha=.7; x.font=`600 24px ${MS}`; track(x,"PASS ID "+passId(name,when,got),L+120,H-48,4); x.globalAlpha=1;
+  return c;
+}
+function updatePass(){
+  const img=document.getElementById("passImg"); if(!img) return;
+  loadFonts().then(()=>{ try{ img.src=drawPass().toDataURL("image/png"); }catch(e){} });
+}
+function downloadPass(){
+  loadFonts().then(()=>{
+    const c=drawPass(), slug=(S.name.trim()||"student").replace(/[^a-z0-9]+/gi,"-").replace(/^-|-$/g,"");
+    const fn=`Press-Pass-${MODULE.num}-${slug}.png`;
+    c.toBlob(b=>{
+      if(!b) return;
+      const url=URL.createObjectURL(b), a=document.createElement("a");
+      a.href=url; a.download=fn; document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(()=>URL.revokeObjectURL(url),4000);
+    },"image/png");
+  });
+}
+
+function render(){
+  renderProg();
+  app.innerHTML = screens[S.step]();
+  if(S.step===5) meter();
+  if(S.step===6) updatePass();
+}
+
+/* ---------- events ---------- */
+app.addEventListener("click", e=>{
+  const t=e.target.closest("button"); if(!t) return;
+  if(t.dataset.say!==undefined){ speak(t.dataset.say); return; }
+  if(t.id==="dlPass"){ downloadPass(); return; }
+  if(t.dataset.go!==undefined){ go(+t.dataset.go); return; }
+  if(t.dataset.open){ S.opened.add(t.dataset.open); render(); const el=app.querySelector(`[data-open="${t.dataset.open}"]`); if(el) el.focus(); return; }
+  if(t.dataset.trace){ S.tAns[S.tIdx]=t.dataset.trace; render(); return; }
+  if(t.dataset.who){ S.wAns[S.wIdx]=t.dataset.who; render(); return; }
+  if(t.dataset.walk!==undefined){ const i=+t.dataset.walk; S.walk.has(i)?S.walk.delete(i):S.walk.add(i); render(); const el=app.querySelector(`[data-walk="${i}"]`); if(el) el.focus(); return; }
+  if(t.hasAttribute("data-walkcheck")){ S.walkChecked=true; render(); return; }
+  if(t.dataset.next==="trace"){ if(S.tIdx<TRACE.length-1){S.tIdx++; render(); app.focus();} else go(3); return; }
+  if(t.dataset.next==="who"){ if(S.wIdx<WHO.length-1){S.wIdx++; render(); app.focus();} else go(4); return; }
+  if(t.hasAttribute("data-restart")){ S.opened=new Set(); S.tIdx=0; S.tAns=[]; S.wIdx=0; S.wAns=[]; S.walk=new Set(); S.walkChecked=false; S.result=null; go(0); }
+});
+app.addEventListener("input", e=>{
+  const t=e.target;
+  if(t.dataset.lang!==undefined){ S.lang[t.dataset.lang]=t.value; save(); }
+  if(t.id==="where"){ S.mine.where=t.value; meter(); }
+  if(t.id==="news"){ S.mine.news=t.value; meter(); }
+  if(t.id==="whoaff"){ S.mine.who=t.value; meter(); }
+  if(t.id==="nm"){ S.name=t.value; save(); const b=document.getElementById("dlPass"); if(b){ const ok=!!t.value.trim(); b.disabled=!ok; b.textContent=ok?"Download press pass":"Type your name first"; }
+    clearTimeout(S._pt); S._pt=setTimeout(updatePass,200); }
+});
+app.addEventListener("change", e=>{
+  const t=e.target;
+  if(t.dataset.src){ S.mine.src=t.dataset.src; meter(); }
+});
+
+render();
+})();
+</script>
+</body>
+</html>

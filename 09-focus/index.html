@@ -1,0 +1,581 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>One Focus</title>
+<meta name="description" content="KHS Cougar News micro-lesson: write a focus sentence or a noun-verb-noun focus statement.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;700&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --red-dk:#6F1A1D; --red:#B3201F; --red-br:#DD2A2A; --ink:#1E1E21; --ink2:#4A4A50;
+  --line:#E6DCDA; --tint:#FBEFEE; --sand:#F6F2F0; --link:#1A5FB4; --ok:#1d7a3a; --ok-bg:#E8F4EC;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font-family:Lexend,system-ui,sans-serif;color:var(--ink);background:#fff;font-size:17px;line-height:1.55;min-height:100vh;display:flex;flex-direction:column}
+button{font:inherit;color:inherit;cursor:pointer}
+input{font:inherit}
+:focus-visible{outline:3px solid var(--link);outline-offset:2px}
+
+/* header band, after switcher.png */
+.band{background:linear-gradient(180deg,var(--red-dk) 0%,#A61E1E 55%,var(--red-br) 100%);color:#fff;padding:22px 16px 18px}
+.band-in{max-width:760px;margin:0 auto;position:relative}
+.kicker{font-family:Montserrat;font-weight:700;font-size:11px;letter-spacing:.2em;text-transform:uppercase;opacity:.88;padding-right:150px}
+.band h1{font-family:Montserrat;font-weight:900;font-size:clamp(28px,7vw,44px);line-height:1.02;text-transform:uppercase;margin-top:6px;text-shadow:2px 2px 0 rgba(60,20,20,.55)}
+.band .sub{font-weight:300;font-size:16px;margin-top:6px;opacity:.95}
+.chip{position:absolute;top:-2px;right:0;background:#fff;color:var(--red-dk);font-family:Montserrat;font-weight:800;font-size:10px;letter-spacing:.14em;padding:4px 9px;border-radius:3px}
+
+/* progress */
+.prog{background:var(--ink);color:#fff;padding:10px 16px}
+.prog-in{max-width:760px;margin:0 auto;display:flex;gap:6px;align-items:center}
+.prog .seg{flex:1;height:6px;border-radius:3px;background:#46464c}
+.prog .seg.done{background:var(--red-br)}
+.prog .seg.now{background:#fff}
+.prog .lbl{font-family:Montserrat;font-weight:700;font-size:11px;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap;margin-left:8px;opacity:.85}
+
+main{flex:1;width:100%;max-width:760px;margin:0 auto;padding:24px 16px 32px}
+h2{font-family:Montserrat;font-weight:800;font-size:20px;color:var(--red-dk);text-transform:uppercase;letter-spacing:.05em;display:flex;align-items:center;gap:10px;margin-bottom:12px}
+h2 .n{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;background:var(--red);color:#fff;font-size:15px;letter-spacing:0;flex:none}
+h3{font-family:Montserrat;font-weight:800;font-size:16px;margin-bottom:4px}
+p+p{margin-top:10px}
+.lead{font-size:18px}
+b{font-weight:600}
+.muted{color:var(--ink2);font-size:15px}
+
+.box{background:var(--sand);border-radius:8px;padding:14px 16px}
+.callout{background:var(--tint);border-left:5px solid var(--red);border-radius:0 8px 8px 0;padding:12px 16px;margin:16px 0}
+.tag{font-family:Montserrat;font-weight:800;font-size:11px;letter-spacing:.16em;color:var(--red-dk);text-transform:uppercase;display:block;margin-bottom:2px}
+.stack>*+*{margin-top:14px}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:10px 22px;border-radius:8px;border:0;background:var(--red);color:#fff;font-family:Montserrat;font-weight:800;font-size:15px;letter-spacing:.06em;text-transform:uppercase}
+.btn:hover{background:var(--red-dk)}
+.btn[disabled]{background:#c9c3c1;cursor:not-allowed}
+.btn.ghost{background:#fff;color:var(--red-dk);border:2px solid var(--red)}
+.btn.ghost:hover{background:var(--tint)}
+.nav{display:flex;justify-content:space-between;gap:12px;margin-top:24px;flex-wrap:wrap}
+.nav .spacer{flex:1}
+.say-btn{border:1.5px solid var(--line);background:#fff;border-radius:20px;padding:3px 10px;font-size:13px;font-weight:600;color:var(--ink2);display:inline-flex;align-items:center;gap:5px;vertical-align:middle}
+.say-btn:hover{border-color:var(--red);color:var(--red-dk)}
+
+/* value cards */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px}
+.vcard{text-align:left;background:var(--sand);border:2px solid transparent;border-radius:10px;padding:14px;min-height:150px;display:flex;flex-direction:column;gap:6px;transition:border-color .15s,background .15s}
+.vcard:hover{border-color:var(--line)}
+.vcard .easy{font-family:Montserrat;font-weight:900;font-size:12px;letter-spacing:.14em;color:var(--red)}
+.vcard .nm{font-family:Montserrat;font-weight:800;font-size:18px}
+.vcard .hint{font-size:13px;color:var(--ink2);margin-top:auto}
+.vcard .more{display:none;font-size:15px}
+.vcard.open{background:#fff;border-color:var(--red)}
+.vcard.open .more{display:block}
+.vcard.open .hint{display:none}
+.vcard .ex{color:var(--ink2);font-size:14px;margin-top:4px}
+.count{font-family:Montserrat;font-weight:800;font-size:13px;letter-spacing:.1em;color:var(--ink2);text-transform:uppercase;margin:14px 0 0}
+
+/* question */
+.q{background:var(--sand);border-radius:10px;padding:18px 18px 16px}
+.q .qn{font-family:Montserrat;font-weight:800;font-size:12px;letter-spacing:.14em;color:var(--ink2);text-transform:uppercase}
+.q .stem{font-size:19px;font-weight:600;margin:6px 0 4px}
+.opts{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-top:14px}
+.opts.two{grid-template-columns:1fr 1fr}
+.opts.one{grid-template-columns:1fr}
+.opt{text-align:left;background:#fff;border:2px solid var(--line);border-radius:8px;padding:10px 12px;min-height:48px;font-size:15px}
+.opt .e{display:block;font-family:Montserrat;font-weight:900;font-size:11px;letter-spacing:.12em;color:var(--red)}
+.opt:hover:not([disabled]){border-color:var(--red)}
+.opt[disabled]{cursor:default}
+.opt.right{border-color:var(--ok);background:var(--ok-bg)}
+.opt.wrong{border-color:var(--red);background:var(--tint)}
+.opt.dim{opacity:.55}
+.opt.pitch{font-size:16px;padding:14px}
+.opt.pitch b{font-family:Montserrat;font-weight:800;color:var(--red-dk);margin-right:6px}
+.fb{margin-top:14px;border-radius:8px;padding:12px 14px;display:none}
+.fb.show{display:block}
+.fb.ok{background:var(--ok-bg);border-left:5px solid var(--ok)}
+.fb.no{background:var(--tint);border-left:5px solid var(--red)}
+.fb .v{font-family:Montserrat;font-weight:900;font-size:12px;letter-spacing:.12em;text-transform:uppercase;display:block;margin-bottom:2px}
+.fb.ok .v{color:var(--ok)} .fb.no .v{color:var(--red)}
+.pills{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.pill{font-family:Montserrat;font-weight:800;font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding:3px 9px;border-radius:20px;background:var(--red);color:#fff}
+.pill.ink{background:var(--ink)}
+
+/* your turn */
+label.fld{display:block;font-weight:600;margin-bottom:6px}
+.inp{width:100%;border:2px solid var(--line);border-radius:8px;padding:12px;font-size:16px;background:#fff}
+.inp:focus{border-color:var(--red);outline:none}
+.checks{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px}
+.ck{display:flex;align-items:center;gap:10px;background:#fff;border:2px solid var(--line);border-radius:8px;padding:10px 12px;min-height:48px;cursor:pointer;font-size:15px}
+.ck input{width:20px;height:20px;accent-color:var(--red);flex:none}
+.ck:has(input:checked){border-color:var(--red);background:var(--tint)}
+.meter{margin-top:14px;border-radius:8px;padding:12px 14px;background:var(--sand)}
+.meter.go{background:var(--ok-bg);border-left:5px solid var(--ok)}
+.meter.wait{border-left:5px solid #b9b2b0}
+.pitchline{font-size:16px;background:#fff;border:2px dashed var(--line);border-radius:8px;padding:12px;margin-top:10px;white-space:pre-wrap}
+
+/* words to know */
+table{width:100%;border-collapse:collapse;font-size:15px}
+th{font-family:Montserrat;font-weight:800;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--red-dk);text-align:left;padding:8px;border-bottom:2px solid var(--red)}
+td{padding:8px;border-bottom:1px solid var(--line);vertical-align:top}
+td.k{font-family:Montserrat;font-weight:800;white-space:nowrap}
+td input{width:100%;min-width:90px;border:0;border-bottom:1.5px solid #9a9a9a;padding:4px 2px;font-size:15px;background:transparent}
+details{margin-top:18px}
+summary{font-family:Montserrat;font-weight:800;font-size:14px;letter-spacing:.1em;text-transform:uppercase;color:var(--red-dk);cursor:pointer;padding:6px 0;min-height:40px;display:flex;align-items:center}
+
+.walk{display:grid;gap:8px}
+.wk{text-align:left;width:100%;align-items:flex-start}
+.wk .box2{width:22px;height:22px;border:2px solid var(--red);border-radius:4px;flex:none;display:inline-flex;align-items:center;justify-content:center;font-weight:700;color:#fff;margin-top:2px}
+.wk.on{border-color:var(--red);background:var(--tint)}
+.wk.on .box2{background:var(--red)}
+.wk.right{border-color:var(--ok);background:var(--ok-bg)}
+.wk.wrong{border-color:var(--red);background:var(--tint)}
+.wk .why{display:block;font-size:14px;color:var(--ink2);margin-top:4px}
+.wk[disabled]{cursor:default}
+.write{border-bottom:1.5px solid #9a9a9a;padding:0 4px;font-weight:600}
+
+.cols2{display:grid;grid-template-columns:1fr 1.6fr;gap:10px}
+.stepf{display:flex;gap:12px;align-items:flex-start}
+.stepf>div{flex:1;min-width:0}
+.stepf .sn{flex:none;width:30px;height:30px;border-radius:50%;background:var(--ink);color:#fff;font-family:Montserrat;font-weight:800;font-size:14px;display:flex;align-items:center;justify-content:center;margin-top:2px}
+.stepf .fld{display:block;font-weight:600;margin-bottom:6px}
+.frame{display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center}
+.frame .inp{flex:1 1 180px;width:auto}
+.frame span{font-weight:600;color:var(--red-dk)}
+@media (max-width:480px){.cols2{grid-template-columns:1fr}}
+
+.cols2.eq{grid-template-columns:1fr 1fr}
+.good::before{content:"OPEN  ";font-family:Montserrat;font-weight:900;color:var(--ok);font-size:11px;letter-spacing:.1em}
+.bad::before{content:"YES/NO  ";font-family:Montserrat;font-weight:900;color:var(--red);font-size:11px;letter-spacing:.1em}
+.strike{text-decoration:line-through;text-decoration-color:var(--red);text-decoration-thickness:2px;color:var(--ink2)}
+ol.order{list-style:none;display:grid;gap:8px}
+.slot{display:flex;gap:10px;align-items:flex-start;background:#fff;border:2px solid var(--line);border-radius:8px;padding:10px 12px;min-height:48px;font-size:15px}
+.slot.empty{border-style:dashed;background:var(--sand)}
+.slot>span:nth-child(2){flex:1}
+.slot .sn{flex:none;width:26px;height:26px;border-radius:50%;background:var(--ink);color:#fff;font-family:Montserrat;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center}
+.slot.right{border-color:var(--ok);background:var(--ok-bg)}
+.slot.wrong{border-color:var(--red);background:var(--tint)}
+.slot .why{display:block;font-size:13px;color:var(--ink2);margin-top:4px}
+.undo{flex:none;border:1.5px solid var(--line);background:#fff;border-radius:20px;padding:2px 10px;font-size:13px;font-weight:600;color:var(--ink2)}
+.qcheck{font-size:14px;margin-top:6px;min-height:0}
+.qcheck.ok{color:var(--ok)} .qcheck.ok::before{content:"✓ "}
+.qcheck.no{color:var(--red)} .qcheck.no::before{content:"! "}
+@media (max-width:480px){.cols2.eq{grid-template-columns:1fr}}
+
+.rules{display:grid;gap:8px}
+.len{display:inline-block;font-family:Montserrat;font-weight:900;font-size:13px;background:var(--ink);color:#fff;border-radius:4px;padding:1px 7px;vertical-align:middle}
+.tc{background:#fff;border:2px solid var(--line);border-radius:8px;padding:12px 14px;font-size:16px}
+.tcrow{display:flex;justify-content:space-between;font-family:Montserrat;font-weight:800;font-size:12px;letter-spacing:.1em;color:var(--red-dk);margin-bottom:6px}
+
+svg.shot{display:block;width:100%;height:auto;border-radius:6px;background:#ddd}
+.shotwrap{max-width:520px;margin:6px auto 0}
+.wmt{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.wmt figure{margin:0}.wmt figcaption{font-size:13px;margin-top:4px;line-height:1.3}
+.shotgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+.shotcard{margin:0;background:var(--sand);border-radius:10px;padding:8px}
+.shotcard figcaption{display:flex;gap:10px;align-items:flex-start;font-size:14px;margin-top:8px;line-height:1.4}
+.big-l{font-family:Montserrat;font-weight:900;font-size:28px;color:var(--red);line-height:1;flex:none;width:26px}
+.shotopts{grid-template-columns:repeat(auto-fill,minmax(140px,1fr))}
+.planrow{display:flex;gap:10px;align-items:flex-start}
+.planrow>div{flex:1;min-width:0}
+.pl{flex:none;width:30px;height:30px;border-radius:50%;background:var(--red);color:#fff;font-family:Montserrat;font-weight:900;font-size:14px;display:flex;align-items:center;justify-content:center;margin-top:2px}
+@media (max-width:480px){.wmt{grid-template-columns:1fr 1fr 1fr;gap:6px}.wmt figcaption{font-size:11px}.shotopts{grid-template-columns:1fr 1fr}}
+
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.stats>div{background:var(--ink);color:#fff;border-radius:8px;padding:10px;text-align:center}
+.stats .kv{display:block;font-family:Montserrat;font-weight:700;font-size:10px;letter-spacing:.12em;text-transform:uppercase;opacity:.75}
+.stats .sv{display:block;font-family:Montserrat;font-weight:900;font-size:17px;color:#fff;margin-top:2px}
+ol.rulelist{padding-left:22px;display:grid;gap:6px;font-size:16px}
+ol.rulelist li::marker{font-family:Montserrat;font-weight:800;color:var(--red)}
+.checks.one-col{grid-template-columns:1fr}
+@media (max-width:480px){.stats{grid-template-columns:1fr 1fr}}
+
+dl.facts{display:grid;grid-template-columns:auto 1fr;gap:2px 10px;margin-top:8px;font-size:14px}
+dl.facts dt{font-family:Montserrat;font-weight:800;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--red-dk);padding-top:2px}
+dl.facts dd{margin:0}
+select.inp{appearance:auto;min-height:48px}
+
+/* done */
+.score{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.big{font-family:Montserrat;font-weight:900;font-size:56px;color:var(--red);line-height:1}
+.dark{background:var(--ink);color:#fff;border-radius:10px;padding:18px}
+.dark .tag{color:#ff8d8d}
+.dark .who{font-family:Montserrat;font-weight:800;font-size:22px;margin-top:4px}
+.dark .row{display:flex;justify-content:space-between;gap:12px;border-top:1px solid #3a3a40;padding-top:8px;margin-top:8px;font-size:15px}
+
+.passwrap{display:flex;flex-direction:column;align-items:center;gap:12px}
+.pass-img{width:100%;max-width:340px;display:block;filter:drop-shadow(0 8px 18px rgba(30,30,33,.25))}
+.passwrap .btn{width:100%;max-width:340px}
+
+footer{background:var(--ink);color:#fff;padding:12px 16px;font-family:Montserrat;font-size:11px;font-weight:600;letter-spacing:.06em}
+footer .in{max-width:760px;margin:0 auto;display:flex;align-items:center;gap:14px}
+footer .num{font-weight:900;font-size:22px;color:var(--red-br);line-height:1}
+footer .doc{flex:1;text-transform:uppercase}
+
+@media (max-width:480px){
+  .opts.two{grid-template-columns:1fr}
+  .nav .btn{flex:1}
+  .nav .spacer{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+@media print{.prog,.nav,.say-btn{display:none!important}}
+</style>
+</head>
+<body>
+
+<header class="band">
+  <div class="band-in">
+    <div class="kicker">KHS Cougar News · 04 Story Packages</div>
+    <span class="chip">MICRO-LESSON 09</span>
+    <h1>One Focus</h1>
+    <div class="sub">Focus sentence · noun, verb, noun</div>
+  </div>
+</header>
+
+<nav class="prog" aria-label="Progress">
+  <div class="prog-in" id="prog"></div>
+</nav>
+
+<main id="app" tabindex="-1"></main>
+
+<footer>
+  <div class="in"><span class="num">04</span><span class="doc">Based on News – Guide + Feature – Guide</span><span>~7 min</span></div>
+</footer>
+
+<script>
+(function(){
+"use strict";
+
+/* ---------- content (from News – Guide focus sentence, Feature – Guide §1 Find the focus, Story Pitch – Template) ---------- */
+const QUIZ = {
+  sent: { n:2, h:"Pick the focus sentence", intro:"News and sports: who is doing what, and why should students care? Pick the strongest one.", lbl:"Story", one:true, items:[
+    {stem:"A story about the cafeteria", a:1, opts:[
+      {k:0,l:"The cafeteria.",e:"Topic"},
+      {k:1,l:"The cafeteria adds a grab-and-go line Monday, so students can get their food faster and have more time to eat."},
+      {k:2,l:"Lunch is really important, and everyone should care about it.",e:"No who or what"}],
+     why:"It names who (the cafeteria), what (adds a grab-and-go line), when (Monday) and why students care (more time to eat)."},
+    {stem:"A story about senior events", a:2, opts:[
+      {k:0,l:"Seniors are upset.",e:"No action, no why"},
+      {k:1,l:"Senior events are a big part of senior year at Kempner and across the country.",e:"Too big"},
+      {k:2,l:"Student council moves senior sunrise to the football field, and seniors have until Friday to sign up."}],
+     why:"A person, an action, and a reason students care now: a Friday deadline."},
+    {stem:"A sports story about volleyball", a:0, opts:[
+      {k:0,l:"Nine seniors play their last home volleyball game Thursday, and students can pack the gym for senior night."},
+      {k:1,l:"Volleyball.",e:"Topic"},
+      {k:2,l:"The volleyball team is good.",e:"No action, no why"}],
+     why:"Who (nine seniors), what (last home game), when (Thursday) and why students care (they can be there)."},
+    {stem:"A story about testing week", a:1, opts:[
+      {k:0,l:"This story is about testing, the bell schedule, lunch, parking and hall passes.",e:"Too many points"},
+      {k:1,l:"Testing week changes the bell schedule Monday through Thursday, so students need to know their new lunch times."},
+      {k:2,l:"Testing is stressful.",e:"No who, no action"}],
+     why:"A news story has room for one point. This one has a who, a change and a reason students care."}]},
+  stmt: { n:3, h:"Noun · verb · noun", intro:"Features: write the focus in 3 words, noun, verb, noun. Pick the best focus statement for each story.", lbl:"Feature", one:true, items:[
+    {stem:"Freshmen who never played an instrument joined drumline this year and now perform at every game.", a:1, opts:[
+      {k:0,l:"Drumline",e:"Topic"},{k:1,l:"Freshmen join drumline"},{k:2,l:"The drumline is a group that plays at football games and pep rallies",e:"Not 3 words"}],
+     why:"Noun (freshmen), verb (join), noun (drumline). It says who did what."},
+    {stem:"The art club paints a mural to cover graffiti in the B hall.", a:0, opts:[
+      {k:0,l:"Artists cover graffiti"},{k:1,l:"The art club",e:"Topic"},{k:2,l:"Art club paints a big mural in the B hall this week",e:"Not 3 words"}],
+     why:"3 words that say who did what. Everything in the story serves them."},
+    {stem:"Students who work night shifts still make it to first period.", a:2, opts:[
+      {k:0,l:"Jobs",e:"Topic"},{k:1,l:"Working is hard for students who also have school",e:"Not 3 words"},{k:2,l:"Students balance jobs"}],
+     why:"Noun, verb, noun. Short enough to check every shot and bite against."},
+    {stem:"A culinary student cooks dinner every night for her younger brothers.", a:1, opts:[
+      {k:0,l:"Cooking is a skill everyone should learn",e:"An opinion"},{k:1,l:"Sister feeds brothers"},{k:2,l:"Culinary",e:"Topic"}],
+     why:"Who (sister), did what (feeds), to whom (brothers)."}]},
+  keep: { n:4, h:"Keep it or cut it?", intro:"Focus: \"Garden feeds cafeteria.\" A question, shot or bite that doesn't serve those 3 words comes out.", lbl:"Piece", two:true,
+    opts:[{k:"keep",l:"Keep it",e:"Serves the focus"},{k:"cut",l:"Cut it",e:"Off focus"}], items:[
+    {stem:"Shot: tight of students pulling carrots out of the garden bed.", a:"keep", why:"It shows the garden making food. That serves the focus."},
+    {stem:"Bite: the garden club president talks about her college plans.", a:"cut", why:"Interesting, but it's not about the garden feeding the cafeteria."},
+    {stem:"Question: \"How does the food get from the garden to the lunch line?\"", a:"keep", why:"That question gets right at \"feeds cafeteria.\""},
+    {stem:"Shot: the football team practicing next to the garden.", a:"cut", why:"It's near the garden, but it doesn't serve the 3 words."},
+    {stem:"Bite: cafeteria manager says, \"Kids actually eat the salad when they know who grew it.\"", a:"keep", why:"A feeling, and it's exactly about the garden feeding the cafeteria."},
+    {stem:"Shot: wide of the sign in front of the school.", a:"cut", why:"Every story could use this shot. It doesn't serve this focus."}]}
+};
+
+const WORDS = [
+  ["topic","A subject, like \"the robotics team.\""],
+  ["focus","The one story you tell about the topic."],
+  ["focus sentence","News and sports: one sentence. Who is doing what, and why students care."],
+  ["focus statement","Features: 3 words (noun, verb, noun) that say who did what."],
+  ["noun / verb","A person, place or thing / an action word."]
+];
+
+/* ---------- state ---------- */
+const ORDER_Q = ["sent","stmt","keep"];
+const STEPS = ["Start","Focus sentence","Noun · verb · noun","Keep or cut?","Your turn","Done"];
+const S = {step:0, idx:{}, ans:{}, mine:{type:"news",who:"",what:"",why:"",n1:"",v:"",n2:""}, name:""};
+const KEY = "khscn-ml-09";
+function load(){ try{ const d=JSON.parse(localStorage.getItem(KEY)||"{}"); if(d.lang) S.lang=d.lang; if(d.name) S.name=d.name;
+  if(!S.name){ for(const k of ["khscn-ml-08","khscn-ml-07","khscn-ml-06","khscn-ml-05","khscn-ml-04","khscn-ml-03","khscn-ml-02","khscn-ml-01"]){ const o=JSON.parse(localStorage.getItem(k)||"{}"); if(o.name){S.name=o.name;break;} } } }catch(e){} S.lang=S.lang||{}; }
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify({lang:S.lang,name:S.name})); }catch(e){} }
+load();
+ORDER_Q.forEach(k=>{S.idx[k]=0;S.ans[k]=[];});
+
+/* ---------- helpers ---------- */
+const app = document.getElementById("app");
+const esc = s => String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const canSpeak = "speechSynthesis" in window;
+function speak(t){ if(!canSpeak) return; try{ speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(t); u.rate=.92; speechSynthesis.speak(u);}catch(e){} }
+const sayBtn = t => canSpeak ? `<button class="say-btn" data-say="${esc(t)}" aria-label="Listen"><span aria-hidden="true">🔊</span> Listen</button>` : "";
+function go(n){ if(canSpeak) speechSynthesis.cancel(); S.step=n; render(); window.scrollTo({top:0}); app.focus({preventScroll:true}); }
+function renderProg(){
+  document.getElementById("prog").innerHTML =
+    STEPS.map((_,i)=>`<span class="seg ${i<S.step?"done":i===S.step?"now":""}"></span>`).join("") +
+    `<span class="lbl">${S.step+1}/${STEPS.length} · ${esc(STEPS[S.step])}</span>`;
+}
+function quizScreen(key, stepNo){
+  const Q=QUIZ[key], i=S.idx[key], it=Q.items[i], ans=S.ans[key][i], has=ans!==undefined;
+  const opts=it.opts||Q.opts, right=has&&ans===it.a;
+  return `
+  <h2><span class="n">${Q.n}</span>${esc(Q.h)}</h2>
+  <p>${esc(Q.intro)}</p>
+  <div class="q" style="margin-top:14px">
+    <div class="qn">${Q.lbl} ${i+1} of ${Q.items.length}</div>
+    <p class="stem">${esc(it.stem)} ${sayBtn(it.stem)}</p>
+    <div class="opts ${Q.one?"one":Q.two?"two":""}">${opts.map(o=>{
+      let c=""; if(has){ c = o.k===it.a?"right":(o.k===ans?"wrong":"dim"); }
+      const lab = Q.one ? (has&&o.e?`<span class="e">${esc(o.e)}</span>`:"") : (o.e?`<span class="e">${esc(o.e)}</span>`:"");
+      return `<button class="opt ${Q.one?"pitch":""} ${c}" data-q="${key}" data-k="${o.k}" ${has?"disabled":""}>${lab}${esc(o.l)}</button>`;}).join("")}
+    </div>
+    <div class="fb ${has?(right?"ok show":"no show"):""}" aria-live="polite">
+      ${has?`<span class="v">${right?"Yes.":"Not this one."}</span>${esc(it.why)}`:""}
+    </div>
+  </div>
+  <div class="nav"><button class="btn ghost" data-go="${stepNo-1}">Back</button><span class="spacer"></span>
+    ${has?`<button class="btn" data-nextq="${key}" data-step="${stepNo}">${i<Q.items.length-1?"Next":"Next step"}</button>`:""}</div>`;
+}
+
+/* ---------- screens ---------- */
+const screens = [
+/* 0 start */
+() => `
+  <div class="stack">
+    <h2><span class="n">1</span>Topic or focus?</h2>
+    <p class="lead">A <b>topic</b> is a subject. A <b>focus</b> is the one story you tell about it. ${sayBtn("A topic is a subject. A focus is the one story you tell about it.")}</p>
+    <div class="cols2 eq">
+      <div class="box"><span class="tag">News + sports · focus sentence</span>
+        <b>Who is doing what, and why should students care?</b>
+        <p class="muted" style="margin-top:6px">"___ is ___ so that ___. Students should care because ___."</p></div>
+      <div class="box"><span class="tag">Features · focus statement</span>
+        <b>3 words: noun, verb, noun.</b>
+        <p class="muted" style="margin-top:6px">"Our focus is: ___ (noun) ___ (verb) ___ (noun)."</p></div>
+    </div>
+    <table>
+      <thead><tr><th>Topic (too big)</th><th>Focus</th></tr></thead>
+      <tbody>
+        <tr><td>The robotics team</td><td class="k">Rookies rebuild robot</td></tr>
+        <tr><td>The school garden</td><td class="k">Garden feeds cafeteria</td></tr>
+        <tr><td>Drumline</td><td class="k">Seniors teach freshmen</td></tr>
+      </tbody>
+    </table>
+    <div class="callout"><span class="tag">Why it matters</span>A question, shot or bite that doesn't serve your focus comes out. ${sayBtn("A question, shot or bite that doesn't serve your focus comes out.")}</div>
+    <details>
+      <summary>Words to know</summary>
+      <table>
+        <thead><tr><th>Word</th><th>What it means</th><th>In my language</th></tr></thead>
+        <tbody>${WORDS.map(([w,m],i)=>`<tr><td class="k">${esc(w)}</td><td>${esc(m)}</td><td><input data-lang="${i}" aria-label="${esc(w)} in my language" value="${esc(S.lang[i]||"")}"></td></tr>`).join("")}</tbody>
+      </table>
+    </details>
+  </div>
+  <div class="nav"><span class="spacer"></span><button class="btn" data-go="1">Start</button></div>`,
+() => quizScreen("sent",1),
+() => quizScreen("stmt",2),
+() => quizScreen("keep",3),
+
+/* 4 your turn */
+() => {
+  const m=S.mine, feat=m.type==="feat";
+  return `
+  <h2><span class="n">5</span>Your turn</h2>
+  <p>Write the focus for your next story.</p>
+  <div class="stack" style="margin-top:14px">
+    <div class="opts two" style="margin-top:0">
+      <button class="opt ${!feat?"right":""}" data-type="news" aria-pressed="${!feat}"><span class="e">Focus sentence</span>News or sports</button>
+      <button class="opt ${feat?"right":""}" data-type="feat" aria-pressed="${feat}"><span class="e">Focus statement</span>Feature</button>
+    </div>
+    ${feat?`
+      <div class="frame">
+        <span>Our focus is:</span>
+        <input class="inp" id="n1" maxlength="30" aria-label="Noun" placeholder="noun" value="${esc(m.n1)}">
+        <input class="inp" id="v" maxlength="30" aria-label="Verb" placeholder="verb" value="${esc(m.v)}">
+        <input class="inp" id="n2" maxlength="30" aria-label="Noun" placeholder="noun" value="${esc(m.n2)}">
+      </div>`:`
+      <div class="frame">
+        <input class="inp" id="who" maxlength="60" aria-label="Who" placeholder="who" value="${esc(m.who)}">
+        <input class="inp" id="what" maxlength="120" aria-label="Is or are doing or facing what" placeholder="is/are doing or facing what" value="${esc(m.what)}">
+        <span>, and students care because</span>
+        <input class="inp" id="why" maxlength="120" aria-label="Why it matters now" placeholder="why it matters now" value="${esc(m.why)}">
+      </div>`}
+    <div id="meter"></div>
+  </div>
+  <div class="nav"><button class="btn ghost" data-go="3">Back</button><span class="spacer"></span><button class="btn" data-go="5">Finish</button></div>`;
+},
+
+/* 5 done */
+() => {
+  let got=0, tot=0;
+  ORDER_Q.forEach(k=>{ const it=QUIZ[k].items; got+=it.filter((q,i)=>S.ans[k][i]===q.a).length; tot+=it.length; });
+  S.result={got,tot,when:S.result&&S.result.got===got?S.result.when:new Date()};
+  const f=focusText();
+  return `
+  <h2><span class="n">6</span>Done</h2>
+  <div class="score"><span class="big">${got}/${tot}</span><span class="muted">first tries correct</span></div>
+  <div class="stack" style="margin-top:16px">
+    <div><label class="fld" for="nm">Your name</label>
+      <input class="inp" id="nm" maxlength="60" value="${esc(S.name)}" placeholder="First and last name"></div>
+    <div class="passwrap">
+      <img id="passImg" class="pass-img" alt="Your press pass">
+      <button class="btn" id="dlPass" ${S.name.trim()?"":"disabled"}>${S.name.trim()?"Download press pass":"Type your name first"}</button>
+      <a class="btn ghost" href="https://khspress.fillout.com/certificate-upload" target="_blank" rel="noopener" style="text-decoration:none">Submit press pass ↗</a>
+      <p class="muted" style="text-align:center">Download it first, then upload the PNG on the submit form.</p>
+    </div>
+    ${f?`<div class="box"><span class="tag">My focus</span><div class="pitchline">${esc(f)}</div><button class="btn ghost" data-copy style="margin-top:10px;width:100%">Copy my focus</button></div>`:""}
+    <div class="callout"><span class="tag">Remember</span>Write your focus first. Then check every question, shot and bite against it. If it doesn't serve the focus, it comes out.</div>
+  </div>
+  <div class="nav"><button class="btn ghost" data-restart>Try again</button><span class="spacer"></span><button class="btn ghost" data-go="4">Back</button></div>`;
+}
+];
+
+function focusText(){
+  const m=S.mine;
+  if(m.type==="feat"){ const w=[m.n1,m.v,m.n2].map(s=>s.trim()); return w.some(Boolean)?`Our focus is: ${w.map(x=>x||"___").join(" ")}`:""; }
+  if(!m.who.trim()&&!m.what.trim()) return "";
+  return `${m.who.trim()||"___"} ${m.what.trim()||"___"}, and students care because ${m.why.trim().replace(/^because\s+/i,"")||"___"}.`;
+}
+function meter(){
+  const el=document.getElementById("meter"); if(!el) return;
+  const m=S.mine; let cls="wait", msg;
+  if(m.type==="feat"){
+    const w=[m.n1,m.v,m.n2].map(s=>s.trim()), long=w.some(x=>x.split(/\s+/).length>2);
+    if(w.some(x=>!x)) msg="Fill all three: noun, verb, noun.";
+    else if(long) msg="Keep each box to one word if you can. The whole focus is 3 words.";
+    else if(/^(is|are|was|were|be|has|have)$/i.test(w[1])) msg=`"${esc(w[1])}" isn't an action. Use a verb someone does: rebuild, feeds, teach.`;
+    else { cls="go"; msg="<b>That's a focus statement.</b> Check every question, shot and bite against these 3 words."; }
+  } else {
+    if(!m.who.trim()) msg="Who is the story about?";
+    else if(!m.what.trim()) msg="What are they doing or facing?";
+    else if(/^\s*\w+ing\b/i.test(m.what)) msg="Start the action with \"is\" or \"are\". Example: \"are hunting for new spots\".";
+    else if(!m.why.trim()) msg="Why should students care now?";
+    else { cls="go"; msg="<b>That's a focus sentence.</b> Put it on your Story Pitch – Template."; }
+  }
+  const f=focusText();
+  el.innerHTML=`<div class="meter ${cls}" aria-live="polite">${msg}</div>${f?`<div class="pitchline">${esc(f)}</div>`:""}`;
+}
+function copyDraft(btn){
+  const t=focusText(), done=()=>{ btn.textContent="Copied"; setTimeout(()=>btn.textContent="Copy my focus",1800); };
+  try{ if(navigator.clipboard&&window.isSecureContext){ navigator.clipboard.writeText(t).then(done,fallback); return; } }catch(e){}
+  fallback();
+  function fallback(){ const ta=document.createElement("textarea"); ta.value=t; ta.style.position="fixed"; ta.style.opacity="0"; document.body.appendChild(ta); ta.select(); try{document.execCommand("copy"); done();}catch(e){} ta.remove(); }
+}
+
+/* ---------- press pass PNG ---------- */
+const MODULE = {num:"09", title:"One Focus", skill:"Focus sentence · noun, verb, noun"};
+function rr(c,x,y,w,h,r){c.beginPath();c.moveTo(x+r,y);c.arcTo(x+w,y,x+w,y+h,r);c.arcTo(x+w,y+h,x,y+h,r);c.arcTo(x,y+h,x,y,r);c.arcTo(x,y,x+w,y,r);c.closePath();}
+function track(c,t,x,y,sp,align){ // letter-spaced text
+  const w=[...t].reduce((a,ch)=>a+c.measureText(ch).width+sp,-sp);
+  let cx = align==="center"? x-w/2 : align==="right"? x-w : x;
+  c.textAlign="left"; for(const ch of t){c.fillText(ch,cx,y);cx+=c.measureText(ch).width+sp;}
+}
+function passId(name,when,got){
+  let h=2166136261; for(const ch of name+"|"+when.toISOString()+"|"+got+"|"+MODULE.num){h^=ch.charCodeAt(0);h=Math.imul(h,16777619);}
+  const s=(h>>>0).toString(36).toUpperCase().padStart(7,"0"); return s.slice(0,4)+"-"+s.slice(4,7);
+}
+let fontsReady=null;
+function loadFonts(){
+  if(!fontsReady){ fontsReady = (document.fonts? Promise.all(["900 40px Montserrat","800 40px Montserrat","700 40px Montserrat","400 40px Lexend","600 40px Lexend"].map(f=>document.fonts.load(f).catch(()=>{}))) : Promise.resolve()).then(()=>new Promise(r=>setTimeout(r,0))); }
+  return fontsReady;
+}
+function drawPass(){
+  const W=1080,H=1500,R=56, c=document.createElement("canvas"); c.width=W; c.height=H; const x=c.getContext("2d");
+  const {got,tot,when}=S.result, name=(S.name.trim()||"Your name");
+  const MS="Montserrat, Arial Black, sans-serif", LX="Lexend, Arial, sans-serif";
+  // card
+  rr(x,0,0,W,H,R); x.save(); x.clip();
+  x.fillStyle="#fff"; x.fillRect(0,0,W,H);
+  const g=x.createLinearGradient(0,0,0,560); g.addColorStop(0,"#6F1A1D"); g.addColorStop(.55,"#A61E1E"); g.addColorStop(1,"#DD2A2A");
+  x.fillStyle=g; x.fillRect(0,0,W,560);
+  // subtle diagonal stripes in band
+  x.globalAlpha=.06; x.fillStyle="#fff"; for(let i=-600;i<W;i+=70){x.beginPath();x.moveTo(i,560);x.lineTo(i+560,0);x.lineTo(i+590,0);x.lineTo(i+30,560);x.fill();} x.globalAlpha=1;
+  // footer
+  x.fillStyle="#1E1E21"; x.fillRect(0,H-150,W,150);
+  x.restore();
+  // lanyard slot (punch out)
+  x.save(); x.globalCompositeOperation="destination-out"; rr(x,W/2-110,46,220,38,19); x.fill(); x.restore();
+  // band text
+  x.fillStyle="#fff"; x.globalAlpha=.9; x.font=`700 30px ${MS}`; track(x,"KHS COUGAR NEWS",W/2,150,9,"center"); x.globalAlpha=1;
+  x.font=`900 200px ${MS}`; x.textAlign="center";
+  x.fillStyle="rgba(60,20,20,.55)"; x.fillText("PRESS",W/2+6,346); x.fillText("PASS",W/2+6,516);
+  x.fillStyle="#fff"; x.fillText("PRESS",W/2,340); x.fillText("PASS",W/2,510);
+  // body
+  const L=90;
+  x.fillStyle="#4A4A50"; x.font=`800 28px ${MS}`; track(x,"ISSUED TO",L,650,6);
+  let fs=96; x.font=`800 ${fs}px ${MS}`; while(x.measureText(name.toUpperCase()).width>W-2*L && fs>40){fs-=4; x.font=`800 ${fs}px ${MS}`;}
+  x.fillStyle="#1E1E21"; x.textAlign="left"; x.fillText(name.toUpperCase(),L,650+20+fs*.85);
+  x.fillStyle="#E6DCDA"; x.fillRect(L,800,W-2*L,4);
+  x.fillStyle="#4A4A50"; x.font=`800 28px ${MS}`; track(x,"CLEARED IN · MICRO-LESSON "+MODULE.num,L,872,6);
+  x.fillStyle="#6F1A1D"; let tf=62; x.font=`800 ${tf}px ${MS}`; while(x.measureText(MODULE.title.toUpperCase()).width>W-2*L && tf>36){tf-=2; x.font=`800 ${tf}px ${MS}`;} x.fillText(MODULE.title.toUpperCase(),L,948);
+  x.fillStyle="#4A4A50"; x.font=`400 34px ${LX}`; x.fillText(MODULE.skill,L,1002);
+  // score + date
+  x.fillStyle="#4A4A50"; x.font=`800 28px ${MS}`; track(x,"SCORE",L,1100,6); track(x,"DATE",430,1100,6);
+  x.fillStyle="#B3201F"; x.font=`900 92px ${MS}`; x.fillText(`${got}/${tot}`,L,1195);
+  x.fillStyle="#1E1E21"; x.font=`800 50px ${MS}`; x.fillText(when.toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"}),430,1185);
+  x.fillStyle="#4A4A50"; x.font=`400 30px ${LX}`; x.fillText(when.toLocaleTimeString("en-US",{hour:"numeric",minute:"2-digit"}),430,1232);
+  // stamp
+  x.save(); x.translate(905,1160); x.rotate(-.2); x.strokeStyle="#B3201F"; x.fillStyle="#B3201F"; x.globalAlpha=.9;
+  x.lineWidth=7; x.beginPath(); x.arc(0,0,105,0,Math.PI*2); x.stroke(); x.lineWidth=3; x.beginPath(); x.arc(0,0,88,0,Math.PI*2); x.stroke();
+  x.font=`900 34px ${MS}`; x.textAlign="center"; x.fillText("ON",0,-14); x.fillText("AIR",0,26); x.font=`800 16px ${MS}`; x.fillText("★ CLEARED ★",0,58); x.restore();
+  // footer text
+  x.textAlign="left"; x.fillStyle="#DD2A2A"; x.font=`900 72px ${MS}`; x.fillText(MODULE.num,L,H-50);
+  x.fillStyle="#fff"; x.font=`700 26px ${MS}`; track(x,"KHS COUGAR NEWS · MICRO-LEARNING",L+120,H-84,4);
+  x.globalAlpha=.7; x.font=`600 24px ${MS}`; track(x,"PASS ID "+passId(name,when,got),L+120,H-48,4); x.globalAlpha=1;
+  return c;
+}
+function updatePass(){
+  const img=document.getElementById("passImg"); if(!img) return;
+  loadFonts().then(()=>{ try{ img.src=drawPass().toDataURL("image/png"); }catch(e){} });
+}
+function downloadPass(){
+  loadFonts().then(()=>{
+    const c=drawPass(), slug=(S.name.trim()||"student").replace(/[^a-z0-9]+/gi,"-").replace(/^-|-$/g,"");
+    const fn=`Press-Pass-${MODULE.num}-${slug}.png`;
+    c.toBlob(b=>{
+      if(!b) return;
+      const url=URL.createObjectURL(b), a=document.createElement("a");
+      a.href=url; a.download=fn; document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(()=>URL.revokeObjectURL(url),4000);
+    },"image/png");
+  });
+}
+
+function render(){
+  renderProg();
+  app.innerHTML = screens[S.step]();
+  if(S.step===4) meter();
+  if(S.step===5) updatePass();
+}
+
+/* ---------- events ---------- */
+app.addEventListener("click", e=>{
+  const t=e.target.closest("button"); if(!t) return;
+  if(t.dataset.say!==undefined){ speak(t.dataset.say); return; }
+  if(t.id==="dlPass"){ downloadPass(); return; }
+  if(t.hasAttribute("data-copy")){ copyDraft(t); return; }
+  if(t.dataset.go!==undefined){ go(+t.dataset.go); return; }
+  if(t.dataset.type){ S.mine.type=t.dataset.type; render(); return; }
+  if(t.dataset.q){ const k=t.dataset.q, raw=t.dataset.k; S.ans[k][S.idx[k]] = isNaN(+raw)?raw:+raw; render(); return; }
+  if(t.dataset.nextq){ const k=t.dataset.nextq; if(S.idx[k]<QUIZ[k].items.length-1){ S.idx[k]++; render(); window.scrollTo({top:0}); app.focus(); } else go(+t.dataset.step+1); return; }
+  if(t.hasAttribute("data-restart")){ ORDER_Q.forEach(k=>{S.idx[k]=0;S.ans[k]=[];}); S.result=null; go(0); }
+});
+app.addEventListener("input", e=>{
+  const t=e.target;
+  if(t.dataset.lang!==undefined){ S.lang[t.dataset.lang]=t.value; save(); return; }
+  if(["who","what","why","n1","v","n2"].includes(t.id)){ S.mine[t.id]=t.value; meter(); return; }
+  if(t.id==="nm"){ S.name=t.value; save(); const b=document.getElementById("dlPass"); if(b){ const ok=!!t.value.trim(); b.disabled=!ok; b.textContent=ok?"Download press pass":"Type your name first"; }
+    clearTimeout(S._pt); S._pt=setTimeout(updatePass,200); }
+});
+
+render();
+})();
+</script>
+</body>
+</html>

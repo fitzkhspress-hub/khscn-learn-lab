@@ -1,0 +1,617 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WALLDO Spotter</title>
+<meta name="description" content="KHS Cougar News micro-lesson: shoot in sequences and add variety with WALLDO.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;700&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --red-dk:#6F1A1D; --red:#B3201F; --red-br:#DD2A2A; --ink:#1E1E21; --ink2:#4A4A50;
+  --line:#E6DCDA; --tint:#FBEFEE; --sand:#F6F2F0; --link:#1A5FB4; --ok:#1d7a3a; --ok-bg:#E8F4EC;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font-family:Lexend,system-ui,sans-serif;color:var(--ink);background:#fff;font-size:17px;line-height:1.55;min-height:100vh;display:flex;flex-direction:column}
+button{font:inherit;color:inherit;cursor:pointer}
+input{font:inherit}
+:focus-visible{outline:3px solid var(--link);outline-offset:2px}
+
+/* header band, after switcher.png */
+.band{background:linear-gradient(180deg,var(--red-dk) 0%,#A61E1E 55%,var(--red-br) 100%);color:#fff;padding:22px 16px 18px}
+.band-in{max-width:760px;margin:0 auto;position:relative}
+.kicker{font-family:Montserrat;font-weight:700;font-size:11px;letter-spacing:.2em;text-transform:uppercase;opacity:.88;padding-right:150px}
+.band h1{font-family:Montserrat;font-weight:900;font-size:clamp(28px,7vw,44px);line-height:1.02;text-transform:uppercase;margin-top:6px;text-shadow:2px 2px 0 rgba(60,20,20,.55)}
+.band .sub{font-weight:300;font-size:16px;margin-top:6px;opacity:.95}
+.chip{position:absolute;top:-2px;right:0;background:#fff;color:var(--red-dk);font-family:Montserrat;font-weight:800;font-size:10px;letter-spacing:.14em;padding:4px 9px;border-radius:3px}
+
+/* progress */
+.prog{background:var(--ink);color:#fff;padding:10px 16px}
+.prog-in{max-width:760px;margin:0 auto;display:flex;gap:6px;align-items:center}
+.prog .seg{flex:1;height:6px;border-radius:3px;background:#46464c}
+.prog .seg.done{background:var(--red-br)}
+.prog .seg.now{background:#fff}
+.prog .lbl{font-family:Montserrat;font-weight:700;font-size:11px;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap;margin-left:8px;opacity:.85}
+
+main{flex:1;width:100%;max-width:760px;margin:0 auto;padding:24px 16px 32px}
+h2{font-family:Montserrat;font-weight:800;font-size:20px;color:var(--red-dk);text-transform:uppercase;letter-spacing:.05em;display:flex;align-items:center;gap:10px;margin-bottom:12px}
+h2 .n{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;background:var(--red);color:#fff;font-size:15px;letter-spacing:0;flex:none}
+h3{font-family:Montserrat;font-weight:800;font-size:16px;margin-bottom:4px}
+p+p{margin-top:10px}
+.lead{font-size:18px}
+b{font-weight:600}
+.muted{color:var(--ink2);font-size:15px}
+
+.box{background:var(--sand);border-radius:8px;padding:14px 16px}
+.callout{background:var(--tint);border-left:5px solid var(--red);border-radius:0 8px 8px 0;padding:12px 16px;margin:16px 0}
+.tag{font-family:Montserrat;font-weight:800;font-size:11px;letter-spacing:.16em;color:var(--red-dk);text-transform:uppercase;display:block;margin-bottom:2px}
+.stack>*+*{margin-top:14px}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:10px 22px;border-radius:8px;border:0;background:var(--red);color:#fff;font-family:Montserrat;font-weight:800;font-size:15px;letter-spacing:.06em;text-transform:uppercase}
+.btn:hover{background:var(--red-dk)}
+.btn[disabled]{background:#c9c3c1;cursor:not-allowed}
+.btn.ghost{background:#fff;color:var(--red-dk);border:2px solid var(--red)}
+.btn.ghost:hover{background:var(--tint)}
+.nav{display:flex;justify-content:space-between;gap:12px;margin-top:24px;flex-wrap:wrap}
+.nav .spacer{flex:1}
+.say-btn{border:1.5px solid var(--line);background:#fff;border-radius:20px;padding:3px 10px;font-size:13px;font-weight:600;color:var(--ink2);display:inline-flex;align-items:center;gap:5px;vertical-align:middle}
+.say-btn:hover{border-color:var(--red);color:var(--red-dk)}
+
+/* value cards */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px}
+.vcard{text-align:left;background:var(--sand);border:2px solid transparent;border-radius:10px;padding:14px;min-height:150px;display:flex;flex-direction:column;gap:6px;transition:border-color .15s,background .15s}
+.vcard:hover{border-color:var(--line)}
+.vcard .easy{font-family:Montserrat;font-weight:900;font-size:12px;letter-spacing:.14em;color:var(--red)}
+.vcard .nm{font-family:Montserrat;font-weight:800;font-size:18px}
+.vcard .hint{font-size:13px;color:var(--ink2);margin-top:auto}
+.vcard .more{display:none;font-size:15px}
+.vcard.open{background:#fff;border-color:var(--red)}
+.vcard.open .more{display:block}
+.vcard.open .hint{display:none}
+.vcard .ex{color:var(--ink2);font-size:14px;margin-top:4px}
+.count{font-family:Montserrat;font-weight:800;font-size:13px;letter-spacing:.1em;color:var(--ink2);text-transform:uppercase;margin:14px 0 0}
+
+/* question */
+.q{background:var(--sand);border-radius:10px;padding:18px 18px 16px}
+.q .qn{font-family:Montserrat;font-weight:800;font-size:12px;letter-spacing:.14em;color:var(--ink2);text-transform:uppercase}
+.q .stem{font-size:19px;font-weight:600;margin:6px 0 4px}
+.opts{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-top:14px}
+.opts.two{grid-template-columns:1fr 1fr}
+.opts.one{grid-template-columns:1fr}
+.opt{text-align:left;background:#fff;border:2px solid var(--line);border-radius:8px;padding:10px 12px;min-height:48px;font-size:15px}
+.opt .e{display:block;font-family:Montserrat;font-weight:900;font-size:11px;letter-spacing:.12em;color:var(--red)}
+.opt:hover:not([disabled]){border-color:var(--red)}
+.opt[disabled]{cursor:default}
+.opt.right{border-color:var(--ok);background:var(--ok-bg)}
+.opt.wrong{border-color:var(--red);background:var(--tint)}
+.opt.dim{opacity:.55}
+.opt.pitch{font-size:16px;padding:14px}
+.opt.pitch b{font-family:Montserrat;font-weight:800;color:var(--red-dk);margin-right:6px}
+.fb{margin-top:14px;border-radius:8px;padding:12px 14px;display:none}
+.fb.show{display:block}
+.fb.ok{background:var(--ok-bg);border-left:5px solid var(--ok)}
+.fb.no{background:var(--tint);border-left:5px solid var(--red)}
+.fb .v{font-family:Montserrat;font-weight:900;font-size:12px;letter-spacing:.12em;text-transform:uppercase;display:block;margin-bottom:2px}
+.fb.ok .v{color:var(--ok)} .fb.no .v{color:var(--red)}
+.pills{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.pill{font-family:Montserrat;font-weight:800;font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding:3px 9px;border-radius:20px;background:var(--red);color:#fff}
+.pill.ink{background:var(--ink)}
+
+/* your turn */
+label.fld{display:block;font-weight:600;margin-bottom:6px}
+.inp{width:100%;border:2px solid var(--line);border-radius:8px;padding:12px;font-size:16px;background:#fff}
+.inp:focus{border-color:var(--red);outline:none}
+.checks{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px}
+.ck{display:flex;align-items:center;gap:10px;background:#fff;border:2px solid var(--line);border-radius:8px;padding:10px 12px;min-height:48px;cursor:pointer;font-size:15px}
+.ck input{width:20px;height:20px;accent-color:var(--red);flex:none}
+.ck:has(input:checked){border-color:var(--red);background:var(--tint)}
+.meter{margin-top:14px;border-radius:8px;padding:12px 14px;background:var(--sand)}
+.meter.go{background:var(--ok-bg);border-left:5px solid var(--ok)}
+.meter.wait{border-left:5px solid #b9b2b0}
+.pitchline{font-size:16px;background:#fff;border:2px dashed var(--line);border-radius:8px;padding:12px;margin-top:10px;white-space:pre-wrap}
+
+/* words to know */
+table{width:100%;border-collapse:collapse;font-size:15px}
+th{font-family:Montserrat;font-weight:800;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--red-dk);text-align:left;padding:8px;border-bottom:2px solid var(--red)}
+td{padding:8px;border-bottom:1px solid var(--line);vertical-align:top}
+td.k{font-family:Montserrat;font-weight:800;white-space:nowrap}
+td input{width:100%;min-width:90px;border:0;border-bottom:1.5px solid #9a9a9a;padding:4px 2px;font-size:15px;background:transparent}
+details{margin-top:18px}
+summary{font-family:Montserrat;font-weight:800;font-size:14px;letter-spacing:.1em;text-transform:uppercase;color:var(--red-dk);cursor:pointer;padding:6px 0;min-height:40px;display:flex;align-items:center}
+
+.walk{display:grid;gap:8px}
+.wk{text-align:left;width:100%;align-items:flex-start}
+.wk .box2{width:22px;height:22px;border:2px solid var(--red);border-radius:4px;flex:none;display:inline-flex;align-items:center;justify-content:center;font-weight:700;color:#fff;margin-top:2px}
+.wk.on{border-color:var(--red);background:var(--tint)}
+.wk.on .box2{background:var(--red)}
+.wk.right{border-color:var(--ok);background:var(--ok-bg)}
+.wk.wrong{border-color:var(--red);background:var(--tint)}
+.wk .why{display:block;font-size:14px;color:var(--ink2);margin-top:4px}
+.wk[disabled]{cursor:default}
+.write{border-bottom:1.5px solid #9a9a9a;padding:0 4px;font-weight:600}
+
+.cols2{display:grid;grid-template-columns:1fr 1.6fr;gap:10px}
+.stepf{display:flex;gap:12px;align-items:flex-start}
+.stepf>div{flex:1;min-width:0}
+.stepf .sn{flex:none;width:30px;height:30px;border-radius:50%;background:var(--ink);color:#fff;font-family:Montserrat;font-weight:800;font-size:14px;display:flex;align-items:center;justify-content:center;margin-top:2px}
+.stepf .fld{display:block;font-weight:600;margin-bottom:6px}
+.frame{display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center}
+.frame .inp{flex:1 1 180px;width:auto}
+.frame span{font-weight:600;color:var(--red-dk)}
+@media (max-width:480px){.cols2{grid-template-columns:1fr}}
+
+.cols2.eq{grid-template-columns:1fr 1fr}
+.good::before{content:"OPEN  ";font-family:Montserrat;font-weight:900;color:var(--ok);font-size:11px;letter-spacing:.1em}
+.bad::before{content:"YES/NO  ";font-family:Montserrat;font-weight:900;color:var(--red);font-size:11px;letter-spacing:.1em}
+.strike{text-decoration:line-through;text-decoration-color:var(--red);text-decoration-thickness:2px;color:var(--ink2)}
+ol.order{list-style:none;display:grid;gap:8px}
+.slot{display:flex;gap:10px;align-items:flex-start;background:#fff;border:2px solid var(--line);border-radius:8px;padding:10px 12px;min-height:48px;font-size:15px}
+.slot.empty{border-style:dashed;background:var(--sand)}
+.slot>span:nth-child(2){flex:1}
+.slot .sn{flex:none;width:26px;height:26px;border-radius:50%;background:var(--ink);color:#fff;font-family:Montserrat;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center}
+.slot.right{border-color:var(--ok);background:var(--ok-bg)}
+.slot.wrong{border-color:var(--red);background:var(--tint)}
+.slot .why{display:block;font-size:13px;color:var(--ink2);margin-top:4px}
+.undo{flex:none;border:1.5px solid var(--line);background:#fff;border-radius:20px;padding:2px 10px;font-size:13px;font-weight:600;color:var(--ink2)}
+.qcheck{font-size:14px;margin-top:6px;min-height:0}
+.qcheck.ok{color:var(--ok)} .qcheck.ok::before{content:"✓ "}
+.qcheck.no{color:var(--red)} .qcheck.no::before{content:"! "}
+@media (max-width:480px){.cols2.eq{grid-template-columns:1fr}}
+
+.rules{display:grid;gap:8px}
+.len{display:inline-block;font-family:Montserrat;font-weight:900;font-size:13px;background:var(--ink);color:#fff;border-radius:4px;padding:1px 7px;vertical-align:middle}
+.tc{background:#fff;border:2px solid var(--line);border-radius:8px;padding:12px 14px;font-size:16px}
+.tcrow{display:flex;justify-content:space-between;font-family:Montserrat;font-weight:800;font-size:12px;letter-spacing:.1em;color:var(--red-dk);margin-bottom:6px}
+
+svg.shot{display:block;width:100%;height:auto;border-radius:6px;background:#ddd}
+.shotwrap{max-width:520px;margin:6px auto 0}
+.wmt{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.wmt figure{margin:0}.wmt figcaption{font-size:13px;margin-top:4px;line-height:1.3}
+.shotgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+.shotcard{margin:0;background:var(--sand);border-radius:10px;padding:8px}
+.shotcard figcaption{display:flex;gap:10px;align-items:flex-start;font-size:14px;margin-top:8px;line-height:1.4}
+.big-l{font-family:Montserrat;font-weight:900;font-size:28px;color:var(--red);line-height:1;flex:none;width:26px}
+.shotopts{grid-template-columns:repeat(auto-fill,minmax(140px,1fr))}
+.planrow{display:flex;gap:10px;align-items:flex-start}
+.planrow>div{flex:1;min-width:0}
+.pl{flex:none;width:30px;height:30px;border-radius:50%;background:var(--red);color:#fff;font-family:Montserrat;font-weight:900;font-size:14px;display:flex;align-items:center;justify-content:center;margin-top:2px}
+@media (max-width:480px){.wmt{grid-template-columns:1fr 1fr 1fr;gap:6px}.wmt figcaption{font-size:11px}.shotopts{grid-template-columns:1fr 1fr}}
+
+/* done */
+.score{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.big{font-family:Montserrat;font-weight:900;font-size:56px;color:var(--red);line-height:1}
+.dark{background:var(--ink);color:#fff;border-radius:10px;padding:18px}
+.dark .tag{color:#ff8d8d}
+.dark .who{font-family:Montserrat;font-weight:800;font-size:22px;margin-top:4px}
+.dark .row{display:flex;justify-content:space-between;gap:12px;border-top:1px solid #3a3a40;padding-top:8px;margin-top:8px;font-size:15px}
+
+.passwrap{display:flex;flex-direction:column;align-items:center;gap:12px}
+.pass-img{width:100%;max-width:340px;display:block;filter:drop-shadow(0 8px 18px rgba(30,30,33,.25))}
+.passwrap .btn{width:100%;max-width:340px}
+
+footer{background:var(--ink);color:#fff;padding:12px 16px;font-family:Montserrat;font-size:11px;font-weight:600;letter-spacing:.06em}
+footer .in{max-width:760px;margin:0 auto;display:flex;align-items:center;gap:14px}
+footer .num{font-weight:900;font-size:22px;color:var(--red-br);line-height:1}
+footer .doc{flex:1;text-transform:uppercase}
+
+@media (max-width:480px){
+  .opts.two{grid-template-columns:1fr}
+  .nav .btn{flex:1}
+  .nav .spacer{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+@media print{.prog,.nav,.say-btn{display:none!important}}
+</style>
+</head>
+<body>
+
+<header class="band">
+  <div class="band-in">
+    <div class="kicker">KHS Cougar News · 03 Shooting</div>
+    <span class="chip">MICRO-LESSON 06</span>
+    <h1>WALLDO Spotter</h1>
+    <div class="sub">Wide · medium · tight, then WALLDO</div>
+  </div>
+</header>
+
+<nav class="prog" aria-label="Progress">
+  <div class="prog-in" id="prog"></div>
+</nav>
+
+<main id="app" tabindex="-1"></main>
+
+<footer>
+  <div class="in"><span class="num">03</span><span class="doc">Based on B-Roll – Guide</span><span>~9 min</span></div>
+</footer>
+
+<script>
+(function(){
+"use strict";
+
+/* ---------- content (from B-Roll – Guide §2 Shoot in sequences + §4 WALLDO) ---------- */
+
+/* ===== illustrated frames (16:9). Story: a student paints a hallway mural. ===== */
+const C = {wall:"#EFE6E2", wall2:"#E4D8D3", floor:"#B9A9A2", floor2:"#A8968E", ink:"#1E1E21", red:"#B3201F", red2:"#DD2A2A", blue:"#1A5FB4", yel:"#F2B33D", grn:"#2E8B57", skin:"#C68B59", skin2:"#A9704A", hair:"#2B1B14", shirt:"#1A5FB4", pants:"#2E2E35", locker:"#8C9AA8", locker2:"#7A8896"};
+const VF = `<g fill="none" stroke="#fff" stroke-width="2.5" opacity=".9">
+  <path d="M12 26V12H26M294 12H308V26M308 154V168H294M26 168H12V154"/></g>
+  <circle cx="22" cy="22" r="4" fill="${C.red2}"/><text x="30" y="26" font-family="Montserrat,Arial" font-weight="800" font-size="10" fill="#fff">REC</text>`;
+const frame = (inner,label) => `<svg class="shot" viewBox="0 0 320 180" role="img" aria-label="${label}"><defs><clipPath id="cp"><rect width="320" height="180" rx="6"/></clipPath><filter id="bl"><feGaussianBlur stdDeviation="3.2"/></filter></defs><g clip-path="url(#cp)">${inner}${VF}</g></svg>`;
+const mural = (x,y,w,h) => `<g><rect x="${x}" y="${y}" width="${w}" height="${h}" fill="#fff"/>
+  <circle cx="${x+w*.25}" cy="${y+h*.45}" r="${h*.28}" fill="${C.yel}"/>
+  <path d="M${x} ${y+h} L${x+w*.35} ${y+h*.35} L${x+w*.62} ${y+h} Z" fill="${C.red2}"/>
+  <path d="M${x+w*.45} ${y+h} L${x+w*.7} ${y+h*.5} L${x+w*.9} ${y+h} Z" fill="${C.blue}"/>
+  <rect x="${x+w*.72}" y="${y+h*.12}" width="${w*.2}" height="${h*.22}" fill="${C.grn}" opacity=".85"/></g>`;
+/* person in profile facing left, feet at (x,y), scale s, painting */
+const person = (x,y,s=1) => `<g transform="translate(${x} ${y}) scale(${s})">
+  <rect x="-9" y="-56" width="8" height="56" rx="3" fill="${C.pants}"/><rect x="1" y="-56" width="8" height="56" rx="3" fill="${C.pants}"/>
+  <rect x="-12" y="-4" width="12" height="5" rx="2" fill="${C.ink}"/><rect x="0" y="-4" width="12" height="5" rx="2" fill="${C.ink}"/>
+  <rect x="-15" y="-112" width="30" height="60" rx="10" fill="${C.shirt}"/>
+  <path d="M-4 -100 L-38 -116" stroke="${C.skin}" stroke-width="8" stroke-linecap="round"/>
+  <path d="M-38 -116 L-54 -124" stroke="${C.yel}" stroke-width="3" stroke-linecap="round"/><circle cx="-56" cy="-125" r="3" fill="${C.red2}"/>
+  <circle cx="0" cy="-128" r="15" fill="${C.skin}"/><path d="M-15 -130 Q-14 -146 2 -145 Q16 -144 15 -128 Q10 -136 -2 -136 Q-10 -136 -15 -130Z" fill="${C.hair}"/>
+  <path d="M-15 -128 l-4 4 l4 2" fill="${C.skin}"/><circle cx="-8" cy="-129" r="1.8" fill="${C.ink}"/></g>`;
+const lockers = (x,y,w,h,n) => Array.from({length:n},(_,i)=>`<rect x="${x+i*w/n+1}" y="${y}" width="${w/n-2}" height="${h}" fill="${i%2?C.locker:C.locker2}"/><rect x="${x+i*w/n+w/n*.7}" y="${y+h*.45}" width="2" height="10" fill="#555"/>`).join("");
+const can = (x,y,s,col) => `<g transform="translate(${x} ${y}) scale(${s})"><rect x="-12" y="-26" width="24" height="26" rx="3" fill="#9aa"/><ellipse cx="0" cy="-26" rx="12" ry="4" fill="${col}"/><rect x="-12" y="-16" width="24" height="7" fill="#fff" opacity=".7"/></g>`;
+
+const SVG = {
+  wide: frame(`<rect width="320" height="180" fill="${C.wall}"/><rect y="138" width="320" height="42" fill="${C.floor}"/>
+    ${mural(40,34,170,90)}${lockers(240,40,80,98,4)}${person(226,162,.62)}${can(250,160,.6,C.red2)}${can(268,162,.6,C.blue)}`, "Wide shot of the whole hallway"),
+  medium: frame(`<rect width="320" height="180" fill="${C.wall}"/>${mural(-20,10,250,175)}${person(240,250,1.3)}`, "Medium shot of the student painting"),
+  tight: frame(`<rect width="320" height="180" fill="#fff"/><rect width="320" height="180" fill="${C.yel}" opacity=".35"/>
+    <path d="M30 150 Q120 60 210 95" stroke="${C.red2}" stroke-width="26" fill="none" stroke-linecap="round"/>
+    <path d="M190 95 L300 30" stroke="${C.yel}" stroke-width="10" stroke-linecap="round"/><path d="M200 90 L222 77" stroke="#888" stroke-width="12"/>
+    <path d="M196 92 l-14 8" stroke="${C.red2}" stroke-width="12" stroke-linecap="round"/>
+    <ellipse cx="258" cy="60" rx="38" ry="26" fill="${C.skin}" transform="rotate(-30 258 60)"/>
+    <path d="M232 70 q-6 -16 10 -22 M244 78 q-6 -16 10 -22 M256 84 q-6 -16 10 -22" stroke="${C.skin2}" stroke-width="4" fill="none" stroke-linecap="round"/>`, "Tight shot of the hand and brush"),
+  wide2: frame(`<rect width="320" height="180" fill="${C.wall2}"/>
+    <path d="M0 0 L120 60 L120 125 L0 180Z" fill="${C.wall}"/><path d="M320 0 L200 60 L200 125 L320 180Z" fill="${C.wall}"/>
+    <path d="M0 180 L120 125 L200 125 L320 180Z" fill="${C.floor}"/><rect x="120" y="60" width="80" height="65" fill="${C.wall2}"/>
+    <path d="M10 40 L100 72 L100 118 L10 150Z" fill="#fff"/><path d="M10 150 L45 85 L70 128Z" fill="${C.red2}"/><circle cx="35" cy="85" r="14" fill="${C.yel}"/><path d="M55 140 L78 100 L95 120Z" fill="${C.blue}"/>
+    <path d="M320 20 L215 66 L215 120 L320 165Z" fill="${C.locker}"/><path d="M300 28 L300 158 M275 39 L275 147 M250 50 L250 136 M230 59 L230 127" stroke="${C.locker2}" stroke-width="3"/>
+    ${person(108,140,.42)}`, "Second wide shot from the other end of the hall"),
+  angled: frame(`<rect width="320" height="180" fill="${C.floor}"/><rect width="320" height="34" fill="${C.wall2}"/><rect y="28" width="320" height="8" fill="#fff"/>
+    <rect x="30" y="28" width="60" height="8" fill="${C.red2}"/><rect x="90" y="28" width="40" height="8" fill="${C.yel}"/><rect x="130" y="28" width="50" height="8" fill="${C.blue}"/>
+    <ellipse cx="160" cy="100" rx="38" ry="22" fill="${C.shirt}"/><path d="M150 92 L132 48" stroke="${C.skin}" stroke-width="9" stroke-linecap="round"/><path d="M132 48 L128 36" stroke="${C.yel}" stroke-width="4"/>
+    <circle cx="164" cy="98" r="17" fill="${C.hair}"/>
+    <g><circle cx="230" cy="120" r="15" fill="#9aa"/><circle cx="230" cy="120" r="11" fill="${C.red2}"/><circle cx="262" cy="142" r="15" fill="#9aa"/><circle cx="262" cy="142" r="11" fill="${C.blue}"/><circle cx="90" cy="140" r="15" fill="#9aa"/><circle cx="90" cy="140" r="11" fill="${C.yel}"/></g>`, "Angled shot looking down from above"),
+  low: frame(`<rect width="320" height="180" fill="${C.wall}"/><rect width="320" height="22" fill="#d9d2cf"/><rect x="60" y="6" width="70" height="8" rx="3" fill="#fff"/><rect x="200" y="6" width="70" height="8" rx="3" fill="#fff"/>
+    <g><path d="M-10 150 L190 150 L176 30 L6 40Z" fill="#fff"/><path d="M-10 150 L60 60 L120 150Z" fill="${C.red2}"/><circle cx="48" cy="78" r="22" fill="${C.yel}"/><path d="M95 150 L140 80 L182 150Z" fill="${C.blue}"/></g>
+    <path d="M0 172 L320 160 L320 180 L0 180Z" fill="${C.floor}"/><path d="M40 180 L120 166 M120 180 L170 164 M200 180 L215 162 M280 180 L262 161" stroke="${C.floor2}" stroke-width="2"/>
+    <g><path d="M192 172 L210 96 L224 96 L228 172Z" fill="${C.pants}"/><path d="M232 172 L226 96 L240 96 L262 172Z" fill="${C.pants}"/>
+    <rect x="182" y="164" width="48" height="16" rx="5" fill="${C.ink}"/><rect x="230" y="164" width="48" height="16" rx="5" fill="${C.ink}"/>
+    <path d="M204 104 L208 54 L242 54 L244 104Z" fill="${C.shirt}"/><path d="M212 62 L176 40" stroke="${C.skin}" stroke-width="7" stroke-linecap="round"/><path d="M176 40 L166 34" stroke="${C.yel}" stroke-width="3"/>
+    <circle cx="226" cy="40" r="11" fill="${C.skin}"/><path d="M215 38 Q216 26 227 27 Q238 28 237 39 Q232 33 226 33 Q219 33 215 38Z" fill="${C.hair}"/></g>`, "Low shot from the floor looking up"),
+  linking: frame(`<rect width="320" height="180" fill="${C.wall}"/>${mural(-20,10,220,175)}${person(250,262,1.35)}
+    <rect x="212" y="54" width="76" height="48" fill="none" stroke="#fff" stroke-width="2.5" stroke-dasharray="6 4"/>
+    <rect x="148" y="78" width="76" height="48" fill="none" stroke="#fff" stroke-width="2.5" stroke-dasharray="6 4"/>
+    <path d="M232 106 Q220 118 206 116" stroke="#fff" stroke-width="3" fill="none" marker-end="url(#ar)"/>
+    <defs><marker id="ar" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10z" fill="#fff"/></marker></defs>
+`, "Linking shot: one slow move from the face to the hands"),
+  depth: frame(`<rect width="320" height="180" fill="${C.wall}"/><rect y="140" width="320" height="40" fill="${C.floor}"/>${mural(150,30,140,95)}${person(300,160,.62)}
+    <g filter="url(#bl)">${can(70,200,3.2,C.red2)}<rect x="122" y="88" width="10" height="92" fill="${C.yel}"/><rect x="138" y="96" width="9" height="84" fill="${C.ink}"/><rect x="110" y="120" width="46" height="60" rx="6" fill="#cfd8dc" opacity=".9"/></g>`, "Depth shot: paint cans close to the lens, student behind"),
+  opposite: frame(`<rect width="320" height="180" fill="#fff"/>${mural(0,0,320,180)}
+    <path d="M150 60 L120 48" stroke="${C.yel}" stroke-width="5" stroke-linecap="round"/><path d="M200 120 Q175 90 152 62" stroke="${C.skin}" stroke-width="14" fill="none" stroke-linecap="round"/>
+    <path d="M200 180 Q205 120 250 112 Q300 106 320 120 L320 180Z" fill="${C.shirt}"/>
+    <circle cx="268" cy="78" r="44" fill="${C.hair}"/><path d="M226 92 Q228 110 244 116" stroke="${C.skin}" stroke-width="8" fill="none"/>`, "Opposite shot: over the shoulder, onto the mural")
+};
+
+const SHOTS = [
+  {k:"wide",   l:"W", name:"Wide",           q:"Where are we?",          what:"The whole room or space."},
+  {k:"medium", l:"M", name:"Medium",         q:"Who does what?",         what:"The person doing the action."},
+  {k:"tight",  l:"T", name:"Tight",          q:"What's the detail?",     what:"Hands, tools, a face."},
+  {k:"wide2",  l:"W", name:"Wide (new spot)",q:"WALLDO",                 what:"The subject, from a second spot.",                 ex:"the whole shop, student at a bench"},
+  {k:"angled", l:"A", name:"Angled",         q:"WALLDO",                 what:"The same action from the side or above.",          ex:"from above, looking down"},
+  {k:"low",    l:"L", name:"Low",            q:"WALLDO",                 what:"The view from the floor or the tabletop.",         ex:"camera on the bench, sparks fly past"},
+  {k:"linking",l:"L", name:"Linking",        q:"WALLDO",                 what:"One slow move from a person to what they do.",     ex:"tilt from the mask down to the hands"},
+  {k:"depth",  l:"D", name:"Depth",          q:"WALLDO",                 what:"Something close to the lens, action behind it.",   ex:"metal parts up front, student behind"},
+  {k:"opposite",l:"O",name:"Opposite",       q:"WALLDO",                 what:"The reverse view: what the subject sees.",         ex:"over the shoulder, onto the weld"}
+];
+const SH = Object.fromEntries(SHOTS.map(s=>[s.k,s]));
+const SPOT_OPTS = ["wide","medium","tight","angled","low","linking","depth","opposite"].map(k=>({k,l:SH[k].name,e:SH[k].l}));
+
+const QUIZ = {
+  spot: { n:3, h:"Spot the shot", intro:"Same story: a student paints a hallway mural. Name each shot.", lbl:"Frame", opts:SPOT_OPTS, items:
+    ["tight","low","wide","opposite","medium","depth","angled","linking"].map(k=>({html:`<div class="shotwrap">${SVG[k]}</div>`, a:k, say:"", why:`${SH[k].name}: ${SH[k].what}`}))},
+  which: { n:5, h:"Which shot do you need?", intro:"A new story: a student welds in the shop. Which shot is each one?", lbl:"Need", opts:SPOT_OPTS.concat([{k:"wide2",l:"Wide (new spot)",e:"W"}]), items:[
+    {stem:"\"Where are we?\" The whole shop.", a:"wide", why:"Wide answers \"Where are we?\""},
+    {stem:"\"Who does what?\" The student at the welding bench.", a:"medium", why:"Medium shows the person doing the action."},
+    {stem:"\"What's the detail?\" The hands and the torch.", a:"tight", why:"Tight shows hands, tools or a face."},
+    {stem:"Camera on the bench. Sparks fly past.", a:"low", why:"Low is the view from the floor or the tabletop."},
+    {stem:"Metal parts up front, the student behind them.", a:"depth", why:"Depth puts something close to the lens, with action behind it."},
+    {stem:"Over the shoulder, onto the weld.", a:"opposite", why:"Opposite is the reverse view: what the subject sees."},
+    {stem:"Tilt from the mask down to the hands.", a:"linking", why:"Linking is one slow move from a person to what they do."},
+    {stem:"From above, looking down at the bench.", a:"angled", why:"Angled shows the same action from the side or above."},
+    {stem:"The whole shop again, from a second spot across the room.", a:"wide2", why:"The W in WALLDO is a second wide, from a new spot."}]}
+};
+const LETTERS = ["wide2","angled","low","linking","depth","opposite"];
+const SHUFFLE = [3,0,5,2,4,1];
+
+const WORDS = [
+  ["sequence","3 or more shots of one action that cut together."],
+  ["wide / medium / tight","The whole place / the person and action / a small detail."],
+  ["WALLDO","Wide, Angled, Low, Linking, Depth, Opposite: 6 shots that add variety."],
+  ["foreground","The part of the picture closest to the camera."],
+  ["tilt","Point the camera up or down."]
+];
+
+/* ---------- state ---------- */
+const ORDER_Q = ["spot","which"];
+const STEPS = ["Start","Learn","Spot it","WALLDO order","Which shot?","Your turn","Done"];
+const S = {step:0, idx:{}, ans:{}, picked:[], orderChecked:false, mine:{action:"",shots:{}}, name:""};
+const KEY = "khscn-ml-06";
+function load(){ try{ const d=JSON.parse(localStorage.getItem(KEY)||"{}"); if(d.lang) S.lang=d.lang; if(d.name) S.name=d.name;
+  if(!S.name){ for(const k of ["khscn-ml-05","khscn-ml-04","khscn-ml-03","khscn-ml-02","khscn-ml-01"]){ const o=JSON.parse(localStorage.getItem(k)||"{}"); if(o.name){S.name=o.name;break;} } } }catch(e){} S.lang=S.lang||{}; }
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify({lang:S.lang,name:S.name})); }catch(e){} }
+load();
+ORDER_Q.forEach(k=>{S.idx[k]=0;S.ans[k]=[];});
+
+/* ---------- helpers ---------- */
+const app = document.getElementById("app");
+const esc = s => String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const canSpeak = "speechSynthesis" in window;
+function speak(t){ if(!canSpeak) return; try{ speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(t); u.rate=.92; speechSynthesis.speak(u);}catch(e){} }
+const sayBtn = t => canSpeak ? `<button class="say-btn" data-say="${esc(t)}" aria-label="Listen"><span aria-hidden="true">🔊</span> Listen</button>` : "";
+function go(n){ if(canSpeak) speechSynthesis.cancel(); S.step=n; render(); window.scrollTo({top:0}); app.focus({preventScroll:true}); }
+function renderProg(){
+  document.getElementById("prog").innerHTML =
+    STEPS.map((_,i)=>`<span class="seg ${i<S.step?"done":i===S.step?"now":""}"></span>`).join("") +
+    `<span class="lbl">${S.step+1}/${STEPS.length} · ${esc(STEPS[S.step])}</span>`;
+}
+
+function quizScreen(key, stepNo){
+  const Q=QUIZ[key], i=S.idx[key], it=Q.items[i], ans=S.ans[key][i], has=ans!==undefined;
+  const opts=it.opts||Q.opts, right=has&&ans===it.a, ansLabel=(opts.find(o=>o.k===it.a)||{}).l;
+  return `
+  <h2><span class="n">${Q.n}</span>${esc(Q.h)}</h2>
+  <p>${esc(Q.intro)}</p>
+  <div class="q" style="margin-top:14px">
+    <div class="qn">${Q.lbl} ${i+1} of ${Q.items.length}</div>
+    ${it.html? it.html : `<p class="stem">${esc(it.stem)} ${sayBtn(it.stem)}</p>`}
+    <div class="opts shotopts">${opts.map(o=>{
+      let c=""; if(has){ c = o.k===it.a?"right":(o.k===ans?"wrong":"dim"); }
+      return `<button class="opt ${c}" data-q="${key}" data-k="${o.k}" ${has?"disabled":""}>${o.e?`<span class="e">${esc(o.e)}</span>`:""}${esc(o.l)}</button>`;}).join("")}
+    </div>
+    <div class="fb ${has?(right?"ok show":"no show"):""}" aria-live="polite">
+      ${has?`<span class="v">${right?"Yes.":"Not quite. It's "+esc(ansLabel)+"."}</span>${esc(it.why)}`:""}
+    </div>
+  </div>
+  <div class="nav"><button class="btn ghost" data-go="${stepNo-1}">Back</button><span class="spacer"></span>
+    ${has?`<button class="btn" data-nextq="${key}" data-step="${stepNo}">${i<Q.items.length-1?"Next":"Next step"}</button>`:""}</div>`;
+}
+
+/* ---------- screens ---------- */
+const screens = [
+/* 0 start */
+() => `
+  <div class="stack">
+    <h2><span class="n">1</span>One shot is a picture</h2>
+    <p class="lead">One shot of a student painting is a picture. Five shots of it is a <b>scene</b>. ${sayBtn("One shot of a student painting is a picture. Five shots of it is a scene.")}</p>
+    <p>A <b>sequence</b> is 3 or more shots of the same action that cut together. Start every action with <b>wide, medium and tight</b>. Then add variety with <b>WALLDO</b>.</p>
+    <div class="wmt">${["wide","medium","tight"].map(k=>`<figure>${SVG[k]}<figcaption><b>${SH[k].name}</b> · ${esc(SH[k].q)}</figcaption></figure>`).join("")}</div>
+    <div class="callout"><span class="tag">The rule</span>Every action: <b>W · M · T</b>. Then the 6 WALLDO shots, in order. ${sayBtn("Every action: wide, medium, tight. Then the 6 WALLDO shots, in order.")}</div>
+    <details>
+      <summary>Words to know</summary>
+      <table>
+        <thead><tr><th>Word</th><th>What it means</th><th>In my language</th></tr></thead>
+        <tbody>${WORDS.map(([w,m],i)=>`<tr><td class="k">${esc(w)}</td><td>${esc(m)}</td><td><input data-lang="${i}" aria-label="${esc(w)} in my language" value="${esc(S.lang[i]||"")}"></td></tr>`).join("")}</tbody>
+      </table>
+    </details>
+  </div>
+  <div class="nav"><span class="spacer"></span><button class="btn" data-go="1">Start</button></div>`,
+
+/* 1 learn */
+() => `
+  <h2><span class="n">2</span>The WALLDO shots</h2>
+  <p>After wide, medium and tight, add these 6 shots. <b>The W is a second wide, from a new spot.</b></p>
+  <div class="shotgrid" style="margin-top:14px">
+    ${LETTERS.map(k=>{const s=SH[k]; return `<figure class="shotcard">${SVG[k]}<figcaption><span class="big-l">${s.l}</span><span><b>${esc(s.name)}</b><br>${esc(s.what)} ${sayBtn(s.name+". "+s.what)}</span></figcaption></figure>`;}).join("")}
+  </div>
+  <div class="nav"><button class="btn ghost" data-go="0">Back</button><span class="spacer"></span><button class="btn" data-go="2">Next</button></div>`,
+
+() => quizScreen("spot",2),
+
+/* 3 order */
+() => {
+  const done=S.orderChecked, left=SHUFFLE.filter(k=>!S.picked.includes(k));
+  return `
+  <h2><span class="n">4</span>WALLDO in order</h2>
+  <p>Shoot the six in order. <b>Tap them in WALLDO order.</b></p>
+  <ol class="order" style="margin-top:14px">
+    ${LETTERS.map((_,slot)=>{
+      const k=S.picked[slot], letter="WALLDO"[slot];
+      if(k===undefined) return `<li class="slot empty"><span class="sn">${letter}</span><span class="muted">Tap a shot below</span></li>`;
+      const right=k===slot, s=SH[LETTERS[k]];
+      return `<li class="slot ${done?(right?"right":"wrong"):""}"><span class="sn">${letter}</span><span><b>${esc(s.name)}</b>${done&&!right?`<span class="why">Should be: ${esc(SH[LETTERS[slot]].name)}</span>`:""}</span>
+        ${!done&&slot===S.picked.length-1?`<button class="undo" data-undo aria-label="Undo">Undo</button>`:""}</li>`;
+    }).join("")}
+  </ol>
+  ${!done&&left.length?`<div class="opts" style="margin-top:12px">${left.map(k=>`<button class="opt" data-pick="${k}">${esc(SH[LETTERS[k]].name)}</button>`).join("")}</div>`:""}
+  ${done?`<div class="fb show ${S.picked.every((k,s)=>k===s)?"ok":"no"}" aria-live="polite"><span class="v">${S.picked.filter((k,s)=>k===s).length} of 6 in the right spot</span>
+    W · A · L · L · D · O: Wide (new spot), Angled, Low, Linking, Depth, Opposite.</div>`:""}
+  <div class="nav"><button class="btn ghost" data-go="2">Back</button><span class="spacer"></span>
+    ${done?`<button class="btn" data-go="4">Next</button>`:`<button class="btn" data-ordercheck ${S.picked.length<6?"disabled":""}>Check</button>`}</div>`;
+},
+
+() => quizScreen("which",4),
+
+/* 5 your turn */
+() => {
+  const m=S.mine;
+  return `
+  <h2><span class="n">6</span>Your turn</h2>
+  <p>Plan a sequence for one action in your next story. Write what each shot will show.</p>
+  <div class="stack" style="margin-top:14px">
+    <div><label class="fld" for="action">The action</label>
+      <input class="inp" id="action" maxlength="100" placeholder="Example: the drumline warms up on the field" value="${esc(m.action)}"></div>
+    ${SHOTS.map(s=>`<div class="planrow"><span class="pl">${s.l}</span><div><label class="fld" for="sh-${s.k}">${esc(s.name)} <span class="muted">· ${esc(s.k==="wide"||s.k==="medium"||s.k==="tight"?s.q:s.what)}</span></label>
+      <input class="inp" id="sh-${s.k}" data-shot="${s.k}" maxlength="100" value="${esc(m.shots[s.k]||"")}"></div></div>`).join("")}
+    <div id="meter"></div>
+  </div>
+  <div class="nav"><button class="btn ghost" data-go="4">Back</button><span class="spacer"></span><button class="btn" data-go="6">Finish</button></div>`;
+},
+
+/* 6 done */
+() => {
+  let got=0, tot=0;
+  ORDER_Q.forEach(k=>{ const it=QUIZ[k].items; got+=it.filter((q,i)=>S.ans[k][i]===q.a).length; tot+=it.length; });
+  got += S.orderChecked?S.picked.filter((k,s)=>k===s).length:0; tot+=6;
+  S.result={got,tot,when:S.result&&S.result.got===got?S.result.when:new Date()};
+  const planned=SHOTS.filter(s=>(S.mine.shots[s.k]||"").trim()).length;
+  return `
+  <h2><span class="n">7</span>Done</h2>
+  <div class="score"><span class="big">${got}/${tot}</span><span class="muted">first tries correct</span></div>
+  <div class="stack" style="margin-top:16px">
+    <div><label class="fld" for="nm">Your name</label>
+      <input class="inp" id="nm" maxlength="60" value="${esc(S.name)}" placeholder="First and last name"></div>
+    <div class="passwrap">
+      <img id="passImg" class="pass-img" alt="Your press pass">
+      <button class="btn" id="dlPass" ${S.name.trim()?"":"disabled"}>${S.name.trim()?"Download press pass":"Type your name first"}</button>
+      <a class="btn ghost" href="https://khspress.fillout.com/certificate-upload" target="_blank" rel="noopener" style="text-decoration:none">Submit press pass ↗</a>
+      <p class="muted" style="text-align:center">Download it first, then upload the PNG on the submit form.</p>
+    </div>
+    ${planned?`<div class="box"><span class="tag">Your sequence</span><div class="pitchline">${esc(planText())}</div><button class="btn ghost" data-copy style="margin-top:10px;width:100%">Copy for Shot List</button></div>`:""}
+    <div class="callout"><span class="tag">Remember</span>Every action: wide, medium, tight. Then WALLDO. Before you leave: wide, medium and tight for every action, some WALLDO shots, and extra tight shots.</div>
+  </div>
+  <div class="nav"><button class="btn ghost" data-restart>Try again</button><span class="spacer"></span><button class="btn ghost" data-go="5">Back</button></div>`;
+}
+];
+
+function planText(){
+  const m=S.mine;
+  return [`Action: ${m.action||"—"}`, ...SHOTS.filter(s=>(m.shots[s.k]||"").trim()).map(s=>`${s.name}: ${m.shots[s.k].trim()}`)].join("\n");
+}
+function meter(){
+  const el=document.getElementById("meter"); if(!el) return;
+  const m=S.mine, has=k=>!!(m.shots[k]||"").trim(), wmt=["wide","medium","tight"].filter(has).length, walldo=LETTERS.filter(has).length;
+  let cls="wait", msg;
+  if(!m.action.trim()) msg="Name one action first.";
+  else if(wmt<3) msg=`Wide, medium and tight come first: ${wmt} of 3.`;
+  else if(walldo<3) msg=`Sequence started. Add some WALLDO shots for variety: ${walldo} of 6.`;
+  else { cls="go"; msg=`<b>That's a scene.</b> W · M · T plus ${walldo} WALLDO shots.${walldo<6?" Get the rest if you can.":""}`; }
+  el.innerHTML=`<div class="meter ${cls}" aria-live="polite">${msg}</div>`;
+}
+function copyDraft(btn){
+  const t=planText(), done=()=>{ btn.textContent="Copied"; setTimeout(()=>btn.textContent="Copy for Shot List",1800); };
+  try{ if(navigator.clipboard&&window.isSecureContext){ navigator.clipboard.writeText(t).then(done,fallback); return; } }catch(e){}
+  fallback();
+  function fallback(){ const ta=document.createElement("textarea"); ta.value=t; ta.style.position="fixed"; ta.style.opacity="0"; document.body.appendChild(ta); ta.select(); try{document.execCommand("copy"); done();}catch(e){} ta.remove(); }
+}
+
+/* ---------- press pass PNG ---------- */
+const MODULE = {num:"06", title:"WALLDO Spotter", skill:"Wide · medium · tight, then WALLDO"};
+function rr(c,x,y,w,h,r){c.beginPath();c.moveTo(x+r,y);c.arcTo(x+w,y,x+w,y+h,r);c.arcTo(x+w,y+h,x,y+h,r);c.arcTo(x,y+h,x,y,r);c.arcTo(x,y,x+w,y,r);c.closePath();}
+function track(c,t,x,y,sp,align){ // letter-spaced text
+  const w=[...t].reduce((a,ch)=>a+c.measureText(ch).width+sp,-sp);
+  let cx = align==="center"? x-w/2 : align==="right"? x-w : x;
+  c.textAlign="left"; for(const ch of t){c.fillText(ch,cx,y);cx+=c.measureText(ch).width+sp;}
+}
+function passId(name,when,got){
+  let h=2166136261; for(const ch of name+"|"+when.toISOString()+"|"+got+"|"+MODULE.num){h^=ch.charCodeAt(0);h=Math.imul(h,16777619);}
+  const s=(h>>>0).toString(36).toUpperCase().padStart(7,"0"); return s.slice(0,4)+"-"+s.slice(4,7);
+}
+let fontsReady=null;
+function loadFonts(){
+  if(!fontsReady){ fontsReady = (document.fonts? Promise.all(["900 40px Montserrat","800 40px Montserrat","700 40px Montserrat","400 40px Lexend","600 40px Lexend"].map(f=>document.fonts.load(f).catch(()=>{}))) : Promise.resolve()).then(()=>new Promise(r=>setTimeout(r,0))); }
+  return fontsReady;
+}
+function drawPass(){
+  const W=1080,H=1500,R=56, c=document.createElement("canvas"); c.width=W; c.height=H; const x=c.getContext("2d");
+  const {got,tot,when}=S.result, name=(S.name.trim()||"Your name");
+  const MS="Montserrat, Arial Black, sans-serif", LX="Lexend, Arial, sans-serif";
+  // card
+  rr(x,0,0,W,H,R); x.save(); x.clip();
+  x.fillStyle="#fff"; x.fillRect(0,0,W,H);
+  const g=x.createLinearGradient(0,0,0,560); g.addColorStop(0,"#6F1A1D"); g.addColorStop(.55,"#A61E1E"); g.addColorStop(1,"#DD2A2A");
+  x.fillStyle=g; x.fillRect(0,0,W,560);
+  // subtle diagonal stripes in band
+  x.globalAlpha=.06; x.fillStyle="#fff"; for(let i=-600;i<W;i+=70){x.beginPath();x.moveTo(i,560);x.lineTo(i+560,0);x.lineTo(i+590,0);x.lineTo(i+30,560);x.fill();} x.globalAlpha=1;
+  // footer
+  x.fillStyle="#1E1E21"; x.fillRect(0,H-150,W,150);
+  x.restore();
+  // lanyard slot (punch out)
+  x.save(); x.globalCompositeOperation="destination-out"; rr(x,W/2-110,46,220,38,19); x.fill(); x.restore();
+  // band text
+  x.fillStyle="#fff"; x.globalAlpha=.9; x.font=`700 30px ${MS}`; track(x,"KHS COUGAR NEWS",W/2,150,9,"center"); x.globalAlpha=1;
+  x.font=`900 200px ${MS}`; x.textAlign="center";
+  x.fillStyle="rgba(60,20,20,.55)"; x.fillText("PRESS",W/2+6,346); x.fillText("PASS",W/2+6,516);
+  x.fillStyle="#fff"; x.fillText("PRESS",W/2,340); x.fillText("PASS",W/2,510);
+  // body
+  const L=90;
+  x.fillStyle="#4A4A50"; x.font=`800 28px ${MS}`; track(x,"ISSUED TO",L,650,6);
+  let fs=96; x.font=`800 ${fs}px ${MS}`; while(x.measureText(name.toUpperCase()).width>W-2*L && fs>40){fs-=4; x.font=`800 ${fs}px ${MS}`;}
+  x.fillStyle="#1E1E21"; x.textAlign="left"; x.fillText(name.toUpperCase(),L,650+20+fs*.85);
+  x.fillStyle="#E6DCDA"; x.fillRect(L,800,W-2*L,4);
+  x.fillStyle="#4A4A50"; x.font=`800 28px ${MS}`; track(x,"CLEARED IN · MICRO-LESSON "+MODULE.num,L,872,6);
+  x.fillStyle="#6F1A1D"; let tf=62; x.font=`800 ${tf}px ${MS}`; while(x.measureText(MODULE.title.toUpperCase()).width>W-2*L && tf>36){tf-=2; x.font=`800 ${tf}px ${MS}`;} x.fillText(MODULE.title.toUpperCase(),L,948);
+  x.fillStyle="#4A4A50"; x.font=`400 34px ${LX}`; x.fillText(MODULE.skill,L,1002);
+  // score + date
+  x.fillStyle="#4A4A50"; x.font=`800 28px ${MS}`; track(x,"SCORE",L,1100,6); track(x,"DATE",430,1100,6);
+  x.fillStyle="#B3201F"; x.font=`900 92px ${MS}`; x.fillText(`${got}/${tot}`,L,1195);
+  x.fillStyle="#1E1E21"; x.font=`800 50px ${MS}`; x.fillText(when.toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"}),430,1185);
+  x.fillStyle="#4A4A50"; x.font=`400 30px ${LX}`; x.fillText(when.toLocaleTimeString("en-US",{hour:"numeric",minute:"2-digit"}),430,1232);
+  // stamp
+  x.save(); x.translate(905,1160); x.rotate(-.2); x.strokeStyle="#B3201F"; x.fillStyle="#B3201F"; x.globalAlpha=.9;
+  x.lineWidth=7; x.beginPath(); x.arc(0,0,105,0,Math.PI*2); x.stroke(); x.lineWidth=3; x.beginPath(); x.arc(0,0,88,0,Math.PI*2); x.stroke();
+  x.font=`900 34px ${MS}`; x.textAlign="center"; x.fillText("ON",0,-14); x.fillText("AIR",0,26); x.font=`800 16px ${MS}`; x.fillText("★ CLEARED ★",0,58); x.restore();
+  // footer text
+  x.textAlign="left"; x.fillStyle="#DD2A2A"; x.font=`900 72px ${MS}`; x.fillText(MODULE.num,L,H-50);
+  x.fillStyle="#fff"; x.font=`700 26px ${MS}`; track(x,"KHS COUGAR NEWS · MICRO-LEARNING",L+120,H-84,4);
+  x.globalAlpha=.7; x.font=`600 24px ${MS}`; track(x,"PASS ID "+passId(name,when,got),L+120,H-48,4); x.globalAlpha=1;
+  return c;
+}
+function updatePass(){
+  const img=document.getElementById("passImg"); if(!img) return;
+  loadFonts().then(()=>{ try{ img.src=drawPass().toDataURL("image/png"); }catch(e){} });
+}
+function downloadPass(){
+  loadFonts().then(()=>{
+    const c=drawPass(), slug=(S.name.trim()||"student").replace(/[^a-z0-9]+/gi,"-").replace(/^-|-$/g,"");
+    const fn=`Press-Pass-${MODULE.num}-${slug}.png`;
+    c.toBlob(b=>{
+      if(!b) return;
+      const url=URL.createObjectURL(b), a=document.createElement("a");
+      a.href=url; a.download=fn; document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(()=>URL.revokeObjectURL(url),4000);
+    },"image/png");
+  });
+}
+
+function render(){
+  renderProg();
+  app.innerHTML = screens[S.step]();
+  if(S.step===5) meter();
+  if(S.step===6) updatePass();
+}
+
+/* ---------- events ---------- */
+app.addEventListener("click", e=>{
+  const t=e.target.closest("button"); if(!t) return;
+  if(t.dataset.say!==undefined){ speak(t.dataset.say); return; }
+  if(t.id==="dlPass"){ downloadPass(); return; }
+  if(t.hasAttribute("data-copy")){ copyDraft(t); return; }
+  if(t.dataset.go!==undefined){ go(+t.dataset.go); return; }
+  if(t.dataset.q){ const k=t.dataset.q; S.ans[k][S.idx[k]] = t.dataset.k; render(); return; }
+  if(t.dataset.nextq){ const k=t.dataset.nextq; if(S.idx[k]<QUIZ[k].items.length-1){ S.idx[k]++; render(); window.scrollTo({top:0}); app.focus(); } else go(+t.dataset.step+1); return; }
+  if(t.dataset.pick){ S.picked.push(+t.dataset.pick); render(); return; }
+  if(t.hasAttribute("data-undo")){ S.picked.pop(); render(); return; }
+  if(t.hasAttribute("data-ordercheck")){ S.orderChecked=true; render(); return; }
+  if(t.hasAttribute("data-restart")){ ORDER_Q.forEach(k=>{S.idx[k]=0;S.ans[k]=[];}); S.picked=[]; S.orderChecked=false; S.result=null; go(0); }
+});
+app.addEventListener("input", e=>{
+  const t=e.target;
+  if(t.dataset.lang!==undefined){ S.lang[t.dataset.lang]=t.value; save(); return; }
+  if(t.id==="action"){ S.mine.action=t.value; meter(); return; }
+  if(t.dataset.shot){ S.mine.shots[t.dataset.shot]=t.value; meter(); return; }
+  if(t.id==="nm"){ S.name=t.value; save(); const b=document.getElementById("dlPass"); if(b){ const ok=!!t.value.trim(); b.disabled=!ok; b.textContent=ok?"Download press pass":"Type your name first"; }
+    clearTimeout(S._pt); S._pt=setTimeout(updatePass,200); }
+});
+
+render();
+})();
+</script>
+</body>
+</html>

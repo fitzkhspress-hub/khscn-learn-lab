@@ -1,0 +1,471 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>What Makes It News?</title>
+<meta name="description" content="KHS Cougar News micro-lesson: the 7 news values and the bullpen test.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;700&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --red-dk:#6F1A1D; --red:#B3201F; --red-br:#DD2A2A; --ink:#1E1E21; --ink2:#4A4A50;
+  --line:#E6DCDA; --tint:#FBEFEE; --sand:#F6F2F0; --link:#1A5FB4; --ok:#1d7a3a; --ok-bg:#E8F4EC;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font-family:Lexend,system-ui,sans-serif;color:var(--ink);background:#fff;font-size:17px;line-height:1.55;min-height:100vh;display:flex;flex-direction:column}
+button{font:inherit;color:inherit;cursor:pointer}
+input{font:inherit}
+:focus-visible{outline:3px solid var(--link);outline-offset:2px}
+
+/* header band, after switcher.png */
+.band{background:linear-gradient(180deg,var(--red-dk) 0%,#A61E1E 55%,var(--red-br) 100%);color:#fff;padding:22px 16px 18px}
+.band-in{max-width:760px;margin:0 auto;position:relative}
+.kicker{font-family:Montserrat;font-weight:700;font-size:11px;letter-spacing:.2em;text-transform:uppercase;opacity:.88;padding-right:135px}
+.band h1{font-family:Montserrat;font-weight:900;font-size:clamp(28px,7vw,44px);line-height:1.02;text-transform:uppercase;margin-top:6px;text-shadow:2px 2px 0 rgba(60,20,20,.55)}
+.band .sub{font-weight:300;font-size:16px;margin-top:6px;opacity:.95}
+.chip{position:absolute;top:-2px;right:0;background:#fff;color:var(--red-dk);font-family:Montserrat;font-weight:800;font-size:10px;letter-spacing:.14em;padding:4px 9px;border-radius:3px}
+
+/* progress */
+.prog{background:var(--ink);color:#fff;padding:10px 16px}
+.prog-in{max-width:760px;margin:0 auto;display:flex;gap:6px;align-items:center}
+.prog .seg{flex:1;height:6px;border-radius:3px;background:#46464c}
+.prog .seg.done{background:var(--red-br)}
+.prog .seg.now{background:#fff}
+.prog .lbl{font-family:Montserrat;font-weight:700;font-size:11px;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap;margin-left:8px;opacity:.85}
+
+main{flex:1;width:100%;max-width:760px;margin:0 auto;padding:24px 16px 32px}
+h2{font-family:Montserrat;font-weight:800;font-size:20px;color:var(--red-dk);text-transform:uppercase;letter-spacing:.05em;display:flex;align-items:center;gap:10px;margin-bottom:12px}
+h2 .n{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;background:var(--red);color:#fff;font-size:15px;letter-spacing:0;flex:none}
+h3{font-family:Montserrat;font-weight:800;font-size:16px;margin-bottom:4px}
+p+p{margin-top:10px}
+.lead{font-size:18px}
+b{font-weight:600}
+.muted{color:var(--ink2);font-size:15px}
+
+.box{background:var(--sand);border-radius:8px;padding:14px 16px}
+.callout{background:var(--tint);border-left:5px solid var(--red);border-radius:0 8px 8px 0;padding:12px 16px;margin:16px 0}
+.tag{font-family:Montserrat;font-weight:800;font-size:11px;letter-spacing:.16em;color:var(--red-dk);text-transform:uppercase;display:block;margin-bottom:2px}
+.stack>*+*{margin-top:14px}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:10px 22px;border-radius:8px;border:0;background:var(--red);color:#fff;font-family:Montserrat;font-weight:800;font-size:15px;letter-spacing:.06em;text-transform:uppercase}
+.btn:hover{background:var(--red-dk)}
+.btn[disabled]{background:#c9c3c1;cursor:not-allowed}
+.btn.ghost{background:#fff;color:var(--red-dk);border:2px solid var(--red)}
+.btn.ghost:hover{background:var(--tint)}
+.nav{display:flex;justify-content:space-between;gap:12px;margin-top:24px;flex-wrap:wrap}
+.nav .spacer{flex:1}
+.say-btn{border:1.5px solid var(--line);background:#fff;border-radius:20px;padding:3px 10px;font-size:13px;font-weight:600;color:var(--ink2);display:inline-flex;align-items:center;gap:5px;vertical-align:middle}
+.say-btn:hover{border-color:var(--red);color:var(--red-dk)}
+
+/* value cards */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px}
+.vcard{text-align:left;background:var(--sand);border:2px solid transparent;border-radius:10px;padding:14px;min-height:150px;display:flex;flex-direction:column;gap:6px;transition:border-color .15s,background .15s}
+.vcard:hover{border-color:var(--line)}
+.vcard .easy{font-family:Montserrat;font-weight:900;font-size:12px;letter-spacing:.14em;color:var(--red)}
+.vcard .nm{font-family:Montserrat;font-weight:800;font-size:18px}
+.vcard .hint{font-size:13px;color:var(--ink2);margin-top:auto}
+.vcard .more{display:none;font-size:15px}
+.vcard.open{background:#fff;border-color:var(--red)}
+.vcard.open .more{display:block}
+.vcard.open .hint{display:none}
+.vcard .ex{color:var(--ink2);font-size:14px;margin-top:4px}
+.count{font-family:Montserrat;font-weight:800;font-size:13px;letter-spacing:.1em;color:var(--ink2);text-transform:uppercase;margin:14px 0 0}
+
+/* question */
+.q{background:var(--sand);border-radius:10px;padding:18px 18px 16px}
+.q .qn{font-family:Montserrat;font-weight:800;font-size:12px;letter-spacing:.14em;color:var(--ink2);text-transform:uppercase}
+.q .stem{font-size:19px;font-weight:600;margin:6px 0 4px}
+.opts{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-top:14px}
+.opts.two{grid-template-columns:1fr 1fr}
+.opts.one{grid-template-columns:1fr}
+.opt{text-align:left;background:#fff;border:2px solid var(--line);border-radius:8px;padding:10px 12px;min-height:48px;font-size:15px}
+.opt .e{display:block;font-family:Montserrat;font-weight:900;font-size:11px;letter-spacing:.12em;color:var(--red)}
+.opt:hover:not([disabled]){border-color:var(--red)}
+.opt[disabled]{cursor:default}
+.opt.right{border-color:var(--ok);background:var(--ok-bg)}
+.opt.wrong{border-color:var(--red);background:var(--tint)}
+.opt.dim{opacity:.55}
+.opt.pitch{font-size:16px;padding:14px}
+.opt.pitch b{font-family:Montserrat;font-weight:800;color:var(--red-dk);margin-right:6px}
+.fb{margin-top:14px;border-radius:8px;padding:12px 14px;display:none}
+.fb.show{display:block}
+.fb.ok{background:var(--ok-bg);border-left:5px solid var(--ok)}
+.fb.no{background:var(--tint);border-left:5px solid var(--red)}
+.fb .v{font-family:Montserrat;font-weight:900;font-size:12px;letter-spacing:.12em;text-transform:uppercase;display:block;margin-bottom:2px}
+.fb.ok .v{color:var(--ok)} .fb.no .v{color:var(--red)}
+.pills{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.pill{font-family:Montserrat;font-weight:800;font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding:3px 9px;border-radius:20px;background:var(--red);color:#fff}
+.pill.ink{background:var(--ink)}
+
+/* your turn */
+label.fld{display:block;font-weight:600;margin-bottom:6px}
+.inp{width:100%;border:2px solid var(--line);border-radius:8px;padding:12px;font-size:16px;background:#fff}
+.inp:focus{border-color:var(--red);outline:none}
+.checks{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px}
+.ck{display:flex;align-items:center;gap:10px;background:#fff;border:2px solid var(--line);border-radius:8px;padding:10px 12px;min-height:48px;cursor:pointer;font-size:15px}
+.ck input{width:20px;height:20px;accent-color:var(--red);flex:none}
+.ck:has(input:checked){border-color:var(--red);background:var(--tint)}
+.meter{margin-top:14px;border-radius:8px;padding:12px 14px;background:var(--sand)}
+.meter.go{background:var(--ok-bg);border-left:5px solid var(--ok)}
+.meter.wait{border-left:5px solid #b9b2b0}
+.pitchline{font-size:16px;background:#fff;border:2px dashed var(--line);border-radius:8px;padding:12px;margin-top:10px;white-space:pre-wrap}
+
+/* words to know */
+table{width:100%;border-collapse:collapse;font-size:15px}
+th{font-family:Montserrat;font-weight:800;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--red-dk);text-align:left;padding:8px;border-bottom:2px solid var(--red)}
+td{padding:8px;border-bottom:1px solid var(--line);vertical-align:top}
+td.k{font-family:Montserrat;font-weight:800;white-space:nowrap}
+td input{width:100%;min-width:90px;border:0;border-bottom:1.5px solid #9a9a9a;padding:4px 2px;font-size:15px;background:transparent}
+details{margin-top:18px}
+summary{font-family:Montserrat;font-weight:800;font-size:14px;letter-spacing:.1em;text-transform:uppercase;color:var(--red-dk);cursor:pointer;padding:6px 0;min-height:40px;display:flex;align-items:center}
+
+/* done */
+.score{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.big{font-family:Montserrat;font-weight:900;font-size:56px;color:var(--red);line-height:1}
+.dark{background:var(--ink);color:#fff;border-radius:10px;padding:18px}
+.dark .tag{color:#ff8d8d}
+.dark .who{font-family:Montserrat;font-weight:800;font-size:22px;margin-top:4px}
+.dark .row{display:flex;justify-content:space-between;gap:12px;border-top:1px solid #3a3a40;padding-top:8px;margin-top:8px;font-size:15px}
+
+footer{background:var(--ink);color:#fff;padding:12px 16px;font-family:Montserrat;font-size:11px;font-weight:600;letter-spacing:.06em}
+footer .in{max-width:760px;margin:0 auto;display:flex;align-items:center;gap:14px}
+footer .num{font-weight:900;font-size:22px;color:var(--red-br);line-height:1}
+footer .doc{flex:1;text-transform:uppercase}
+
+@media (max-width:480px){
+  .opts.two{grid-template-columns:1fr}
+  .nav .btn{flex:1}
+  .nav .spacer{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+@media print{.prog,.nav,.say-btn{display:none!important}}
+</style>
+</head>
+<body>
+
+<header class="band">
+  <div class="band-in">
+    <div class="kicker">KHS Cougar News · 01 Bullpen &amp; Planning</div>
+    <span class="chip">MICRO-LESSON</span>
+    <h1>What Makes It News?</h1>
+    <div class="sub">The 7 news values · the bullpen test</div>
+  </div>
+</header>
+
+<nav class="prog" aria-label="Progress">
+  <div class="prog-in" id="prog"></div>
+</nav>
+
+<main id="app" tabindex="-1"></main>
+
+<footer>
+  <div class="in"><span class="num">01</span><span class="doc">Based on Finding Stories – Handout</span><span>~8 min</span></div>
+</footer>
+
+<script>
+(function(){
+"use strict";
+
+/* ---------- content (from Finding Stories – Handout) ---------- */
+const VALUES = [
+  {k:"time",  name:"Timeliness",     easy:"NEW",         ask:"Is it happening now or this week?",               ex:"A new tardy policy starts Monday."},
+  {k:"prox",  name:"Proximity",      easy:"NEAR",        ask:"Is it happening here, to us?",                    ex:"The district picks our field first for new turf."},
+  {k:"imp",   name:"Impact",         easy:"MANY PEOPLE", ask:"How many people does it change, and how much?",   ex:"A schedule change cuts lunch by 5 minutes."},
+  {k:"prom",  name:"Prominence",     easy:"WELL-KNOWN",  ask:"Is someone everyone knows involved?",             ex:"The principal plays in the student-staff game."},
+  {k:"conf",  name:"Conflict",       easy:"PROBLEM",     ask:"Is there a problem, a disagreement or a contest?",ex:"Seniors ask to change exam exemption rules."},
+  {k:"nov",   name:"Novelty",        easy:"UNUSUAL",     ask:"Is it a first, a last, an only, or strange?",     ex:"Robotics goes to state for the first time."},
+  {k:"hum",   name:"Human interest", easy:"FEELINGS",    ask:"Does one person's story make you feel something?",ex:"A cafeteria worker retires after 25 years."}
+];
+const V = Object.fromEntries(VALUES.map(v=>[v.k,v]));
+
+/* Practice 1: name the strongest value. Made-up campus examples. */
+const NAME_IT = [
+  {s:"Course selection opens tomorrow morning and closes Friday at 4 p.m.", a:"time",
+   why:"The clock is the story. It opens tomorrow and closes Friday. That makes it timely."},
+  {s:"A junior becomes the first Kempner student to earn a perfect ACT score.", a:"nov",
+   why:"\"The first\" is the clue. Firsts, lasts and onlys are novelty."},
+  {s:"Every student's laptop will lock for two hours during a required update.", a:"imp",
+   why:"It changes things for every student. That is a lot of people, so the impact is big."},
+  {s:"The superintendent visits the broadcast studio to film a district message.", a:"prom",
+   why:"Everyone knows who the superintendent is. A well-known person makes it prominent."},
+  {s:"Students say the new parking permit fee is too high. The district disagrees.", a:"conf",
+   why:"Two sides disagree. A disagreement is conflict."},
+  {s:"A custodian has kept a notebook of every student who thanked him for 10 years.", a:"hum",
+   why:"One person's story makes you feel something. That is human interest."},
+  {s:"A national survey says teens sleep 6 hours a night. We ask Kempner students how much they sleep.", a:"prox",
+   why:"A big story gets a campus angle. Bringing it here, to us, adds proximity."}
+];
+
+/* Practice 2: pass the news-value test? (2+ values, one is timeliness) */
+const PASS_IT = [
+  {s:"Our school has a courtyard.", pass:false, has:["prox"],
+   why:"Only proximity. Everything on campus is near us, so proximity can't be the only news value. Nothing is new."},
+  {s:"The bell schedule changes Monday, so lunch starts 10 minutes later for everyone.", pass:true, has:["time","imp","prox"],
+   why:"It starts Monday (timeliness) and it changes everyone's day (impact). It passes."},
+  {s:"Homecoming is in October.", pass:false, has:["prox"],
+   why:"That is an announcement, not a story. A calendar event becomes a story when you find what is new this time."},
+  {s:"This week, choir becomes the first Kempner group invited to sing at a state convention.", pass:true, has:["time","nov","prox"],
+   why:"It happens this week (timeliness) and it's a first (novelty). It passes."},
+  {s:"A teacher who has taught here 30 years shares her favorite memories.", pass:false, has:["hum","prox"],
+   why:"It has human interest, but nothing is new this week. Is she retiring Friday? Is something changing? Find the timeliness."},
+  {s:"Starting today, the library stays open until 6 p.m. for students who need Wi-Fi.", pass:true, has:["time","imp","prox"],
+   why:"It starts today (timeliness) and it helps students who need Wi-Fi (impact). It passes."}
+];
+
+/* Practice 3: one slot left in the show. */
+const PICK = {
+  stem:"Bullpen is almost over. The show has one news slot left. Which pitch gets it?",
+  opts:[
+    {t:"The cafeteria serves pizza every Friday.", ok:false,
+     why:"It could run any week, so it gets bumped. Nothing is new."},
+    {t:"The library is getting new chairs sometime this year.", ok:false,
+     why:"\"Sometime this year\" isn't timely, and new chairs don't change much for most students."},
+    {t:"Starting Monday, students must scan their ID to leave class. The scanners arrive Friday.", ok:true,
+     why:"Timeliness decides what airs. It starts Monday, it changes every student's day (impact), and some students may push back (conflict)."}
+  ]
+};
+
+const WORDS = [
+  ["news value","A reason people care about a story."],
+  ["timeliness","It is happening now or this week."],
+  ["pitch","Your story idea, said in a short way at bullpen."],
+  ["announcement","Just facts about an event, with nothing new found yet."],
+  ["campus angle","How a big story touches someone here."]
+];
+
+/* ---------- state ---------- */
+const STEPS = ["Start","Learn","Name it","Pass or narrow","One slot","Your turn","Done"];
+const S = {step:0, opened:new Set(), nameIdx:0, nameAns:[], passIdx:0, passAns:[], pick:null, mine:{idea:"",why:"",vals:[]}, name:""};
+const KEY = "khscn-ml-01";
+function load(){ try{ const d=JSON.parse(localStorage.getItem(KEY)||"{}"); if(d.lang) S.lang=d.lang; if(d.name) S.name=d.name; }catch(e){} S.lang=S.lang||{}; }
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify({lang:S.lang,name:S.name})); }catch(e){} }
+load();
+
+/* ---------- helpers ---------- */
+const app = document.getElementById("app");
+const esc = s => String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const canSpeak = "speechSynthesis" in window;
+function speak(t){ if(!canSpeak) return; try{ speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(t); u.rate=.92; speechSynthesis.speak(u);}catch(e){} }
+const sayBtn = t => canSpeak ? `<button class="say-btn" data-say="${esc(t)}" aria-label="Listen"><span aria-hidden="true">🔊</span> Listen</button>` : "";
+function go(n){ if(canSpeak) speechSynthesis.cancel(); S.step=n; render(); window.scrollTo({top:0}); app.focus({preventScroll:true}); }
+
+function renderProg(){
+  document.getElementById("prog").innerHTML =
+    STEPS.map((_,i)=>`<span class="seg ${i<S.step?"done":i===S.step?"now":""}"></span>`).join("") +
+    `<span class="lbl">${S.step+1}/${STEPS.length} · ${esc(STEPS[S.step])}</span>`;
+}
+
+/* ---------- screens ---------- */
+const screens = [
+/* 0 start */
+() => `
+  <div class="stack">
+    <h2><span class="n">1</span>Why would anyone care?</h2>
+    <p class="lead">At bullpen, every idea has to answer one question: <b>why would people care?</b> ${sayBtn("At bullpen, every idea has to answer one question: why would people care?")}</p>
+    <p>A <b>news value</b> is a reason people care. There are 7 of them. You'll learn all 7, then use them to judge pitches like an editor.</p>
+    <div class="callout"><span class="tag">The rule</span>
+      A strong story has <b>at least two</b> news values. One should be <b>timeliness</b>. ${sayBtn("The rule. A strong story has at least two news values. One should be timeliness.")}
+    </div>
+    <details>
+      <summary>Words to know</summary>
+      <table>
+        <thead><tr><th>Word</th><th>What it means</th><th>In my language</th></tr></thead>
+        <tbody>${WORDS.map(([w,m],i)=>`<tr><td class="k">${esc(w)}</td><td>${esc(m)}</td><td><input data-lang="${i}" aria-label="${esc(w)} in my language" value="${esc(S.lang[i]||"")}"></td></tr>`).join("")}</tbody>
+      </table>
+    </details>
+  </div>
+  <div class="nav"><span class="spacer"></span><button class="btn" data-go="1">Start</button></div>`,
+
+/* 1 learn */
+() => `
+  <h2><span class="n">2</span>The 7 news values</h2>
+  <p>Tap each card to open it. Read the question you should ask yourself.</p>
+  <div class="grid" style="margin-top:14px">
+    ${VALUES.map(v=>`
+      <button class="vcard ${S.opened.has(v.k)?"open":""}" data-open="${v.k}" aria-expanded="${S.opened.has(v.k)}">
+        <span class="easy">${v.easy}</span>
+        <span class="nm">${v.name}</span>
+        <span class="more"><b>Ask:</b> ${esc(v.ask)}<span class="ex" style="display:block">Example: ${esc(v.ex)}</span></span>
+        <span class="hint">Tap to open</span>
+      </button>`).join("")}
+  </div>
+  <p class="count" aria-live="polite">${S.opened.size} of 7 opened</p>
+  <div class="callout"><span class="tag">Proximity is almost automatic</span>Everything on campus is near our audience. So proximity can't be a story's only news value.</div>
+  <div class="nav"><button class="btn ghost" data-go="0">Back</button><span class="spacer"></span>
+    <button class="btn" data-go="2" ${S.opened.size<7?"disabled":""}>${S.opened.size<7?"Open all 7":"Next"}</button></div>`,
+
+/* 2 name it */
+() => {
+  const i=S.nameIdx, q=NAME_IT[i], ans=S.nameAns[i];
+  return `
+  <h2><span class="n">3</span>Name the value</h2>
+  <p>Each story has one value that stands out most. Pick it.</p>
+  <div class="q" style="margin-top:14px">
+    <div class="qn">Story ${i+1} of ${NAME_IT.length}</div>
+    <p class="stem">${esc(q.s)} ${sayBtn(q.s)}</p>
+    <div class="opts">${VALUES.map(v=>{
+      let c=""; if(ans){ c = v.k===q.a?"right":(v.k===ans?"wrong":"dim"); }
+      return `<button class="opt ${c}" data-name="${v.k}" ${ans?"disabled":""}><span class="e">${v.easy}</span>${v.name}</button>`;}).join("")}
+    </div>
+    <div class="fb ${ans?(ans===q.a?"ok show":"no show"):""}" aria-live="polite">
+      ${ans?`<span class="v">${ans===q.a?"Yes, that's it.":"Not quite. It's "+V[q.a].name+"."}</span>${esc(q.why)}`:""}
+    </div>
+  </div>
+  <div class="nav"><button class="btn ghost" data-go="1">Back</button><span class="spacer"></span>
+    ${ans?`<button class="btn" data-next="name">${i<NAME_IT.length-1?"Next story":"Next"}</button>`:""}</div>`;
+},
+
+/* 3 pass or narrow */
+() => {
+  const i=S.passIdx, q=PASS_IT[i], ans=S.passAns[i];
+  const right = ans!==undefined && ans===q.pass;
+  return `
+  <h2><span class="n">4</span>Pass or narrow?</h2>
+  <p>You're the editor. Does this pitch pass the test: <b>2+ news values, and one is timeliness</b>?</p>
+  <div class="q" style="margin-top:14px">
+    <div class="qn">Pitch ${i+1} of ${PASS_IT.length}</div>
+    <p class="stem">"${esc(q.s)}" ${sayBtn(q.s)}</p>
+    <div class="opts two">
+      ${[[true,"It passes","2+ values, one is timeliness"],[false,"Narrow it","Missing something"]].map(([val,l,sub])=>{
+        let c=""; if(ans!==undefined){ c = val===q.pass?"right":(val===ans?"wrong":"dim"); }
+        return `<button class="opt ${c}" data-pass="${val}" ${ans!==undefined?"disabled":""}><span class="e">${sub}</span>${l}</button>`;}).join("")}
+    </div>
+    <div class="fb ${ans!==undefined?(right?"ok show":"no show"):""}" aria-live="polite">
+      ${ans!==undefined?`<span class="v">${right?"Good call.":"Look again."}</span>${esc(q.why)}
+        <div class="pills">${q.has.map(k=>`<span class="pill ${k==="time"?"":"ink"}">${V[k].name}</span>`).join("")}</div>`:""}
+    </div>
+  </div>
+  <div class="nav"><button class="btn ghost" data-go="2">Back</button><span class="spacer"></span>
+    ${ans!==undefined?`<button class="btn" data-next="pass">${i<PASS_IT.length-1?"Next pitch":"Next"}</button>`:""}</div>`;
+},
+
+/* 4 one slot */
+() => {
+  const a=S.pick;
+  return `
+  <h2><span class="n">5</span>One slot left</h2>
+  <p class="stem" style="font-size:18px;font-weight:600">${esc(PICK.stem)}</p>
+  <div class="opts one" style="margin-top:12px">
+    ${PICK.opts.map((o,i)=>{
+      let c=""; if(a!==null){ c = o.ok?"right":(i===a?"wrong":"dim"); }
+      return `<button class="opt pitch ${c}" data-pick="${i}" ${a!==null?"disabled":""}><b>${"ABC"[i]}</b>${esc(o.t)}</button>`;}).join("")}
+  </div>
+  ${a!==null?`<div class="fb show ${PICK.opts[a].ok?"ok":"no"}" aria-live="polite">
+      <span class="v">${PICK.opts[a].ok?"That's the one.":"Not this one."}</span>${esc(PICK.opts[a].why)}
+      ${PICK.opts[a].ok?"":`<p style="margin-top:8px"><b>Pitch C gets the slot.</b> ${esc(PICK.opts[2].why)}</p>`}
+    </div>`:""}
+  <div class="callout"><span class="tag">Timeliness decides what airs</span>A story that could run any week gets bumped.</div>
+  <div class="nav"><button class="btn ghost" data-go="3">Back</button><span class="spacer"></span>
+    ${a!==null?`<button class="btn" data-go="5">Next</button>`:""}</div>`;
+},
+
+/* 5 your turn */
+() => `
+  <h2><span class="n">6</span>Your turn</h2>
+  <p>Test one of your own ideas before bullpen.</p>
+  <div class="stack" style="margin-top:14px">
+    <div>
+      <label class="fld" for="idea">My story idea, in one sentence</label>
+      <input class="inp" id="idea" maxlength="220" placeholder="Who is doing what, this week?" value="${esc(S.mine.idea)}">
+    </div>
+    <div>
+      <p class="fld" style="font-weight:600;margin-bottom:6px">Tap every news value your idea has</p>
+      <div class="checks">${VALUES.map(v=>`<label class="ck"><input type="checkbox" data-val="${v.k}" ${S.mine.vals.includes(v.k)?"checked":""}><span>${v.name}</span></label>`).join("")}</div>
+    </div>
+    <div>
+      <label class="fld" for="why">Say it: "This story matters now because…"</label>
+      <input class="inp" id="why" maxlength="200" placeholder="…" value="${esc(S.mine.why)}">
+    </div>
+    <div id="meter"></div>
+  </div>
+  <div class="nav"><button class="btn ghost" data-go="4">Back</button><span class="spacer"></span><button class="btn" data-go="6">Finish</button></div>`,
+
+/* 6 done */
+() => {
+  const n1=NAME_IT.filter((q,i)=>S.nameAns[i]===q.a).length;
+  const n2=PASS_IT.filter((q,i)=>S.passAns[i]===q.pass).length;
+  const n3=S.pick!==null&&PICK.opts[S.pick].ok?1:0;
+  const tot=NAME_IT.length+PASS_IT.length+1, got=n1+n2+n3;
+  const d=new Date();
+  return `
+  <h2><span class="n">7</span>Done</h2>
+  <div class="score"><span class="big">${got}/${tot}</span><span class="muted">first tries correct</span></div>
+  <div class="stack" style="margin-top:16px">
+    <div>
+      <label class="fld" for="nm">Your name</label>
+      <input class="inp" id="nm" maxlength="60" value="${esc(S.name)}" placeholder="First and last name">
+    </div>
+    <div class="dark" id="card">
+      <span class="tag">KHS Cougar News · Micro-lesson 01</span>
+      <div class="who" id="who">${esc(S.name||"Your name")}</div>
+      <div class="row"><span>What Makes It News?</span><span>${got}/${tot}</span></div>
+      <div class="row"><span>Name the value · Pass or narrow · One slot</span><span>${n1}/${NAME_IT.length} · ${n2}/${PASS_IT.length} · ${n3}/1</span></div>
+      <div class="row"><span>Completed</span><span>${d.toLocaleDateString()} ${d.toLocaleTimeString([], {hour:"numeric",minute:"2-digit"})}</span></div>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:8px"><a class="btn ghost" href="https://khspress.fillout.com/certificate-upload" target="_blank" rel="noopener" style="text-decoration:none;width:100%;max-width:340px">Submit ↗</a>
+      <p class="muted" style="text-align:center">Take a screenshot of the card above, then upload it on the submit form.</p></div>
+    ${S.mine.idea?`<div class="box"><span class="tag">Bring to bullpen</span>${pitchText()}</div>`:""}
+    <div class="callout"><span class="tag">Remember</span>2+ news values. One is timeliness. Proximity alone isn't enough. Next, run the <b>Pitch check</b> on the Finding Stories handout and fill out the Story Pitch – Template.</div>
+  </div>
+  <div class="nav"><button class="btn ghost" data-restart>Try again</button><span class="spacer"></span><button class="btn ghost" data-go="5">Back</button></div>`;
+}
+];
+
+function pitchText(){
+  const vals=VALUES.filter(v=>S.mine.vals.includes(v.k)).map(v=>v.name);
+  return `<div class="pitchline">${esc(S.mine.idea||"(no idea yet)")}\nNews values: ${esc(vals.join(", ")||"none yet")}${S.mine.why?`\nIt matters now because ${esc(S.mine.why.replace(/^because\s+/i,""))}`:""}</div>`;
+}
+function meter(){
+  const el=document.getElementById("meter"); if(!el) return;
+  const v=S.mine.vals, hasT=v.includes("time"), n=v.length, onlyProx=n===1&&v[0]==="prox";
+  let cls="wait", msg;
+  if(!S.mine.idea.trim()) msg="Type your idea first.";
+  else if(n===0) msg="Tap the news values your idea has.";
+  else if(onlyProx) msg="Proximity alone isn't enough. What is new or changing about it?";
+  else if(!hasT && n>=2) msg="Two or more values, but no timeliness. What is happening this week? Find the timeliness, or it gets bumped.";
+  else if(!hasT) msg="Add timeliness. What is new or changing this week?";
+  else if(n<2) msg="Timely, good. Now find a second value. Who does it change? Is it a first? Is there a problem?";
+  else { cls="go"; msg="<b>Ready for bullpen.</b> It has "+n+" news values, and one is timeliness."; }
+  el.innerHTML=`<div class="meter ${cls}" aria-live="polite">${msg}</div>${S.mine.idea.trim()?pitchText():""}`;
+}
+
+function render(){
+  renderProg();
+  app.innerHTML = screens[S.step]();
+  if(S.step===5) meter();
+}
+
+/* ---------- events ---------- */
+app.addEventListener("click", e=>{
+  const t=e.target.closest("button"); if(!t) return;
+  if(t.dataset.say!==undefined){ speak(t.dataset.say); return; }
+  if(t.dataset.go!==undefined){ go(+t.dataset.go); return; }
+  if(t.dataset.open){ S.opened.add(t.dataset.open); const v=V[t.dataset.open]; render(); const el=app.querySelector(`[data-open="${t.dataset.open}"]`); if(el) el.focus(); return; }
+  if(t.dataset.name){ S.nameAns[S.nameIdx]=t.dataset.name; render(); return; }
+  if(t.dataset.pass){ S.passAns[S.passIdx]=t.dataset.pass==="true"; render(); return; }
+  if(t.dataset.pick){ S.pick=+t.dataset.pick; render(); return; }
+  if(t.dataset.next==="name"){ if(S.nameIdx<NAME_IT.length-1){S.nameIdx++; render(); app.focus();} else go(3); return; }
+  if(t.dataset.next==="pass"){ if(S.passIdx<PASS_IT.length-1){S.passIdx++; render(); app.focus();} else go(4); return; }
+  if(t.hasAttribute("data-restart")){ S.opened=new Set(); S.nameIdx=0; S.nameAns=[]; S.passIdx=0; S.passAns=[]; S.pick=null; go(0); }
+});
+app.addEventListener("input", e=>{
+  const t=e.target;
+  if(t.dataset.lang!==undefined){ S.lang[t.dataset.lang]=t.value; save(); }
+  if(t.id==="idea"){ S.mine.idea=t.value; meter(); }
+  if(t.id==="why"){ S.mine.why=t.value; meter(); }
+  if(t.id==="nm"){ S.name=t.value; save(); const w=document.getElementById("who"); if(w) w.textContent=t.value||"Your name"; }
+});
+app.addEventListener("change", e=>{
+  const t=e.target;
+  if(t.dataset.val){ const s=new Set(S.mine.vals); t.checked?s.add(t.dataset.val):s.delete(t.dataset.val); S.mine.vals=VALUES.map(v=>v.k).filter(k=>s.has(k)); meter(); }
+});
+
+render();
+})();
+</script>
+</body>
+</html>
