@@ -1,0 +1,522 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Is That a Usable Bite?</title>
+<meta name="description" content="KHS Cougar News micro-lesson: what makes a sound bite usable.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;700&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --red-dk:#6F1A1D; --red:#B3201F; --red-br:#DD2A2A; --ink:#1E1E21; --ink2:#4A4A50;
+  --line:#E6DCDA; --tint:#FBEFEE; --sand:#F6F2F0; --link:#1A5FB4; --ok:#1d7a3a; --ok-bg:#E8F4EC;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font-family:Lexend,system-ui,sans-serif;color:var(--ink);background:#fff;font-size:17px;line-height:1.55;min-height:100vh;display:flex;flex-direction:column}
+button{font:inherit;color:inherit;cursor:pointer}
+input{font:inherit}
+:focus-visible{outline:3px solid var(--link);outline-offset:2px}
+
+/* header band, after switcher.png */
+.band{background:linear-gradient(180deg,var(--red-dk) 0%,#A61E1E 55%,var(--red-br) 100%);color:#fff;padding:22px 16px 18px}
+.band-in{max-width:760px;margin:0 auto;position:relative}
+.kicker{font-family:Montserrat;font-weight:700;font-size:11px;letter-spacing:.2em;text-transform:uppercase;opacity:.88;padding-right:150px}
+.band h1{font-family:Montserrat;font-weight:900;font-size:clamp(28px,7vw,44px);line-height:1.02;text-transform:uppercase;margin-top:6px;text-shadow:2px 2px 0 rgba(60,20,20,.55)}
+.band .sub{font-weight:300;font-size:16px;margin-top:6px;opacity:.95}
+.chip{position:absolute;top:-2px;right:0;background:#fff;color:var(--red-dk);font-family:Montserrat;font-weight:800;font-size:10px;letter-spacing:.14em;padding:4px 9px;border-radius:3px}
+
+/* progress */
+.prog{background:var(--ink);color:#fff;padding:10px 16px}
+.prog-in{max-width:760px;margin:0 auto;display:flex;gap:6px;align-items:center}
+.prog .seg{flex:1;height:6px;border-radius:3px;background:#46464c}
+.prog .seg.done{background:var(--red-br)}
+.prog .seg.now{background:#fff}
+.prog .lbl{font-family:Montserrat;font-weight:700;font-size:11px;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap;margin-left:8px;opacity:.85}
+
+main{flex:1;width:100%;max-width:760px;margin:0 auto;padding:24px 16px 32px}
+h2{font-family:Montserrat;font-weight:800;font-size:20px;color:var(--red-dk);text-transform:uppercase;letter-spacing:.05em;display:flex;align-items:center;gap:10px;margin-bottom:12px}
+h2 .n{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;background:var(--red);color:#fff;font-size:15px;letter-spacing:0;flex:none}
+h3{font-family:Montserrat;font-weight:800;font-size:16px;margin-bottom:4px}
+p+p{margin-top:10px}
+.lead{font-size:18px}
+b{font-weight:600}
+.muted{color:var(--ink2);font-size:15px}
+
+.box{background:var(--sand);border-radius:8px;padding:14px 16px}
+.callout{background:var(--tint);border-left:5px solid var(--red);border-radius:0 8px 8px 0;padding:12px 16px;margin:16px 0}
+.tag{font-family:Montserrat;font-weight:800;font-size:11px;letter-spacing:.16em;color:var(--red-dk);text-transform:uppercase;display:block;margin-bottom:2px}
+.stack>*+*{margin-top:14px}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:10px 22px;border-radius:8px;border:0;background:var(--red);color:#fff;font-family:Montserrat;font-weight:800;font-size:15px;letter-spacing:.06em;text-transform:uppercase}
+.btn:hover{background:var(--red-dk)}
+.btn[disabled]{background:#c9c3c1;cursor:not-allowed}
+.btn.ghost{background:#fff;color:var(--red-dk);border:2px solid var(--red)}
+.btn.ghost:hover{background:var(--tint)}
+.nav{display:flex;justify-content:space-between;gap:12px;margin-top:24px;flex-wrap:wrap}
+.nav .spacer{flex:1}
+.say-btn{border:1.5px solid var(--line);background:#fff;border-radius:20px;padding:3px 10px;font-size:13px;font-weight:600;color:var(--ink2);display:inline-flex;align-items:center;gap:5px;vertical-align:middle}
+.say-btn:hover{border-color:var(--red);color:var(--red-dk)}
+
+/* value cards */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px}
+.vcard{text-align:left;background:var(--sand);border:2px solid transparent;border-radius:10px;padding:14px;min-height:150px;display:flex;flex-direction:column;gap:6px;transition:border-color .15s,background .15s}
+.vcard:hover{border-color:var(--line)}
+.vcard .easy{font-family:Montserrat;font-weight:900;font-size:12px;letter-spacing:.14em;color:var(--red)}
+.vcard .nm{font-family:Montserrat;font-weight:800;font-size:18px}
+.vcard .hint{font-size:13px;color:var(--ink2);margin-top:auto}
+.vcard .more{display:none;font-size:15px}
+.vcard.open{background:#fff;border-color:var(--red)}
+.vcard.open .more{display:block}
+.vcard.open .hint{display:none}
+.vcard .ex{color:var(--ink2);font-size:14px;margin-top:4px}
+.count{font-family:Montserrat;font-weight:800;font-size:13px;letter-spacing:.1em;color:var(--ink2);text-transform:uppercase;margin:14px 0 0}
+
+/* question */
+.q{background:var(--sand);border-radius:10px;padding:18px 18px 16px}
+.q .qn{font-family:Montserrat;font-weight:800;font-size:12px;letter-spacing:.14em;color:var(--ink2);text-transform:uppercase}
+.q .stem{font-size:19px;font-weight:600;margin:6px 0 4px}
+.opts{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-top:14px}
+.opts.two{grid-template-columns:1fr 1fr}
+.opts.one{grid-template-columns:1fr}
+.opt{text-align:left;background:#fff;border:2px solid var(--line);border-radius:8px;padding:10px 12px;min-height:48px;font-size:15px}
+.opt .e{display:block;font-family:Montserrat;font-weight:900;font-size:11px;letter-spacing:.12em;color:var(--red)}
+.opt:hover:not([disabled]){border-color:var(--red)}
+.opt[disabled]{cursor:default}
+.opt.right{border-color:var(--ok);background:var(--ok-bg)}
+.opt.wrong{border-color:var(--red);background:var(--tint)}
+.opt.dim{opacity:.55}
+.opt.pitch{font-size:16px;padding:14px}
+.opt.pitch b{font-family:Montserrat;font-weight:800;color:var(--red-dk);margin-right:6px}
+.fb{margin-top:14px;border-radius:8px;padding:12px 14px;display:none}
+.fb.show{display:block}
+.fb.ok{background:var(--ok-bg);border-left:5px solid var(--ok)}
+.fb.no{background:var(--tint);border-left:5px solid var(--red)}
+.fb .v{font-family:Montserrat;font-weight:900;font-size:12px;letter-spacing:.12em;text-transform:uppercase;display:block;margin-bottom:2px}
+.fb.ok .v{color:var(--ok)} .fb.no .v{color:var(--red)}
+.pills{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.pill{font-family:Montserrat;font-weight:800;font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding:3px 9px;border-radius:20px;background:var(--red);color:#fff}
+.pill.ink{background:var(--ink)}
+
+/* your turn */
+label.fld{display:block;font-weight:600;margin-bottom:6px}
+.inp{width:100%;border:2px solid var(--line);border-radius:8px;padding:12px;font-size:16px;background:#fff}
+.inp:focus{border-color:var(--red);outline:none}
+.checks{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px}
+.ck{display:flex;align-items:center;gap:10px;background:#fff;border:2px solid var(--line);border-radius:8px;padding:10px 12px;min-height:48px;cursor:pointer;font-size:15px}
+.ck input{width:20px;height:20px;accent-color:var(--red);flex:none}
+.ck:has(input:checked){border-color:var(--red);background:var(--tint)}
+.meter{margin-top:14px;border-radius:8px;padding:12px 14px;background:var(--sand)}
+.meter.go{background:var(--ok-bg);border-left:5px solid var(--ok)}
+.meter.wait{border-left:5px solid #b9b2b0}
+.pitchline{font-size:16px;background:#fff;border:2px dashed var(--line);border-radius:8px;padding:12px;margin-top:10px;white-space:pre-wrap}
+
+/* words to know */
+table{width:100%;border-collapse:collapse;font-size:15px}
+th{font-family:Montserrat;font-weight:800;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--red-dk);text-align:left;padding:8px;border-bottom:2px solid var(--red)}
+td{padding:8px;border-bottom:1px solid var(--line);vertical-align:top}
+td.k{font-family:Montserrat;font-weight:800;white-space:nowrap}
+td input{width:100%;min-width:90px;border:0;border-bottom:1.5px solid #9a9a9a;padding:4px 2px;font-size:15px;background:transparent}
+details{margin-top:18px}
+summary{font-family:Montserrat;font-weight:800;font-size:14px;letter-spacing:.1em;text-transform:uppercase;color:var(--red-dk);cursor:pointer;padding:6px 0;min-height:40px;display:flex;align-items:center}
+
+.walk{display:grid;gap:8px}
+.wk{text-align:left;width:100%;align-items:flex-start}
+.wk .box2{width:22px;height:22px;border:2px solid var(--red);border-radius:4px;flex:none;display:inline-flex;align-items:center;justify-content:center;font-weight:700;color:#fff;margin-top:2px}
+.wk.on{border-color:var(--red);background:var(--tint)}
+.wk.on .box2{background:var(--red)}
+.wk.right{border-color:var(--ok);background:var(--ok-bg)}
+.wk.wrong{border-color:var(--red);background:var(--tint)}
+.wk .why{display:block;font-size:14px;color:var(--ink2);margin-top:4px}
+.wk[disabled]{cursor:default}
+.write{border-bottom:1.5px solid #9a9a9a;padding:0 4px;font-weight:600}
+
+.cols2{display:grid;grid-template-columns:1fr 1.6fr;gap:10px}
+.stepf{display:flex;gap:12px;align-items:flex-start}
+.stepf>div{flex:1;min-width:0}
+.stepf .sn{flex:none;width:30px;height:30px;border-radius:50%;background:var(--ink);color:#fff;font-family:Montserrat;font-weight:800;font-size:14px;display:flex;align-items:center;justify-content:center;margin-top:2px}
+.stepf .fld{display:block;font-weight:600;margin-bottom:6px}
+.frame{display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center}
+.frame .inp{flex:1 1 180px;width:auto}
+.frame span{font-weight:600;color:var(--red-dk)}
+@media (max-width:480px){.cols2{grid-template-columns:1fr}}
+
+.cols2.eq{grid-template-columns:1fr 1fr}
+.good::before{content:"OPEN  ";font-family:Montserrat;font-weight:900;color:var(--ok);font-size:11px;letter-spacing:.1em}
+.bad::before{content:"YES/NO  ";font-family:Montserrat;font-weight:900;color:var(--red);font-size:11px;letter-spacing:.1em}
+.strike{text-decoration:line-through;text-decoration-color:var(--red);text-decoration-thickness:2px;color:var(--ink2)}
+ol.order{list-style:none;display:grid;gap:8px}
+.slot{display:flex;gap:10px;align-items:flex-start;background:#fff;border:2px solid var(--line);border-radius:8px;padding:10px 12px;min-height:48px;font-size:15px}
+.slot.empty{border-style:dashed;background:var(--sand)}
+.slot>span:nth-child(2){flex:1}
+.slot .sn{flex:none;width:26px;height:26px;border-radius:50%;background:var(--ink);color:#fff;font-family:Montserrat;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center}
+.slot.right{border-color:var(--ok);background:var(--ok-bg)}
+.slot.wrong{border-color:var(--red);background:var(--tint)}
+.slot .why{display:block;font-size:13px;color:var(--ink2);margin-top:4px}
+.undo{flex:none;border:1.5px solid var(--line);background:#fff;border-radius:20px;padding:2px 10px;font-size:13px;font-weight:600;color:var(--ink2)}
+.qcheck{font-size:14px;margin-top:6px;min-height:0}
+.qcheck.ok{color:var(--ok)} .qcheck.ok::before{content:"✓ "}
+.qcheck.no{color:var(--red)} .qcheck.no::before{content:"! "}
+@media (max-width:480px){.cols2.eq{grid-template-columns:1fr}}
+
+.rules{display:grid;gap:8px}
+.len{display:inline-block;font-family:Montserrat;font-weight:900;font-size:13px;background:var(--ink);color:#fff;border-radius:4px;padding:1px 7px;vertical-align:middle}
+.tc{background:#fff;border:2px solid var(--line);border-radius:8px;padding:12px 14px;font-size:16px}
+.tcrow{display:flex;justify-content:space-between;font-family:Montserrat;font-weight:800;font-size:12px;letter-spacing:.1em;color:var(--red-dk);margin-bottom:6px}
+
+/* done */
+.score{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.big{font-family:Montserrat;font-weight:900;font-size:56px;color:var(--red);line-height:1}
+.dark{background:var(--ink);color:#fff;border-radius:10px;padding:18px}
+.dark .tag{color:#ff8d8d}
+.dark .who{font-family:Montserrat;font-weight:800;font-size:22px;margin-top:4px}
+.dark .row{display:flex;justify-content:space-between;gap:12px;border-top:1px solid #3a3a40;padding-top:8px;margin-top:8px;font-size:15px}
+
+.passwrap{display:flex;flex-direction:column;align-items:center;gap:12px}
+.pass-img{width:100%;max-width:340px;display:block;filter:drop-shadow(0 8px 18px rgba(30,30,33,.25))}
+.passwrap .btn{width:100%;max-width:340px}
+
+footer{background:var(--ink);color:#fff;padding:12px 16px;font-family:Montserrat;font-size:11px;font-weight:600;letter-spacing:.06em}
+footer .in{max-width:760px;margin:0 auto;display:flex;align-items:center;gap:14px}
+footer .num{font-weight:900;font-size:22px;color:var(--red-br);line-height:1}
+footer .doc{flex:1;text-transform:uppercase}
+
+@media (max-width:480px){
+  .opts.two{grid-template-columns:1fr}
+  .nav .btn{flex:1}
+  .nav .spacer{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+@media print{.prog,.nav,.say-btn{display:none!important}}
+</style>
+</head>
+<body>
+
+<header class="band">
+  <div class="band-in">
+    <div class="kicker">KHS Cougar News · 02 Interviews</div>
+    <span class="chip">MICRO-LESSON 05</span>
+    <h1>Is That a Usable Bite?</h1>
+    <div class="sub">Complete · feeling, not fact · 8–12 seconds</div>
+  </div>
+</header>
+
+<nav class="prog" aria-label="Progress">
+  <div class="prog-in" id="prog"></div>
+</nav>
+
+<main id="app" tabindex="-1"></main>
+
+<footer>
+  <div class="in"><span class="num">02</span><span class="doc">Based on Interviews – Guide</span><span>~8 min</span></div>
+</footer>
+
+<script>
+(function(){
+"use strict";
+
+/* ---------- content (from Interviews – Guide §4–5 + Interview Questions – Template "My best sound bites") ---------- */
+const FF = [["fact","Fact","The anchor says it"],["feel","Feeling","Use it as the bite"]];
+const BITE = [["ok","Usable"],["inc","Not a complete sentence"],["fact","A fact, not a feeling"],["short","Too short"],["long","Too long"]];
+const opt2 = arr => arr.map(([k,l,e])=>({k,l,e}));
+
+/* Each quiz: list of {stem, a, why, opts?, html?}. Made-up quotes. */
+const QUIZ = {
+  ff: { n:2, h:"Fact or feeling?", intro:"The anchor says the facts. The bite shows feeling. Where does each quote go?",
+        lbl:"Quote", two:true, opts:opt2(FF), items:[
+    {stem:"\"The food drive collects cans until Friday.\"", a:"fact", why:"A date and a fact. The anchor can say this."},
+    {stem:"\"Seeing the shelves full made me tear up. People really showed up.\"", a:"feel", why:"A feeling, in their words. Only they can say it."},
+    {stem:"\"The play runs Thursday through Saturday at 7 p.m.\"", a:"fact", why:"Times and dates belong in the anchor's script."},
+    {stem:"\"I was terrified on opening night, but the second the lights came up, I was fine.\"", a:"feel", why:"A story only they can tell."},
+    {stem:"\"Thirty-two students signed up for the new robotics class.\"", a:"fact", why:"A number. The anchor says it, and you check it."},
+    {stem:"\"Playing senior night on our own field means everything to us.\"", a:"feel", why:"An opinion and a feeling. That's the bite."},
+    {stem:"\"The new turf was installed over the summer.\"", a:"fact", why:"A fact. Put it in the script."},
+    {stem:"\"My grandma taught me to cook, so every time I'm in culinary, I feel like she's with me.\"", a:"feel", why:"Personal and emotional. That's a strong bite."}]},
+  check: { n:3, h:"Bite check", intro:"Is this bite usable? If not, what's the problem? Each one has one problem at most.",
+        lbl:"Bite", opts:opt2(BITE), items:[
+    {stem:"\"When they called our name, I just froze. Four years of work, and we finally did it.\"", len:":10", a:"ok", why:"Complete, a feeling, and 10 seconds. Use it."},
+    {stem:"\"Yeah, definitely that one, because it's the one we worked on the most.\"", len:":09", a:"inc", why:"What is \"that one\"? The answer has to make sense alone."},
+    {stem:"\"Practice starts at 3:45 in the main gym every Tuesday and Thursday.\"", len:":08", a:"fact", why:"Facts go in the anchor's script. The bite should show feeling."},
+    {stem:"\"Honestly? Best day ever.\"", len:":03", a:"short", why:"Under 8 seconds feels cut off. Ask a follow-up to get more."},
+    {stem:"\"So, it started back in August, when we first met, and then we had tryouts, and then a few people quit, and then…\"", len:":38", a:"long", why:"Longer slows the story. Ask: \"Can you say that in one or two sentences?\""},
+    {stem:"\"I joined the team because my brother was on it, and now I get why he loved it.\"", len:":09", a:"ok", why:"Makes sense alone, shows feeling, 9 seconds. Usable."},
+    {stem:"\"The tournament has 24 teams from 6 school districts.\"", len:":07", a:"fact", why:"Numbers and facts belong to the anchor."}]},
+  fix: { n:4, h:"Get a better bite", intro:"You're still in the interview. What do you say to get a usable bite?",
+        lbl:"Moment", one:true, items:[
+    {stem:"You ask, \"Why did you join the team?\" They say: \"Because I wanted to.\"", a:1,
+     opts:[{k:0,l:"Use it. It's short."},{k:1,l:"\"Please start with: 'I joined the team because…'\""},{k:2,l:"\"Is that the only reason?\""}],
+     why:"Ask them to repeat your question in their answer. Then the bite makes sense alone."},
+    {stem:"Your source gives a great answer, but it runs 40 seconds.", a:2,
+     opts:[{k:0,l:"Use the whole thing."},{k:1,l:"Cut it off at 12 seconds, even mid-sentence."},{k:2,l:"\"Can you say that in one or two sentences?\""}],
+     why:"One complete thought, 8–12 seconds. Ask for a shorter version."},
+    {stem:"Every answer so far is a date, a time or a number.", a:0,
+     opts:[{k:0,l:"Put the facts in your script, then ask \"Why does this matter to you?\""},{k:1,l:"Use the best fact as your bite."},{k:2,l:"End the interview. You have what you need."}],
+     why:"Facts go to the anchor. A how or why question gets the feeling."}]},
+  log: { n:5, h:"Log it", intro:"On your Interview Questions – Template, log your best bites: timecode in, first words, out-cue (the last 3 words) and length.",
+        lbl:"Question", one:true, items:[]},
+  name: { n:6, h:"Get the name right", intro:"The name on the bottom of the screen is the lower third. Get it right before you leave.",
+        lbl:"Question", one:true, items:[
+    {stem:"When do you ask them to say and spell their name?", a:1,
+     opts:[{k:0,l:"Before you start recording"},{k:1,l:"After you roll, so it's on camera"},{k:2,l:"After the interview, by email"}],
+     why:"Roll first. Then they say and spell it on camera. Write it down letter by letter and read it back."},
+    {stem:"What goes in the lower third for a student?", a:2,
+     opts:[{k:0,l:"First name only"},{k:1,l:"Name + club"},{k:2,l:"Name + grade"}],
+     why:"Students: name + grade. Get their legal name, with no middle name."},
+    {stem:"What goes in the lower third for an adult?", a:0,
+     opts:[{k:0,l:"Name + title, like \"Head Football Coach\""},{k:1,l:"Name only"},{k:2,l:"\"Teacher\""}],
+     why:"Adults: name + title. A title is their job name."}]}
+};
+
+/* Log-it items: two bites from a transcript, 3 questions each */
+const LOGS = [
+  {in:"00:42", out:"00:52", text:"When they called our name, I just froze. Four years of work, and we finally did it."},
+  {in:"01:05", out:"01:19", text:"We practiced every single morning before school, even in the rain, and nobody ever complained, not once, because we all wanted it."}
+];
+function logItems(){
+  const out=[];
+  LOGS.forEach((b,i)=>{
+    const card=`<div class="tc"><div class="tcrow"><span>IN ${b.in}</span><span>OUT ${b.out}</span></div>"${esc(b.text)}"</div>`;
+    const words=b.text.replace(/[.,!?"]/g,"").split(/\s+/), last3=words.slice(-3).join(" "), first3=words.slice(0,3).join(" ");
+    const sec=(t=>{const[m,s]=t.split(":").map(Number);return m*60+s;}), len=sec(b.out)-sec(b.in);
+    out.push({html:card+`<p class="stem" style="margin-top:12px">Bite ${i+1}: what's the out-cue?</p>`, a:0,
+      opts:[{k:0,l:`"${last3}"`},{k:1,l:`"${first3}"`},{k:2,l:"The out timecode"}],
+      why:`The out-cue is the last 3 words: "${last3}." It marks where the bite ends.`});
+    const wrong=[len-2, sec(b.out)].map(v=>":"+String(v).padStart(2,"0"));
+    out.push({html:card+`<p class="stem" style="margin-top:12px">Bite ${i+1}: how long is it?</p>`, a:1,
+      opts:[{k:0,l:wrong[0]},{k:1,l:":"+String(len).padStart(2,"0")},{k:2,l:wrong[1]}],
+      why:`Out minus in: ${b.out} − ${b.in} = ${len} seconds.`});
+    const ok=len>=8&&len<=12;
+    out.push({html:card+`<p class="stem" style="margin-top:12px">Bite ${i+1}: is that a usable length?</p>`, a:ok?0:1,
+      opts:[{k:0,l:"Yes, 8–12 seconds"},{k:1,l:"No, too long"},{k:2,l:"No, too short"}],
+      why: ok? "8–12 seconds is one complete thought." : `${len} seconds slows the story. Look for one complete thought inside it, or ask them to say it in one or two sentences.`});
+  });
+  return out;
+}
+
+const WORDS = [
+  ["sound bite (SOT)","A short clip of a person talking on camera, 8–12 seconds."],
+  ["quote","The exact words a person said."],
+  ["out-cue","The last 3 words of a bite."],
+  ["roll","Start recording."],
+  ["lower third","The name and grade or title at the bottom of the screen."]
+];
+
+/* ---------- state ---------- */
+const ORDER_Q = ["ff","check","fix","log","name"];
+const STEPS = ["Start","Fact or feeling?","Bite check","Get a better bite","Log it","Name it","Done"];
+const S = {step:0, idx:{}, ans:{}, name:""};
+const KEY = "khscn-ml-05";
+function load(){ try{ const d=JSON.parse(localStorage.getItem(KEY)||"{}"); if(d.lang) S.lang=d.lang; if(d.name) S.name=d.name;
+  if(!S.name){ for(const k of ["khscn-ml-04","khscn-ml-03","khscn-ml-02","khscn-ml-01"]){ const o=JSON.parse(localStorage.getItem(k)||"{}"); if(o.name){S.name=o.name;break;} } } }catch(e){} S.lang=S.lang||{}; }
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify({lang:S.lang,name:S.name})); }catch(e){} }
+load();
+ORDER_Q.forEach(k=>{S.idx[k]=0;S.ans[k]=[];});
+
+/* ---------- helpers ---------- */
+const app = document.getElementById("app");
+const esc = s => String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+QUIZ.log.items = logItems();
+const canSpeak = "speechSynthesis" in window;
+function speak(t){ if(!canSpeak) return; try{ speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(t); u.rate=.92; speechSynthesis.speak(u);}catch(e){} }
+const sayBtn = t => canSpeak ? `<button class="say-btn" data-say="${esc(t)}" aria-label="Listen"><span aria-hidden="true">🔊</span> Listen</button>` : "";
+function go(n){ if(canSpeak) speechSynthesis.cancel(); S.step=n; render(); window.scrollTo({top:0}); app.focus({preventScroll:true}); }
+function renderProg(){
+  document.getElementById("prog").innerHTML =
+    STEPS.map((_,i)=>`<span class="seg ${i<S.step?"done":i===S.step?"now":""}"></span>`).join("") +
+    `<span class="lbl">${S.step+1}/${STEPS.length} · ${esc(STEPS[S.step])}</span>`;
+}
+const plain = s => s.replace(/<[^>]+>/g," ").replace(/&quot;/g,'"').replace(/\s+/g," ").trim();
+
+/* generic one-at-a-time quiz screen */
+function quizScreen(key, stepNo){
+  const Q=QUIZ[key], i=S.idx[key], it=Q.items[i], ans=S.ans[key][i], has=ans!==undefined;
+  const opts=it.opts||Q.opts, cls=Q.two?"two":(Q.one||it.opts?"one":"");
+  const right=has&&ans===it.a;
+  const ansLabel=(opts.find(o=>o.k===it.a)||{}).l;
+  return `
+  <h2><span class="n">${Q.n}</span>${esc(Q.h)}</h2>
+  <p>${esc(Q.intro)}</p>
+  <div class="q" style="margin-top:14px">
+    <div class="qn">${Q.lbl} ${i+1} of ${Q.items.length}</div>
+    ${it.html? it.html : `<p class="stem">${esc(it.stem)} ${it.len?`<span class="len">${it.len}</span>`:""} ${sayBtn(it.stem)}</p>`}
+    <div class="opts ${cls}">${opts.map(o=>{
+      let c=""; if(has){ c = o.k===it.a?"right":(o.k===ans?"wrong":"dim"); }
+      return `<button class="opt" data-q="${key}" data-k="${o.k}" ${has?"disabled":""}>${o.e?`<span class="e">${esc(o.e)}</span>`:""}${esc(o.l)}</button>`.replace('class="opt"',`class="opt ${c}"`);}).join("")}
+    </div>
+    <div class="fb ${has?(right?"ok show":"no show"):""}" aria-live="polite">
+      ${has?`<span class="v">${right?"Yes.":"Not quite. "+esc(ansLabel)+"."}</span>${esc(it.why)}`:""}
+    </div>
+  </div>
+  <div class="nav"><button class="btn ghost" data-go="${stepNo-1}">Back</button><span class="spacer"></span>
+    ${has?`<button class="btn" data-nextq="${key}" data-step="${stepNo}">${i<Q.items.length-1?"Next":"Next step"}</button>`:""}</div>`;
+}
+
+/* ---------- screens ---------- */
+const screens = [
+/* 0 start */
+() => `
+  <div class="stack">
+    <h2><span class="n">1</span>What makes a bite usable?</h2>
+    <p class="lead">A <b>sound bite</b> (also called a <b>SOT</b>, "sound on tape") is a short clip of a person talking. <b>The anchor says the facts. The bite shows feeling.</b> ${sayBtn("A sound bite, also called a SOT, sound on tape, is a short clip of a person talking. The anchor says the facts. The bite shows feeling.")}</p>
+    <div class="rules">
+      <div class="box"><span class="tag">1 · Complete sentence</span>The answer makes sense alone. Ask them to repeat your question in their answer.</div>
+      <div class="box"><span class="tag">2 · Feeling, not fact</span>A fact goes in the anchor's script. The bite is an opinion, a feeling or a story only they can tell.</div>
+      <div class="box"><span class="tag">3 · 8–12 seconds</span>One complete thought. Shorter feels cut off. Longer slows the story.</div>
+    </div>
+    <div class="cols2 eq">
+      <div class="box"><span class="tag">Fact · the anchor says it</span>"The food drive goes until November 20th."</div>
+      <div class="box"><span class="tag">Feeling · the bite</span>"Last year we filled 80 boxes. It's a small thing that feeds a lot of families."</div>
+    </div>
+    <details>
+      <summary>Words to know</summary>
+      <table>
+        <thead><tr><th>Word</th><th>What it means</th><th>In my language</th></tr></thead>
+        <tbody>${WORDS.map(([w,m],i)=>`<tr><td class="k">${esc(w)}</td><td>${esc(m)}</td><td><input data-lang="${i}" aria-label="${esc(w)} in my language" value="${esc(S.lang[i]||"")}"></td></tr>`).join("")}</tbody>
+      </table>
+    </details>
+  </div>
+  <div class="nav"><span class="spacer"></span><button class="btn" data-go="1">Start</button></div>`,
+() => quizScreen("ff",1),
+() => quizScreen("check",2),
+() => quizScreen("fix",3),
+() => quizScreen("log",4),
+() => quizScreen("name",5),
+/* 6 done */
+() => {
+  let got=0, tot=0, parts=[];
+  ORDER_Q.forEach(k=>{ const it=QUIZ[k].items, n=it.filter((q,i)=>S.ans[k][i]===q.a).length; got+=n; tot+=it.length; });
+  S.result={got,tot,when:S.result&&S.result.got===got?S.result.when:new Date()};
+  return `
+  <h2><span class="n">7</span>Done</h2>
+  <div class="score"><span class="big">${got}/${tot}</span><span class="muted">first tries correct</span></div>
+  <div class="stack" style="margin-top:16px">
+    <div>
+      <label class="fld" for="nm">Your name</label>
+      <input class="inp" id="nm" maxlength="60" value="${esc(S.name)}" placeholder="First and last name">
+    </div>
+    <div class="passwrap">
+      <img id="passImg" class="pass-img" alt="Your press pass">
+      <button class="btn" id="dlPass" ${S.name.trim()?"":"disabled"}>${S.name.trim()?"Download press pass":"Type your name first"}</button>
+      <a class="btn ghost" href="https://khspress.fillout.com/certificate-upload" target="_blank" rel="noopener" style="text-decoration:none">Submit press pass ↗</a>
+      <p class="muted" style="text-align:center">Download it first, then upload the PNG on the submit form.</p>
+    </div>
+    <div class="box"><span class="tag">Say it · get a usable bite</span>
+      <p>"Please answer in a full sentence. Start with: ___." ${sayBtn("Please answer in a full sentence. Start with blank.")}</p>
+      <p>"Can you say that again in one or two sentences?" ${sayBtn("Can you say that again in one or two sentences?")}</p>
+    </div>
+    <div class="callout"><span class="tag">Remember</span>Complete sentence. Feeling, not fact. 8–12 seconds. Log your best bites on the Interview Questions – Template: timecode in, first words, out-cue, length.</div>
+  </div>
+  <div class="nav"><button class="btn ghost" data-restart>Try again</button><span class="spacer"></span><button class="btn ghost" data-go="5">Back</button></div>`;
+}
+];
+
+/* ---------- press pass PNG ---------- */
+const MODULE = {num:"05", title:"Is That a Usable Bite?", skill:"Complete · feeling, not fact · 8–12 seconds"};
+function rr(c,x,y,w,h,r){c.beginPath();c.moveTo(x+r,y);c.arcTo(x+w,y,x+w,y+h,r);c.arcTo(x+w,y+h,x,y+h,r);c.arcTo(x,y+h,x,y,r);c.arcTo(x,y,x+w,y,r);c.closePath();}
+function track(c,t,x,y,sp,align){ // letter-spaced text
+  const w=[...t].reduce((a,ch)=>a+c.measureText(ch).width+sp,-sp);
+  let cx = align==="center"? x-w/2 : align==="right"? x-w : x;
+  c.textAlign="left"; for(const ch of t){c.fillText(ch,cx,y);cx+=c.measureText(ch).width+sp;}
+}
+function passId(name,when,got){
+  let h=2166136261; for(const ch of name+"|"+when.toISOString()+"|"+got+"|"+MODULE.num){h^=ch.charCodeAt(0);h=Math.imul(h,16777619);}
+  const s=(h>>>0).toString(36).toUpperCase().padStart(7,"0"); return s.slice(0,4)+"-"+s.slice(4,7);
+}
+let fontsReady=null;
+function loadFonts(){
+  if(!fontsReady){ fontsReady = (document.fonts? Promise.all(["900 40px Montserrat","800 40px Montserrat","700 40px Montserrat","400 40px Lexend","600 40px Lexend"].map(f=>document.fonts.load(f).catch(()=>{}))) : Promise.resolve()).then(()=>new Promise(r=>setTimeout(r,0))); }
+  return fontsReady;
+}
+function drawPass(){
+  const W=1080,H=1500,R=56, c=document.createElement("canvas"); c.width=W; c.height=H; const x=c.getContext("2d");
+  const {got,tot,when}=S.result, name=(S.name.trim()||"Your name");
+  const MS="Montserrat, Arial Black, sans-serif", LX="Lexend, Arial, sans-serif";
+  // card
+  rr(x,0,0,W,H,R); x.save(); x.clip();
+  x.fillStyle="#fff"; x.fillRect(0,0,W,H);
+  const g=x.createLinearGradient(0,0,0,560); g.addColorStop(0,"#6F1A1D"); g.addColorStop(.55,"#A61E1E"); g.addColorStop(1,"#DD2A2A");
+  x.fillStyle=g; x.fillRect(0,0,W,560);
+  // subtle diagonal stripes in band
+  x.globalAlpha=.06; x.fillStyle="#fff"; for(let i=-600;i<W;i+=70){x.beginPath();x.moveTo(i,560);x.lineTo(i+560,0);x.lineTo(i+590,0);x.lineTo(i+30,560);x.fill();} x.globalAlpha=1;
+  // footer
+  x.fillStyle="#1E1E21"; x.fillRect(0,H-150,W,150);
+  x.restore();
+  // lanyard slot (punch out)
+  x.save(); x.globalCompositeOperation="destination-out"; rr(x,W/2-110,46,220,38,19); x.fill(); x.restore();
+  // band text
+  x.fillStyle="#fff"; x.globalAlpha=.9; x.font=`700 30px ${MS}`; track(x,"KHS COUGAR NEWS",W/2,150,9,"center"); x.globalAlpha=1;
+  x.font=`900 200px ${MS}`; x.textAlign="center";
+  x.fillStyle="rgba(60,20,20,.55)"; x.fillText("PRESS",W/2+6,346); x.fillText("PASS",W/2+6,516);
+  x.fillStyle="#fff"; x.fillText("PRESS",W/2,340); x.fillText("PASS",W/2,510);
+  // body
+  const L=90;
+  x.fillStyle="#4A4A50"; x.font=`800 28px ${MS}`; track(x,"ISSUED TO",L,650,6);
+  let fs=96; x.font=`800 ${fs}px ${MS}`; while(x.measureText(name.toUpperCase()).width>W-2*L && fs>40){fs-=4; x.font=`800 ${fs}px ${MS}`;}
+  x.fillStyle="#1E1E21"; x.textAlign="left"; x.fillText(name.toUpperCase(),L,650+20+fs*.85);
+  x.fillStyle="#E6DCDA"; x.fillRect(L,800,W-2*L,4);
+  x.fillStyle="#4A4A50"; x.font=`800 28px ${MS}`; track(x,"CLEARED IN · MICRO-LESSON "+MODULE.num,L,872,6);
+  x.fillStyle="#6F1A1D"; let tf=62; x.font=`800 ${tf}px ${MS}`; while(x.measureText(MODULE.title.toUpperCase()).width>W-2*L && tf>36){tf-=2; x.font=`800 ${tf}px ${MS}`;} x.fillText(MODULE.title.toUpperCase(),L,948);
+  x.fillStyle="#4A4A50"; x.font=`400 34px ${LX}`; x.fillText(MODULE.skill,L,1002);
+  // score + date
+  x.fillStyle="#4A4A50"; x.font=`800 28px ${MS}`; track(x,"SCORE",L,1100,6); track(x,"DATE",430,1100,6);
+  x.fillStyle="#B3201F"; x.font=`900 92px ${MS}`; x.fillText(`${got}/${tot}`,L,1195);
+  x.fillStyle="#1E1E21"; x.font=`800 50px ${MS}`; x.fillText(when.toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"}),430,1185);
+  x.fillStyle="#4A4A50"; x.font=`400 30px ${LX}`; x.fillText(when.toLocaleTimeString("en-US",{hour:"numeric",minute:"2-digit"}),430,1232);
+  // stamp
+  x.save(); x.translate(905,1160); x.rotate(-.2); x.strokeStyle="#B3201F"; x.fillStyle="#B3201F"; x.globalAlpha=.9;
+  x.lineWidth=7; x.beginPath(); x.arc(0,0,105,0,Math.PI*2); x.stroke(); x.lineWidth=3; x.beginPath(); x.arc(0,0,88,0,Math.PI*2); x.stroke();
+  x.font=`900 34px ${MS}`; x.textAlign="center"; x.fillText("ON",0,-14); x.fillText("AIR",0,26); x.font=`800 16px ${MS}`; x.fillText("★ CLEARED ★",0,58); x.restore();
+  // footer text
+  x.textAlign="left"; x.fillStyle="#DD2A2A"; x.font=`900 72px ${MS}`; x.fillText(MODULE.num,L,H-50);
+  x.fillStyle="#fff"; x.font=`700 26px ${MS}`; track(x,"KHS COUGAR NEWS · MICRO-LEARNING",L+120,H-84,4);
+  x.globalAlpha=.7; x.font=`600 24px ${MS}`; track(x,"PASS ID "+passId(name,when,got),L+120,H-48,4); x.globalAlpha=1;
+  return c;
+}
+function updatePass(){
+  const img=document.getElementById("passImg"); if(!img) return;
+  loadFonts().then(()=>{ try{ img.src=drawPass().toDataURL("image/png"); }catch(e){} });
+}
+function downloadPass(){
+  loadFonts().then(()=>{
+    const c=drawPass(), slug=(S.name.trim()||"student").replace(/[^a-z0-9]+/gi,"-").replace(/^-|-$/g,"");
+    const fn=`Press-Pass-${MODULE.num}-${slug}.png`;
+    c.toBlob(b=>{
+      if(!b) return;
+      const url=URL.createObjectURL(b), a=document.createElement("a");
+      a.href=url; a.download=fn; document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(()=>URL.revokeObjectURL(url),4000);
+    },"image/png");
+  });
+}
+
+function render(){
+  renderProg();
+  app.innerHTML = screens[S.step]();
+  if(S.step===6) updatePass();
+}
+
+/* ---------- events ---------- */
+app.addEventListener("click", e=>{
+  const t=e.target.closest("button"); if(!t) return;
+  if(t.dataset.say!==undefined){ speak(t.dataset.say); return; }
+  if(t.id==="dlPass"){ downloadPass(); return; }
+  if(t.dataset.go!==undefined){ go(+t.dataset.go); return; }
+  if(t.dataset.q){ const k=t.dataset.q, raw=t.dataset.k; S.ans[k][S.idx[k]] = isNaN(+raw)?raw:+raw; render(); return; }
+  if(t.dataset.nextq){ const k=t.dataset.nextq; if(S.idx[k]<QUIZ[k].items.length-1){ S.idx[k]++; render(); window.scrollTo({top:0}); app.focus(); } else go(+t.dataset.step+1); return; }
+  if(t.hasAttribute("data-restart")){ ORDER_Q.forEach(k=>{S.idx[k]=0;S.ans[k]=[];}); S.result=null; go(0); }
+});
+app.addEventListener("input", e=>{
+  const t=e.target;
+  if(t.dataset.lang!==undefined){ S.lang[t.dataset.lang]=t.value; save(); return; }
+  if(t.id==="nm"){ S.name=t.value; save(); const b=document.getElementById("dlPass"); if(b){ const ok=!!t.value.trim(); b.disabled=!ok; b.textContent=ok?"Download press pass":"Type your name first"; }
+    clearTimeout(S._pt); S._pt=setTimeout(updatePass,200); }
+});
+
+render();
+})();
+</script>
+</body>
+</html>

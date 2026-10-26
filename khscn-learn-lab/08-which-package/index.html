@@ -1,0 +1,538 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Which Package Is It?</title>
+<meta name="description" content="KHS Cougar News micro-lesson: the 4 package types, their lengths, teams and deadlines.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;700&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --red-dk:#6F1A1D; --red:#B3201F; --red-br:#DD2A2A; --ink:#1E1E21; --ink2:#4A4A50;
+  --line:#E6DCDA; --tint:#FBEFEE; --sand:#F6F2F0; --link:#1A5FB4; --ok:#1d7a3a; --ok-bg:#E8F4EC;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font-family:Lexend,system-ui,sans-serif;color:var(--ink);background:#fff;font-size:17px;line-height:1.55;min-height:100vh;display:flex;flex-direction:column}
+button{font:inherit;color:inherit;cursor:pointer}
+input{font:inherit}
+:focus-visible{outline:3px solid var(--link);outline-offset:2px}
+
+/* header band, after switcher.png */
+.band{background:linear-gradient(180deg,var(--red-dk) 0%,#A61E1E 55%,var(--red-br) 100%);color:#fff;padding:22px 16px 18px}
+.band-in{max-width:760px;margin:0 auto;position:relative}
+.kicker{font-family:Montserrat;font-weight:700;font-size:11px;letter-spacing:.2em;text-transform:uppercase;opacity:.88;padding-right:150px}
+.band h1{font-family:Montserrat;font-weight:900;font-size:clamp(28px,7vw,44px);line-height:1.02;text-transform:uppercase;margin-top:6px;text-shadow:2px 2px 0 rgba(60,20,20,.55)}
+.band .sub{font-weight:300;font-size:16px;margin-top:6px;opacity:.95}
+.chip{position:absolute;top:-2px;right:0;background:#fff;color:var(--red-dk);font-family:Montserrat;font-weight:800;font-size:10px;letter-spacing:.14em;padding:4px 9px;border-radius:3px}
+
+/* progress */
+.prog{background:var(--ink);color:#fff;padding:10px 16px}
+.prog-in{max-width:760px;margin:0 auto;display:flex;gap:6px;align-items:center}
+.prog .seg{flex:1;height:6px;border-radius:3px;background:#46464c}
+.prog .seg.done{background:var(--red-br)}
+.prog .seg.now{background:#fff}
+.prog .lbl{font-family:Montserrat;font-weight:700;font-size:11px;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap;margin-left:8px;opacity:.85}
+
+main{flex:1;width:100%;max-width:760px;margin:0 auto;padding:24px 16px 32px}
+h2{font-family:Montserrat;font-weight:800;font-size:20px;color:var(--red-dk);text-transform:uppercase;letter-spacing:.05em;display:flex;align-items:center;gap:10px;margin-bottom:12px}
+h2 .n{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;background:var(--red);color:#fff;font-size:15px;letter-spacing:0;flex:none}
+h3{font-family:Montserrat;font-weight:800;font-size:16px;margin-bottom:4px}
+p+p{margin-top:10px}
+.lead{font-size:18px}
+b{font-weight:600}
+.muted{color:var(--ink2);font-size:15px}
+
+.box{background:var(--sand);border-radius:8px;padding:14px 16px}
+.callout{background:var(--tint);border-left:5px solid var(--red);border-radius:0 8px 8px 0;padding:12px 16px;margin:16px 0}
+.tag{font-family:Montserrat;font-weight:800;font-size:11px;letter-spacing:.16em;color:var(--red-dk);text-transform:uppercase;display:block;margin-bottom:2px}
+.stack>*+*{margin-top:14px}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:10px 22px;border-radius:8px;border:0;background:var(--red);color:#fff;font-family:Montserrat;font-weight:800;font-size:15px;letter-spacing:.06em;text-transform:uppercase}
+.btn:hover{background:var(--red-dk)}
+.btn[disabled]{background:#c9c3c1;cursor:not-allowed}
+.btn.ghost{background:#fff;color:var(--red-dk);border:2px solid var(--red)}
+.btn.ghost:hover{background:var(--tint)}
+.nav{display:flex;justify-content:space-between;gap:12px;margin-top:24px;flex-wrap:wrap}
+.nav .spacer{flex:1}
+.say-btn{border:1.5px solid var(--line);background:#fff;border-radius:20px;padding:3px 10px;font-size:13px;font-weight:600;color:var(--ink2);display:inline-flex;align-items:center;gap:5px;vertical-align:middle}
+.say-btn:hover{border-color:var(--red);color:var(--red-dk)}
+
+/* value cards */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px}
+.vcard{text-align:left;background:var(--sand);border:2px solid transparent;border-radius:10px;padding:14px;min-height:150px;display:flex;flex-direction:column;gap:6px;transition:border-color .15s,background .15s}
+.vcard:hover{border-color:var(--line)}
+.vcard .easy{font-family:Montserrat;font-weight:900;font-size:12px;letter-spacing:.14em;color:var(--red)}
+.vcard .nm{font-family:Montserrat;font-weight:800;font-size:18px}
+.vcard .hint{font-size:13px;color:var(--ink2);margin-top:auto}
+.vcard .more{display:none;font-size:15px}
+.vcard.open{background:#fff;border-color:var(--red)}
+.vcard.open .more{display:block}
+.vcard.open .hint{display:none}
+.vcard .ex{color:var(--ink2);font-size:14px;margin-top:4px}
+.count{font-family:Montserrat;font-weight:800;font-size:13px;letter-spacing:.1em;color:var(--ink2);text-transform:uppercase;margin:14px 0 0}
+
+/* question */
+.q{background:var(--sand);border-radius:10px;padding:18px 18px 16px}
+.q .qn{font-family:Montserrat;font-weight:800;font-size:12px;letter-spacing:.14em;color:var(--ink2);text-transform:uppercase}
+.q .stem{font-size:19px;font-weight:600;margin:6px 0 4px}
+.opts{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-top:14px}
+.opts.two{grid-template-columns:1fr 1fr}
+.opts.one{grid-template-columns:1fr}
+.opt{text-align:left;background:#fff;border:2px solid var(--line);border-radius:8px;padding:10px 12px;min-height:48px;font-size:15px}
+.opt .e{display:block;font-family:Montserrat;font-weight:900;font-size:11px;letter-spacing:.12em;color:var(--red)}
+.opt:hover:not([disabled]){border-color:var(--red)}
+.opt[disabled]{cursor:default}
+.opt.right{border-color:var(--ok);background:var(--ok-bg)}
+.opt.wrong{border-color:var(--red);background:var(--tint)}
+.opt.dim{opacity:.55}
+.opt.pitch{font-size:16px;padding:14px}
+.opt.pitch b{font-family:Montserrat;font-weight:800;color:var(--red-dk);margin-right:6px}
+.fb{margin-top:14px;border-radius:8px;padding:12px 14px;display:none}
+.fb.show{display:block}
+.fb.ok{background:var(--ok-bg);border-left:5px solid var(--ok)}
+.fb.no{background:var(--tint);border-left:5px solid var(--red)}
+.fb .v{font-family:Montserrat;font-weight:900;font-size:12px;letter-spacing:.12em;text-transform:uppercase;display:block;margin-bottom:2px}
+.fb.ok .v{color:var(--ok)} .fb.no .v{color:var(--red)}
+.pills{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.pill{font-family:Montserrat;font-weight:800;font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding:3px 9px;border-radius:20px;background:var(--red);color:#fff}
+.pill.ink{background:var(--ink)}
+
+/* your turn */
+label.fld{display:block;font-weight:600;margin-bottom:6px}
+.inp{width:100%;border:2px solid var(--line);border-radius:8px;padding:12px;font-size:16px;background:#fff}
+.inp:focus{border-color:var(--red);outline:none}
+.checks{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px}
+.ck{display:flex;align-items:center;gap:10px;background:#fff;border:2px solid var(--line);border-radius:8px;padding:10px 12px;min-height:48px;cursor:pointer;font-size:15px}
+.ck input{width:20px;height:20px;accent-color:var(--red);flex:none}
+.ck:has(input:checked){border-color:var(--red);background:var(--tint)}
+.meter{margin-top:14px;border-radius:8px;padding:12px 14px;background:var(--sand)}
+.meter.go{background:var(--ok-bg);border-left:5px solid var(--ok)}
+.meter.wait{border-left:5px solid #b9b2b0}
+.pitchline{font-size:16px;background:#fff;border:2px dashed var(--line);border-radius:8px;padding:12px;margin-top:10px;white-space:pre-wrap}
+
+/* words to know */
+table{width:100%;border-collapse:collapse;font-size:15px}
+th{font-family:Montserrat;font-weight:800;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--red-dk);text-align:left;padding:8px;border-bottom:2px solid var(--red)}
+td{padding:8px;border-bottom:1px solid var(--line);vertical-align:top}
+td.k{font-family:Montserrat;font-weight:800;white-space:nowrap}
+td input{width:100%;min-width:90px;border:0;border-bottom:1.5px solid #9a9a9a;padding:4px 2px;font-size:15px;background:transparent}
+details{margin-top:18px}
+summary{font-family:Montserrat;font-weight:800;font-size:14px;letter-spacing:.1em;text-transform:uppercase;color:var(--red-dk);cursor:pointer;padding:6px 0;min-height:40px;display:flex;align-items:center}
+
+.walk{display:grid;gap:8px}
+.wk{text-align:left;width:100%;align-items:flex-start}
+.wk .box2{width:22px;height:22px;border:2px solid var(--red);border-radius:4px;flex:none;display:inline-flex;align-items:center;justify-content:center;font-weight:700;color:#fff;margin-top:2px}
+.wk.on{border-color:var(--red);background:var(--tint)}
+.wk.on .box2{background:var(--red)}
+.wk.right{border-color:var(--ok);background:var(--ok-bg)}
+.wk.wrong{border-color:var(--red);background:var(--tint)}
+.wk .why{display:block;font-size:14px;color:var(--ink2);margin-top:4px}
+.wk[disabled]{cursor:default}
+.write{border-bottom:1.5px solid #9a9a9a;padding:0 4px;font-weight:600}
+
+.cols2{display:grid;grid-template-columns:1fr 1.6fr;gap:10px}
+.stepf{display:flex;gap:12px;align-items:flex-start}
+.stepf>div{flex:1;min-width:0}
+.stepf .sn{flex:none;width:30px;height:30px;border-radius:50%;background:var(--ink);color:#fff;font-family:Montserrat;font-weight:800;font-size:14px;display:flex;align-items:center;justify-content:center;margin-top:2px}
+.stepf .fld{display:block;font-weight:600;margin-bottom:6px}
+.frame{display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center}
+.frame .inp{flex:1 1 180px;width:auto}
+.frame span{font-weight:600;color:var(--red-dk)}
+@media (max-width:480px){.cols2{grid-template-columns:1fr}}
+
+.cols2.eq{grid-template-columns:1fr 1fr}
+.good::before{content:"OPEN  ";font-family:Montserrat;font-weight:900;color:var(--ok);font-size:11px;letter-spacing:.1em}
+.bad::before{content:"YES/NO  ";font-family:Montserrat;font-weight:900;color:var(--red);font-size:11px;letter-spacing:.1em}
+.strike{text-decoration:line-through;text-decoration-color:var(--red);text-decoration-thickness:2px;color:var(--ink2)}
+ol.order{list-style:none;display:grid;gap:8px}
+.slot{display:flex;gap:10px;align-items:flex-start;background:#fff;border:2px solid var(--line);border-radius:8px;padding:10px 12px;min-height:48px;font-size:15px}
+.slot.empty{border-style:dashed;background:var(--sand)}
+.slot>span:nth-child(2){flex:1}
+.slot .sn{flex:none;width:26px;height:26px;border-radius:50%;background:var(--ink);color:#fff;font-family:Montserrat;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center}
+.slot.right{border-color:var(--ok);background:var(--ok-bg)}
+.slot.wrong{border-color:var(--red);background:var(--tint)}
+.slot .why{display:block;font-size:13px;color:var(--ink2);margin-top:4px}
+.undo{flex:none;border:1.5px solid var(--line);background:#fff;border-radius:20px;padding:2px 10px;font-size:13px;font-weight:600;color:var(--ink2)}
+.qcheck{font-size:14px;margin-top:6px;min-height:0}
+.qcheck.ok{color:var(--ok)} .qcheck.ok::before{content:"✓ "}
+.qcheck.no{color:var(--red)} .qcheck.no::before{content:"! "}
+@media (max-width:480px){.cols2.eq{grid-template-columns:1fr}}
+
+.rules{display:grid;gap:8px}
+.len{display:inline-block;font-family:Montserrat;font-weight:900;font-size:13px;background:var(--ink);color:#fff;border-radius:4px;padding:1px 7px;vertical-align:middle}
+.tc{background:#fff;border:2px solid var(--line);border-radius:8px;padding:12px 14px;font-size:16px}
+.tcrow{display:flex;justify-content:space-between;font-family:Montserrat;font-weight:800;font-size:12px;letter-spacing:.1em;color:var(--red-dk);margin-bottom:6px}
+
+svg.shot{display:block;width:100%;height:auto;border-radius:6px;background:#ddd}
+.shotwrap{max-width:520px;margin:6px auto 0}
+.wmt{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.wmt figure{margin:0}.wmt figcaption{font-size:13px;margin-top:4px;line-height:1.3}
+.shotgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+.shotcard{margin:0;background:var(--sand);border-radius:10px;padding:8px}
+.shotcard figcaption{display:flex;gap:10px;align-items:flex-start;font-size:14px;margin-top:8px;line-height:1.4}
+.big-l{font-family:Montserrat;font-weight:900;font-size:28px;color:var(--red);line-height:1;flex:none;width:26px}
+.shotopts{grid-template-columns:repeat(auto-fill,minmax(140px,1fr))}
+.planrow{display:flex;gap:10px;align-items:flex-start}
+.planrow>div{flex:1;min-width:0}
+.pl{flex:none;width:30px;height:30px;border-radius:50%;background:var(--red);color:#fff;font-family:Montserrat;font-weight:900;font-size:14px;display:flex;align-items:center;justify-content:center;margin-top:2px}
+@media (max-width:480px){.wmt{grid-template-columns:1fr 1fr 1fr;gap:6px}.wmt figcaption{font-size:11px}.shotopts{grid-template-columns:1fr 1fr}}
+
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.stats>div{background:var(--ink);color:#fff;border-radius:8px;padding:10px;text-align:center}
+.stats .kv{display:block;font-family:Montserrat;font-weight:700;font-size:10px;letter-spacing:.12em;text-transform:uppercase;opacity:.75}
+.stats .sv{display:block;font-family:Montserrat;font-weight:900;font-size:17px;color:#fff;margin-top:2px}
+ol.rulelist{padding-left:22px;display:grid;gap:6px;font-size:16px}
+ol.rulelist li::marker{font-family:Montserrat;font-weight:800;color:var(--red)}
+.checks.one-col{grid-template-columns:1fr}
+@media (max-width:480px){.stats{grid-template-columns:1fr 1fr}}
+
+dl.facts{display:grid;grid-template-columns:auto 1fr;gap:2px 10px;margin-top:8px;font-size:14px}
+dl.facts dt{font-family:Montserrat;font-weight:800;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--red-dk);padding-top:2px}
+dl.facts dd{margin:0}
+select.inp{appearance:auto;min-height:48px}
+
+/* done */
+.score{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.big{font-family:Montserrat;font-weight:900;font-size:56px;color:var(--red);line-height:1}
+.dark{background:var(--ink);color:#fff;border-radius:10px;padding:18px}
+.dark .tag{color:#ff8d8d}
+.dark .who{font-family:Montserrat;font-weight:800;font-size:22px;margin-top:4px}
+.dark .row{display:flex;justify-content:space-between;gap:12px;border-top:1px solid #3a3a40;padding-top:8px;margin-top:8px;font-size:15px}
+
+.passwrap{display:flex;flex-direction:column;align-items:center;gap:12px}
+.pass-img{width:100%;max-width:340px;display:block;filter:drop-shadow(0 8px 18px rgba(30,30,33,.25))}
+.passwrap .btn{width:100%;max-width:340px}
+
+footer{background:var(--ink);color:#fff;padding:12px 16px;font-family:Montserrat;font-size:11px;font-weight:600;letter-spacing:.06em}
+footer .in{max-width:760px;margin:0 auto;display:flex;align-items:center;gap:14px}
+footer .num{font-weight:900;font-size:22px;color:var(--red-br);line-height:1}
+footer .doc{flex:1;text-transform:uppercase}
+
+@media (max-width:480px){
+  .opts.two{grid-template-columns:1fr}
+  .nav .btn{flex:1}
+  .nav .spacer{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+@media print{.prog,.nav,.say-btn{display:none!important}}
+</style>
+</head>
+<body>
+
+<header class="band">
+  <div class="band-in">
+    <div class="kicker">KHS Cougar News · 04 Story Packages</div>
+    <span class="chip">MICRO-LESSON 08</span>
+    <h1>Which Package Is It?</h1>
+    <div class="sub">News · Sports · MotS · Feature</div>
+  </div>
+</header>
+
+<nav class="prog" aria-label="Progress">
+  <div class="prog-in" id="prog"></div>
+</nav>
+
+<main id="app" tabindex="-1"></main>
+
+<footer>
+  <div class="in"><span class="num">04</span><span class="doc">Based on the Story Package quick cards</span><span>~7 min</span></div>
+</footer>
+
+<script>
+(function(){
+"use strict";
+
+/* ---------- content (from Finding Stories §5, Story Pitch – Template, News/Sports/MotS/Feature – Quick Cards, project rules) ---------- */
+const TYPES = [
+  {k:"news",  name:"News",    best:"New this week. Get 2 interviews, use the best.", len:":30–:60", team:"Up to 2", when:"Assigned Fri · drafts Tue · final Wed by 7:30 a.m.", min:"2 per term"},
+  {k:"sports",name:"Sports",  best:"A preview, a milestone or a profile. Scores stay in the Sports segment.", len:":30–:45", team:"Up to 2", when:"Final Tue by end of class · airs Thu", min:"Counts as news"},
+  {k:"mots",  name:"MotS",    best:"One question, many fast answers.", len:"30–90 sec", team:"2", when:"Claim Mon · due Fri · final Tue by end of class", min:"Every week you have no studio role"},
+  {k:"feat",  name:"Feature", best:"One person or group, in depth.", len:"3 weeks", team:"Up to 3", when:"Plan wk 1 · shoot wk 2 · write + edit wk 3", min:"1 per term"}
+];
+const TY = Object.fromEntries(TYPES.map(t=>[t.k,t]));
+const TYPE_OPTS = TYPES.map(t=>({k:t.k,l:t.name}));
+
+const QUIZ = {
+  type: { n:3, h:"Which package?", intro:"Read the pitch. Pick the package type that fits best.", lbl:"Pitch", cls:"two", opts:TYPE_OPTS, items:[
+    {stem:"Starting Tuesday, the library lends 30 hotspots to students without home Wi-Fi.", a:"news", why:"New this week, and it affects students now. News."},
+    {stem:"Volleyball's senior night: 9 seniors play their last home game Thursday.", a:"sports", why:"A preview on our campus. Sports."},
+    {stem:"\"What song gets you through a test?\"", a:"mots", why:"One question, many fast answers. MotS."},
+    {stem:"A junior runs her own cake business before and after school.", a:"feat", why:"One person, in depth. That needs a feature's 3 weeks."},
+    {stem:"The boys soccer goalie is one shutout away from the school record.", a:"sports", why:"A milestone. Sports."},
+    {stem:"The bell schedule changes Monday for testing week.", a:"news", why:"A change happening this week. News."},
+    {stem:"Students who work night shifts and still make it to first period.", a:"feat", why:"A group, in depth, with time to tell their story. Feature."},
+    {stem:"\"If you could add one class to Kempner, what would it be?\"", a:"mots", why:"One question you ask a lot of people. MotS."}]},
+  nums: { n:4, h:"Know the numbers", intro:"Length, team size, deadlines and minimums. Get these right before you pitch.", lbl:"Question", one:true, items:[
+    {stem:"How long is a news package?", a:1, opts:[{k:0,l:":15–:20"},{k:1,l:":30–:60"},{k:2,l:"2–3 minutes"}], why:"News runs :30 to :60."},
+    {stem:"How long is a sports package?", a:0, opts:[{k:0,l:":30–:45"},{k:1,l:":60–:90"},{k:2,l:"30–90 sec"}], why:"Sports runs :30 to :45."},
+    {stem:"How long is a MotS?", a:2, opts:[{k:0,l:":15"},{k:1,l:"3 minutes"},{k:2,l:"30 to 90 seconds"}], why:"MotS runs 30 to 90 seconds."},
+    {stem:"How big can a feature team be?", a:2, opts:[{k:0,l:"1"},{k:1,l:"Up to 2"},{k:2,l:"Up to 3"}], why:"Feature teams are up to 3. News and sports are up to 2. MotS is 2."},
+    {stem:"How long do you have for a feature?", a:1, opts:[{k:0,l:"1 week"},{k:1,l:"3 weeks"},{k:2,l:"The whole term"}], why:"Week 1 plan, week 2 shoot, week 3 write and edit."},
+    {stem:"When is the news final due?", a:0, opts:[{k:0,l:"Wednesday by 7:30 a.m."},{k:1,l:"Thursday, show day"},{k:2,l:"Friday"}], why:"News is assigned Friday, drafts are due Tuesday, and the final is due Wednesday by 7:30 a.m."},
+    {stem:"What's the minimum per 9-week term?", a:1, opts:[{k:0,l:"1 news, 1 feature"},{k:1,l:"2 news, 1 feature"},{k:2,l:"3 news, 2 features"}], why:"2 news stories and 1 feature. These are minimums."},
+    {stem:"When do you make a MotS?", a:2, opts:[{k:0,l:"Once a term"},{k:1,l:"Only when the EP assigns one"},{k:2,l:"Every week you have no studio role"}], why:"MotS is every week you don't have a studio job. Claim it Monday."},
+    {stem:"Your sports package is finished. For grading, it counts as…", a:0, opts:[{k:0,l:"News"},{k:1,l:"A feature"},{k:2,l:"A MotS"}], why:"Sports counts as news."},
+    {stem:"\"Football won 28–14 on Friday.\" Is that a sports package?", a:1, opts:[{k:0,l:"Yes, it's sports news"},{k:1,l:"No. Scores stay in the Sports segment."},{k:2,l:"Yes, if you add a bite"}], why:"Pitch a preview, a milestone or a profile instead. Scores go in the Sports segment."}]}
+};
+const WEEKS = ["2.2","2.3","2.4","2.5","2.7","2.8"];
+
+const WORDS = [
+  ["package","A finished story with video, voice and a sound bite."],
+  ["MotS","Man-on-the-street: one question, many fast answers."],
+  ["preview","A story about a game or event before it happens."],
+  ["milestone","A first, a record or a big number reached."],
+  ["profile","A story about one person."]
+];
+
+/* ---------- state ---------- */
+const ORDER_Q = ["type","nums"];
+const STEPS = ["Start","Learn","Which package?","Know the numbers","Plan my term","Done"];
+const S = {step:0, opened:new Set(), idx:{}, ans:{}, mine:{n1:"",n2:"",f:""}, name:""};
+const KEY = "khscn-ml-08";
+function load(){ try{ const d=JSON.parse(localStorage.getItem(KEY)||"{}"); if(d.lang) S.lang=d.lang; if(d.name) S.name=d.name;
+  if(!S.name){ for(const k of ["khscn-ml-07","khscn-ml-06","khscn-ml-05","khscn-ml-04","khscn-ml-03","khscn-ml-02","khscn-ml-01"]){ const o=JSON.parse(localStorage.getItem(k)||"{}"); if(o.name){S.name=o.name;break;} } } }catch(e){} S.lang=S.lang||{}; }
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify({lang:S.lang,name:S.name})); }catch(e){} }
+load();
+ORDER_Q.forEach(k=>{S.idx[k]=0;S.ans[k]=[];});
+
+/* ---------- helpers ---------- */
+const app = document.getElementById("app");
+const esc = s => String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const canSpeak = "speechSynthesis" in window;
+function speak(t){ if(!canSpeak) return; try{ speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(t); u.rate=.92; speechSynthesis.speak(u);}catch(e){} }
+const sayBtn = t => canSpeak ? `<button class="say-btn" data-say="${esc(t)}" aria-label="Listen"><span aria-hidden="true">🔊</span> Listen</button>` : "";
+function go(n){ if(canSpeak) speechSynthesis.cancel(); S.step=n; render(); window.scrollTo({top:0}); app.focus({preventScroll:true}); }
+function renderProg(){
+  document.getElementById("prog").innerHTML =
+    STEPS.map((_,i)=>`<span class="seg ${i<S.step?"done":i===S.step?"now":""}"></span>`).join("") +
+    `<span class="lbl">${S.step+1}/${STEPS.length} · ${esc(STEPS[S.step])}</span>`;
+}
+function quizScreen(key, stepNo){
+  const Q=QUIZ[key], i=S.idx[key], it=Q.items[i], ans=S.ans[key][i], has=ans!==undefined;
+  const opts=it.opts||Q.opts, right=has&&ans===it.a, ansLabel=(opts.find(o=>o.k===it.a)||{}).l;
+  return `
+  <h2><span class="n">${Q.n}</span>${esc(Q.h)}</h2>
+  <p>${esc(Q.intro)}</p>
+  <div class="q" style="margin-top:14px">
+    <div class="qn">${Q.lbl} ${i+1} of ${Q.items.length}</div>
+    <p class="stem">${esc(it.stem)} ${sayBtn(it.stem)}</p>
+    <div class="opts ${Q.one?"one":Q.cls||""}">${opts.map(o=>{
+      let c=""; if(has){ c = o.k===it.a?"right":(o.k===ans?"wrong":"dim"); }
+      return `<button class="opt ${c}" data-q="${key}" data-k="${o.k}" ${has?"disabled":""}>${o.e?`<span class="e">${esc(o.e)}</span>`:""}${esc(o.l)}</button>`;}).join("")}
+    </div>
+    <div class="fb ${has?(right?"ok show":"no show"):""}" aria-live="polite">
+      ${has?`<span class="v">${right?"Yes.":"Not quite: "+esc(ansLabel)+"."}</span>${esc(it.why)}`:""}
+    </div>
+  </div>
+  <div class="nav"><button class="btn ghost" data-go="${stepNo-1}">Back</button><span class="spacer"></span>
+    ${has?`<button class="btn" data-nextq="${key}" data-step="${stepNo}">${i<Q.items.length-1?"Next":"Next step"}</button>`:""}</div>`;
+}
+
+/* ---------- screens ---------- */
+const screens = [
+/* 0 start */
+() => `
+  <div class="stack">
+    <h2><span class="n">1</span>Pick the right type</h2>
+    <p class="lead">Every idea fits one package type best. Picking the right one sets your <b>length, team and deadline</b>. ${sayBtn("Every idea fits one package type best. Picking the right one sets your length, team and deadline.")}</p>
+    <div class="callout"><span class="tag">You choose</span>Packages are staggered so coverage is balanced. You decide what you take on and when, as long as you meet the minimums: <b>2 news stories and 1 feature per 9-week term.</b></div>
+    <details>
+      <summary>Words to know</summary>
+      <table>
+        <thead><tr><th>Word</th><th>What it means</th><th>In my language</th></tr></thead>
+        <tbody>${WORDS.map(([w,m],i)=>`<tr><td class="k">${esc(w)}</td><td>${esc(m)}</td><td><input data-lang="${i}" aria-label="${esc(w)} in my language" value="${esc(S.lang[i]||"")}"></td></tr>`).join("")}</tbody>
+      </table>
+    </details>
+  </div>
+  <div class="nav"><span class="spacer"></span><button class="btn" data-go="1">Start</button></div>`,
+
+/* 1 learn */
+() => `
+  <h2><span class="n">2</span>The 4 package types</h2>
+  <p>Tap each card to open it.</p>
+  <div class="grid" style="margin-top:14px">
+    ${TYPES.map(t=>`
+      <button class="vcard ${S.opened.has(t.k)?"open":""}" data-open="${t.k}" aria-expanded="${S.opened.has(t.k)}">
+        <span class="easy">${esc(t.len)}</span>
+        <span class="nm">${esc(t.name)}</span>
+        <span class="more">${esc(t.best)}
+          <dl class="facts"><dt>Team</dt><dd>${esc(t.team)}</dd><dt>When</dt><dd>${esc(t.when)}</dd><dt>How often</dt><dd>${esc(t.min)}</dd></dl></span>
+        <span class="hint">Tap to open</span>
+      </button>`).join("")}
+  </div>
+  <p class="count" aria-live="polite">${S.opened.size} of 4 opened</p>
+  <div class="nav"><button class="btn ghost" data-go="0">Back</button><span class="spacer"></span>
+    <button class="btn" data-go="2" ${S.opened.size<4?"disabled":""}>${S.opened.size<4?"Open all 4":"Next"}</button></div>`,
+
+() => quizScreen("type",2),
+() => quizScreen("nums",3),
+
+/* 4 plan my term */
+() => {
+  const m=S.mine, sel=(id,v)=>`<select class="inp" id="${id}"><option value="">Pick an air week</option>${WEEKS.map(w=>`<option ${v===w?"selected":""}>${w}</option>`).join("")}</select>`;
+  return `
+  <h2><span class="n">5</span>Plan my term</h2>
+  <p>Pick a target air week for each of your minimums. There's no show in 2.6 or 2.9, and no news is assigned in week 2.1.</p>
+  <div class="stack" style="margin-top:14px">
+    <div><label class="fld" for="n1">News story 1</label>${sel("n1",m.n1)}</div>
+    <div><label class="fld" for="n2">News story 2 (or a sports package)</label>${sel("n2",m.n2)}</div>
+    <div><label class="fld" for="f">Feature (3 weeks before it airs)</label>${sel("f",m.f)}</div>
+    <div class="box"><span class="tag">MotS</span>Every other week you have no studio role. Claim it Monday.</div>
+    <div id="meter"></div>
+  </div>
+  <div class="nav"><button class="btn ghost" data-go="3">Back</button><span class="spacer"></span><button class="btn" data-go="5">Finish</button></div>`;
+},
+
+/* 5 done */
+() => {
+  let got=0, tot=0;
+  ORDER_Q.forEach(k=>{ const it=QUIZ[k].items; got+=it.filter((q,i)=>S.ans[k][i]===q.a).length; tot+=it.length; });
+  S.result={got,tot,when:S.result&&S.result.got===got?S.result.when:new Date()};
+  const m=S.mine, planned=m.n1||m.n2||m.f;
+  return `
+  <h2><span class="n">6</span>Done</h2>
+  <div class="score"><span class="big">${got}/${tot}</span><span class="muted">first tries correct</span></div>
+  <div class="stack" style="margin-top:16px">
+    <div><label class="fld" for="nm">Your name</label>
+      <input class="inp" id="nm" maxlength="60" value="${esc(S.name)}" placeholder="First and last name"></div>
+    <div class="passwrap">
+      <img id="passImg" class="pass-img" alt="Your press pass">
+      <button class="btn" id="dlPass" ${S.name.trim()?"":"disabled"}>${S.name.trim()?"Download press pass":"Type your name first"}</button>
+      <a class="btn ghost" href="https://khspress.fillout.com/certificate-upload" target="_blank" rel="noopener" style="text-decoration:none">Submit press pass ↗</a>
+      <p class="muted" style="text-align:center">Download it first, then upload the PNG on the submit form.</p>
+    </div>
+    ${planned?`<div class="box"><span class="tag">My Term 2 plan</span><div class="pitchline">${esc(planText())}</div></div>`:""}
+    <div class="callout"><span class="tag">Remember</span>Pick the type first. It sets your length, team and deadline. Then fill out the Story Pitch – Template and circle your target air week.</div>
+  </div>
+  <div class="nav"><button class="btn ghost" data-restart>Try again</button><span class="spacer"></span><button class="btn ghost" data-go="4">Back</button></div>`;
+}
+];
+
+function planText(){ const m=S.mine; return `News 1: week ${m.n1||"—"}\nNews 2: week ${m.n2||"—"}\nFeature: week ${m.f||"—"}\nMotS: every week I have no studio role`; }
+function meter(){
+  const el=document.getElementById("meter"); if(!el) return;
+  const m=S.mine; let cls="wait", msg;
+  if(!m.n1||!m.n2||!m.f) msg="Pick a week for all three.";
+  else if(m.n1===m.n2) msg="Both news stories air the same week. Spread them out so coverage is balanced.";
+  else if(m.f===m.n1||m.f===m.n2) msg="Your feature and a news story air the same week. That's a heavy week. Try moving one.";
+  else { cls="go"; msg="<b>Balanced plan.</b> Two news weeks and a feature week, all different."; }
+  el.innerHTML=`<div class="meter ${cls}" aria-live="polite">${msg}</div>`;
+}
+
+/* ---------- press pass PNG ---------- */
+const MODULE = {num:"08", title:"Which Package Is It?", skill:"News · Sports · MotS · Feature"};
+function rr(c,x,y,w,h,r){c.beginPath();c.moveTo(x+r,y);c.arcTo(x+w,y,x+w,y+h,r);c.arcTo(x+w,y+h,x,y+h,r);c.arcTo(x,y+h,x,y,r);c.arcTo(x,y,x+w,y,r);c.closePath();}
+function track(c,t,x,y,sp,align){ // letter-spaced text
+  const w=[...t].reduce((a,ch)=>a+c.measureText(ch).width+sp,-sp);
+  let cx = align==="center"? x-w/2 : align==="right"? x-w : x;
+  c.textAlign="left"; for(const ch of t){c.fillText(ch,cx,y);cx+=c.measureText(ch).width+sp;}
+}
+function passId(name,when,got){
+  let h=2166136261; for(const ch of name+"|"+when.toISOString()+"|"+got+"|"+MODULE.num){h^=ch.charCodeAt(0);h=Math.imul(h,16777619);}
+  const s=(h>>>0).toString(36).toUpperCase().padStart(7,"0"); return s.slice(0,4)+"-"+s.slice(4,7);
+}
+let fontsReady=null;
+function loadFonts(){
+  if(!fontsReady){ fontsReady = (document.fonts? Promise.all(["900 40px Montserrat","800 40px Montserrat","700 40px Montserrat","400 40px Lexend","600 40px Lexend"].map(f=>document.fonts.load(f).catch(()=>{}))) : Promise.resolve()).then(()=>new Promise(r=>setTimeout(r,0))); }
+  return fontsReady;
+}
+function drawPass(){
+  const W=1080,H=1500,R=56, c=document.createElement("canvas"); c.width=W; c.height=H; const x=c.getContext("2d");
+  const {got,tot,when}=S.result, name=(S.name.trim()||"Your name");
+  const MS="Montserrat, Arial Black, sans-serif", LX="Lexend, Arial, sans-serif";
+  // card
+  rr(x,0,0,W,H,R); x.save(); x.clip();
+  x.fillStyle="#fff"; x.fillRect(0,0,W,H);
+  const g=x.createLinearGradient(0,0,0,560); g.addColorStop(0,"#6F1A1D"); g.addColorStop(.55,"#A61E1E"); g.addColorStop(1,"#DD2A2A");
+  x.fillStyle=g; x.fillRect(0,0,W,560);
+  // subtle diagonal stripes in band
+  x.globalAlpha=.06; x.fillStyle="#fff"; for(let i=-600;i<W;i+=70){x.beginPath();x.moveTo(i,560);x.lineTo(i+560,0);x.lineTo(i+590,0);x.lineTo(i+30,560);x.fill();} x.globalAlpha=1;
+  // footer
+  x.fillStyle="#1E1E21"; x.fillRect(0,H-150,W,150);
+  x.restore();
+  // lanyard slot (punch out)
+  x.save(); x.globalCompositeOperation="destination-out"; rr(x,W/2-110,46,220,38,19); x.fill(); x.restore();
+  // band text
+  x.fillStyle="#fff"; x.globalAlpha=.9; x.font=`700 30px ${MS}`; track(x,"KHS COUGAR NEWS",W/2,150,9,"center"); x.globalAlpha=1;
+  x.font=`900 200px ${MS}`; x.textAlign="center";
+  x.fillStyle="rgba(60,20,20,.55)"; x.fillText("PRESS",W/2+6,346); x.fillText("PASS",W/2+6,516);
+  x.fillStyle="#fff"; x.fillText("PRESS",W/2,340); x.fillText("PASS",W/2,510);
+  // body
+  const L=90;
+  x.fillStyle="#4A4A50"; x.font=`800 28px ${MS}`; track(x,"ISSUED TO",L,650,6);
+  let fs=96; x.font=`800 ${fs}px ${MS}`; while(x.measureText(name.toUpperCase()).width>W-2*L && fs>40){fs-=4; x.font=`800 ${fs}px ${MS}`;}
+  x.fillStyle="#1E1E21"; x.textAlign="left"; x.fillText(name.toUpperCase(),L,650+20+fs*.85);
+  x.fillStyle="#E6DCDA"; x.fillRect(L,800,W-2*L,4);
+  x.fillStyle="#4A4A50"; x.font=`800 28px ${MS}`; track(x,"CLEARED IN · MICRO-LESSON "+MODULE.num,L,872,6);
+  x.fillStyle="#6F1A1D"; let tf=62; x.font=`800 ${tf}px ${MS}`; while(x.measureText(MODULE.title.toUpperCase()).width>W-2*L && tf>36){tf-=2; x.font=`800 ${tf}px ${MS}`;} x.fillText(MODULE.title.toUpperCase(),L,948);
+  x.fillStyle="#4A4A50"; x.font=`400 34px ${LX}`; x.fillText(MODULE.skill,L,1002);
+  // score + date
+  x.fillStyle="#4A4A50"; x.font=`800 28px ${MS}`; track(x,"SCORE",L,1100,6); track(x,"DATE",430,1100,6);
+  x.fillStyle="#B3201F"; x.font=`900 92px ${MS}`; x.fillText(`${got}/${tot}`,L,1195);
+  x.fillStyle="#1E1E21"; x.font=`800 50px ${MS}`; x.fillText(when.toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"}),430,1185);
+  x.fillStyle="#4A4A50"; x.font=`400 30px ${LX}`; x.fillText(when.toLocaleTimeString("en-US",{hour:"numeric",minute:"2-digit"}),430,1232);
+  // stamp
+  x.save(); x.translate(905,1160); x.rotate(-.2); x.strokeStyle="#B3201F"; x.fillStyle="#B3201F"; x.globalAlpha=.9;
+  x.lineWidth=7; x.beginPath(); x.arc(0,0,105,0,Math.PI*2); x.stroke(); x.lineWidth=3; x.beginPath(); x.arc(0,0,88,0,Math.PI*2); x.stroke();
+  x.font=`900 34px ${MS}`; x.textAlign="center"; x.fillText("ON",0,-14); x.fillText("AIR",0,26); x.font=`800 16px ${MS}`; x.fillText("★ CLEARED ★",0,58); x.restore();
+  // footer text
+  x.textAlign="left"; x.fillStyle="#DD2A2A"; x.font=`900 72px ${MS}`; x.fillText(MODULE.num,L,H-50);
+  x.fillStyle="#fff"; x.font=`700 26px ${MS}`; track(x,"KHS COUGAR NEWS · MICRO-LEARNING",L+120,H-84,4);
+  x.globalAlpha=.7; x.font=`600 24px ${MS}`; track(x,"PASS ID "+passId(name,when,got),L+120,H-48,4); x.globalAlpha=1;
+  return c;
+}
+function updatePass(){
+  const img=document.getElementById("passImg"); if(!img) return;
+  loadFonts().then(()=>{ try{ img.src=drawPass().toDataURL("image/png"); }catch(e){} });
+}
+function downloadPass(){
+  loadFonts().then(()=>{
+    const c=drawPass(), slug=(S.name.trim()||"student").replace(/[^a-z0-9]+/gi,"-").replace(/^-|-$/g,"");
+    const fn=`Press-Pass-${MODULE.num}-${slug}.png`;
+    c.toBlob(b=>{
+      if(!b) return;
+      const url=URL.createObjectURL(b), a=document.createElement("a");
+      a.href=url; a.download=fn; document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(()=>URL.revokeObjectURL(url),4000);
+    },"image/png");
+  });
+}
+
+function render(){
+  renderProg();
+  app.innerHTML = screens[S.step]();
+  if(S.step===4) meter();
+  if(S.step===5) updatePass();
+}
+
+/* ---------- events ---------- */
+app.addEventListener("click", e=>{
+  const t=e.target.closest("button"); if(!t) return;
+  if(t.dataset.say!==undefined){ speak(t.dataset.say); return; }
+  if(t.id==="dlPass"){ downloadPass(); return; }
+  if(t.dataset.go!==undefined){ go(+t.dataset.go); return; }
+  if(t.dataset.open){ S.opened.add(t.dataset.open); render(); const el=app.querySelector(`[data-open="${t.dataset.open}"]`); if(el) el.focus(); return; }
+  if(t.dataset.q){ const k=t.dataset.q, raw=t.dataset.k; S.ans[k][S.idx[k]] = isNaN(+raw)?raw:+raw; render(); return; }
+  if(t.dataset.nextq){ const k=t.dataset.nextq; if(S.idx[k]<QUIZ[k].items.length-1){ S.idx[k]++; render(); window.scrollTo({top:0}); app.focus(); } else go(+t.dataset.step+1); return; }
+  if(t.hasAttribute("data-restart")){ ORDER_Q.forEach(k=>{S.idx[k]=0;S.ans[k]=[];}); S.opened=new Set(); S.result=null; go(0); }
+});
+app.addEventListener("input", e=>{
+  const t=e.target;
+  if(t.dataset.lang!==undefined){ S.lang[t.dataset.lang]=t.value; save(); return; }
+  if(t.id==="nm"){ S.name=t.value; save(); const b=document.getElementById("dlPass"); if(b){ const ok=!!t.value.trim(); b.disabled=!ok; b.textContent=ok?"Download press pass":"Type your name first"; }
+    clearTimeout(S._pt); S._pt=setTimeout(updatePass,200); }
+});
+app.addEventListener("change", e=>{
+  const t=e.target;
+  if(["n1","n2","f"].includes(t.id)){ S.mine[t.id]=t.value; meter(); }
+});
+
+render();
+})();
+</script>
+</body>
+</html>

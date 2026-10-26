@@ -1,0 +1,598 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Two-Column Script</title>
+<meta name="description" content="KHS Cougar News micro-lesson: write a feature in a two-column script.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;700&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --red-dk:#6F1A1D; --red:#B3201F; --red-br:#DD2A2A; --ink:#1E1E21; --ink2:#4A4A50;
+  --line:#E6DCDA; --tint:#FBEFEE; --sand:#F6F2F0; --link:#1A5FB4; --ok:#1d7a3a; --ok-bg:#E8F4EC;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font-family:Lexend,system-ui,sans-serif;color:var(--ink);background:#fff;font-size:17px;line-height:1.55;min-height:100vh;display:flex;flex-direction:column}
+button{font:inherit;color:inherit;cursor:pointer}
+input{font:inherit}
+:focus-visible{outline:3px solid var(--link);outline-offset:2px}
+
+/* header band, after switcher.png */
+.band{background:linear-gradient(180deg,var(--red-dk) 0%,#A61E1E 55%,var(--red-br) 100%);color:#fff;padding:22px 16px 18px}
+.band-in{max-width:760px;margin:0 auto;position:relative}
+.kicker{font-family:Montserrat;font-weight:700;font-size:11px;letter-spacing:.2em;text-transform:uppercase;opacity:.88;padding-right:150px}
+.band h1{font-family:Montserrat;font-weight:900;font-size:clamp(28px,7vw,44px);line-height:1.02;text-transform:uppercase;margin-top:6px;text-shadow:2px 2px 0 rgba(60,20,20,.55)}
+.band .sub{font-weight:300;font-size:16px;margin-top:6px;opacity:.95}
+.chip{position:absolute;top:-2px;right:0;background:#fff;color:var(--red-dk);font-family:Montserrat;font-weight:800;font-size:10px;letter-spacing:.14em;padding:4px 9px;border-radius:3px}
+
+/* progress */
+.prog{background:var(--ink);color:#fff;padding:10px 16px}
+.prog-in{max-width:760px;margin:0 auto;display:flex;gap:6px;align-items:center}
+.prog .seg{flex:1;height:6px;border-radius:3px;background:#46464c}
+.prog .seg.done{background:var(--red-br)}
+.prog .seg.now{background:#fff}
+.prog .lbl{font-family:Montserrat;font-weight:700;font-size:11px;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap;margin-left:8px;opacity:.85}
+
+main{flex:1;width:100%;max-width:760px;margin:0 auto;padding:24px 16px 32px}
+h2{font-family:Montserrat;font-weight:800;font-size:20px;color:var(--red-dk);text-transform:uppercase;letter-spacing:.05em;display:flex;align-items:center;gap:10px;margin-bottom:12px}
+h2 .n{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;background:var(--red);color:#fff;font-size:15px;letter-spacing:0;flex:none}
+h3{font-family:Montserrat;font-weight:800;font-size:16px;margin-bottom:4px}
+p+p{margin-top:10px}
+.lead{font-size:18px}
+b{font-weight:600}
+.muted{color:var(--ink2);font-size:15px}
+
+.box{background:var(--sand);border-radius:8px;padding:14px 16px}
+.callout{background:var(--tint);border-left:5px solid var(--red);border-radius:0 8px 8px 0;padding:12px 16px;margin:16px 0}
+.tag{font-family:Montserrat;font-weight:800;font-size:11px;letter-spacing:.16em;color:var(--red-dk);text-transform:uppercase;display:block;margin-bottom:2px}
+.stack>*+*{margin-top:14px}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:10px 22px;border-radius:8px;border:0;background:var(--red);color:#fff;font-family:Montserrat;font-weight:800;font-size:15px;letter-spacing:.06em;text-transform:uppercase}
+.btn:hover{background:var(--red-dk)}
+.btn[disabled]{background:#c9c3c1;cursor:not-allowed}
+.btn.ghost{background:#fff;color:var(--red-dk);border:2px solid var(--red)}
+.btn.ghost:hover{background:var(--tint)}
+.nav{display:flex;justify-content:space-between;gap:12px;margin-top:24px;flex-wrap:wrap}
+.nav .spacer{flex:1}
+.say-btn{border:1.5px solid var(--line);background:#fff;border-radius:20px;padding:3px 10px;font-size:13px;font-weight:600;color:var(--ink2);display:inline-flex;align-items:center;gap:5px;vertical-align:middle}
+.say-btn:hover{border-color:var(--red);color:var(--red-dk)}
+
+/* value cards */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px}
+.vcard{text-align:left;background:var(--sand);border:2px solid transparent;border-radius:10px;padding:14px;min-height:150px;display:flex;flex-direction:column;gap:6px;transition:border-color .15s,background .15s}
+.vcard:hover{border-color:var(--line)}
+.vcard .easy{font-family:Montserrat;font-weight:900;font-size:12px;letter-spacing:.14em;color:var(--red)}
+.vcard .nm{font-family:Montserrat;font-weight:800;font-size:18px}
+.vcard .hint{font-size:13px;color:var(--ink2);margin-top:auto}
+.vcard .more{display:none;font-size:15px}
+.vcard.open{background:#fff;border-color:var(--red)}
+.vcard.open .more{display:block}
+.vcard.open .hint{display:none}
+.vcard .ex{color:var(--ink2);font-size:14px;margin-top:4px}
+.count{font-family:Montserrat;font-weight:800;font-size:13px;letter-spacing:.1em;color:var(--ink2);text-transform:uppercase;margin:14px 0 0}
+
+/* question */
+.q{background:var(--sand);border-radius:10px;padding:18px 18px 16px}
+.q .qn{font-family:Montserrat;font-weight:800;font-size:12px;letter-spacing:.14em;color:var(--ink2);text-transform:uppercase}
+.q .stem{font-size:19px;font-weight:600;margin:6px 0 4px}
+.opts{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-top:14px}
+.opts.two{grid-template-columns:1fr 1fr}
+.opts.one{grid-template-columns:1fr}
+.opt{text-align:left;background:#fff;border:2px solid var(--line);border-radius:8px;padding:10px 12px;min-height:48px;font-size:15px}
+.opt .e{display:block;font-family:Montserrat;font-weight:900;font-size:11px;letter-spacing:.12em;color:var(--red)}
+.opt:hover:not([disabled]){border-color:var(--red)}
+.opt[disabled]{cursor:default}
+.opt.right{border-color:var(--ok);background:var(--ok-bg)}
+.opt.wrong{border-color:var(--red);background:var(--tint)}
+.opt.dim{opacity:.55}
+.opt.pitch{font-size:16px;padding:14px}
+.opt.pitch b{font-family:Montserrat;font-weight:800;color:var(--red-dk);margin-right:6px}
+.fb{margin-top:14px;border-radius:8px;padding:12px 14px;display:none}
+.fb.show{display:block}
+.fb.ok{background:var(--ok-bg);border-left:5px solid var(--ok)}
+.fb.no{background:var(--tint);border-left:5px solid var(--red)}
+.fb .v{font-family:Montserrat;font-weight:900;font-size:12px;letter-spacing:.12em;text-transform:uppercase;display:block;margin-bottom:2px}
+.fb.ok .v{color:var(--ok)} .fb.no .v{color:var(--red)}
+.pills{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.pill{font-family:Montserrat;font-weight:800;font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding:3px 9px;border-radius:20px;background:var(--red);color:#fff}
+.pill.ink{background:var(--ink)}
+
+/* your turn */
+label.fld{display:block;font-weight:600;margin-bottom:6px}
+.inp{width:100%;border:2px solid var(--line);border-radius:8px;padding:12px;font-size:16px;background:#fff}
+.inp:focus{border-color:var(--red);outline:none}
+.checks{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px}
+.ck{display:flex;align-items:center;gap:10px;background:#fff;border:2px solid var(--line);border-radius:8px;padding:10px 12px;min-height:48px;cursor:pointer;font-size:15px}
+.ck input{width:20px;height:20px;accent-color:var(--red);flex:none}
+.ck:has(input:checked){border-color:var(--red);background:var(--tint)}
+.meter{margin-top:14px;border-radius:8px;padding:12px 14px;background:var(--sand)}
+.meter.go{background:var(--ok-bg);border-left:5px solid var(--ok)}
+.meter.wait{border-left:5px solid #b9b2b0}
+.pitchline{font-size:16px;background:#fff;border:2px dashed var(--line);border-radius:8px;padding:12px;margin-top:10px;white-space:pre-wrap}
+
+/* words to know */
+table{width:100%;border-collapse:collapse;font-size:15px}
+th{font-family:Montserrat;font-weight:800;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--red-dk);text-align:left;padding:8px;border-bottom:2px solid var(--red)}
+td{padding:8px;border-bottom:1px solid var(--line);vertical-align:top}
+td.k{font-family:Montserrat;font-weight:800;white-space:nowrap}
+td input{width:100%;min-width:90px;border:0;border-bottom:1.5px solid #9a9a9a;padding:4px 2px;font-size:15px;background:transparent}
+details{margin-top:18px}
+summary{font-family:Montserrat;font-weight:800;font-size:14px;letter-spacing:.1em;text-transform:uppercase;color:var(--red-dk);cursor:pointer;padding:6px 0;min-height:40px;display:flex;align-items:center}
+
+.walk{display:grid;gap:8px}
+.wk{text-align:left;width:100%;align-items:flex-start}
+.wk .box2{width:22px;height:22px;border:2px solid var(--red);border-radius:4px;flex:none;display:inline-flex;align-items:center;justify-content:center;font-weight:700;color:#fff;margin-top:2px}
+.wk.on{border-color:var(--red);background:var(--tint)}
+.wk.on .box2{background:var(--red)}
+.wk.right{border-color:var(--ok);background:var(--ok-bg)}
+.wk.wrong{border-color:var(--red);background:var(--tint)}
+.wk .why{display:block;font-size:14px;color:var(--ink2);margin-top:4px}
+.wk[disabled]{cursor:default}
+.write{border-bottom:1.5px solid #9a9a9a;padding:0 4px;font-weight:600}
+
+.cols2{display:grid;grid-template-columns:1fr 1.6fr;gap:10px}
+.stepf{display:flex;gap:12px;align-items:flex-start}
+.stepf>div{flex:1;min-width:0}
+.stepf .sn{flex:none;width:30px;height:30px;border-radius:50%;background:var(--ink);color:#fff;font-family:Montserrat;font-weight:800;font-size:14px;display:flex;align-items:center;justify-content:center;margin-top:2px}
+.stepf .fld{display:block;font-weight:600;margin-bottom:6px}
+.frame{display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center}
+.frame .inp{flex:1 1 180px;width:auto}
+.frame span{font-weight:600;color:var(--red-dk)}
+@media (max-width:480px){.cols2{grid-template-columns:1fr}}
+
+.cols2.eq{grid-template-columns:1fr 1fr}
+.good::before{content:"OPEN  ";font-family:Montserrat;font-weight:900;color:var(--ok);font-size:11px;letter-spacing:.1em}
+.bad::before{content:"YES/NO  ";font-family:Montserrat;font-weight:900;color:var(--red);font-size:11px;letter-spacing:.1em}
+.strike{text-decoration:line-through;text-decoration-color:var(--red);text-decoration-thickness:2px;color:var(--ink2)}
+ol.order{list-style:none;display:grid;gap:8px}
+.slot{display:flex;gap:10px;align-items:flex-start;background:#fff;border:2px solid var(--line);border-radius:8px;padding:10px 12px;min-height:48px;font-size:15px}
+.slot.empty{border-style:dashed;background:var(--sand)}
+.slot>span:nth-child(2){flex:1}
+.slot .sn{flex:none;width:26px;height:26px;border-radius:50%;background:var(--ink);color:#fff;font-family:Montserrat;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center}
+.slot.right{border-color:var(--ok);background:var(--ok-bg)}
+.slot.wrong{border-color:var(--red);background:var(--tint)}
+.slot .why{display:block;font-size:13px;color:var(--ink2);margin-top:4px}
+.undo{flex:none;border:1.5px solid var(--line);background:#fff;border-radius:20px;padding:2px 10px;font-size:13px;font-weight:600;color:var(--ink2)}
+.qcheck{font-size:14px;margin-top:6px;min-height:0}
+.qcheck.ok{color:var(--ok)} .qcheck.ok::before{content:"✓ "}
+.qcheck.no{color:var(--red)} .qcheck.no::before{content:"! "}
+@media (max-width:480px){.cols2.eq{grid-template-columns:1fr}}
+
+.rules{display:grid;gap:8px}
+.len{display:inline-block;font-family:Montserrat;font-weight:900;font-size:13px;background:var(--ink);color:#fff;border-radius:4px;padding:1px 7px;vertical-align:middle}
+.tc{background:#fff;border:2px solid var(--line);border-radius:8px;padding:12px 14px;font-size:16px}
+.tcrow{display:flex;justify-content:space-between;font-family:Montserrat;font-weight:800;font-size:12px;letter-spacing:.1em;color:var(--red-dk);margin-bottom:6px}
+
+svg.shot{display:block;width:100%;height:auto;border-radius:6px;background:#ddd}
+.shotwrap{max-width:520px;margin:6px auto 0}
+.wmt{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.wmt figure{margin:0}.wmt figcaption{font-size:13px;margin-top:4px;line-height:1.3}
+.shotgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+.shotcard{margin:0;background:var(--sand);border-radius:10px;padding:8px}
+.shotcard figcaption{display:flex;gap:10px;align-items:flex-start;font-size:14px;margin-top:8px;line-height:1.4}
+.big-l{font-family:Montserrat;font-weight:900;font-size:28px;color:var(--red);line-height:1;flex:none;width:26px}
+.shotopts{grid-template-columns:repeat(auto-fill,minmax(140px,1fr))}
+.planrow{display:flex;gap:10px;align-items:flex-start}
+.planrow>div{flex:1;min-width:0}
+.pl{flex:none;width:30px;height:30px;border-radius:50%;background:var(--red);color:#fff;font-family:Montserrat;font-weight:900;font-size:14px;display:flex;align-items:center;justify-content:center;margin-top:2px}
+@media (max-width:480px){.wmt{grid-template-columns:1fr 1fr 1fr;gap:6px}.wmt figcaption{font-size:11px}.shotopts{grid-template-columns:1fr 1fr}}
+
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.stats>div{background:var(--ink);color:#fff;border-radius:8px;padding:10px;text-align:center}
+.stats .kv{display:block;font-family:Montserrat;font-weight:700;font-size:10px;letter-spacing:.12em;text-transform:uppercase;opacity:.75}
+.stats .sv{display:block;font-family:Montserrat;font-weight:900;font-size:17px;color:#fff;margin-top:2px}
+ol.rulelist{padding-left:22px;display:grid;gap:6px;font-size:16px}
+ol.rulelist li::marker{font-family:Montserrat;font-weight:800;color:var(--red)}
+.checks.one-col{grid-template-columns:1fr}
+@media (max-width:480px){.stats{grid-template-columns:1fr 1fr}}
+
+dl.facts{display:grid;grid-template-columns:auto 1fr;gap:2px 10px;margin-top:8px;font-size:14px}
+dl.facts dt{font-family:Montserrat;font-weight:800;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--red-dk);padding-top:2px}
+dl.facts dd{margin:0}
+select.inp{appearance:auto;min-height:48px}
+
+.opts.three{grid-template-columns:repeat(3,1fr)}
+table.script{border:2px solid var(--ink);border-radius:6px;overflow:hidden}
+table.script th{background:var(--ink);color:#fff;border-bottom:0}
+table.script td{width:50%;font-size:14px}
+table.script td:first-child{background:var(--sand);border-right:1px solid var(--line)}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:8px;flex:1}
+.rowopt{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.vc{font-size:14px;color:var(--ink2)} .ac{font-size:14px}
+.row2 .why{grid-column:1/-1}
+.tworow{display:grid;grid-template-columns:1fr 1fr;gap:10px;background:var(--sand);border-radius:8px;padding:10px}
+@media (max-width:480px){.opts.three{grid-template-columns:1fr}.tworow{grid-template-columns:1fr}}
+
+/* done */
+.score{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.big{font-family:Montserrat;font-weight:900;font-size:56px;color:var(--red);line-height:1}
+.dark{background:var(--ink);color:#fff;border-radius:10px;padding:18px}
+.dark .tag{color:#ff8d8d}
+.dark .who{font-family:Montserrat;font-weight:800;font-size:22px;margin-top:4px}
+.dark .row{display:flex;justify-content:space-between;gap:12px;border-top:1px solid #3a3a40;padding-top:8px;margin-top:8px;font-size:15px}
+
+.passwrap{display:flex;flex-direction:column;align-items:center;gap:12px}
+.pass-img{width:100%;max-width:340px;display:block;filter:drop-shadow(0 8px 18px rgba(30,30,33,.25))}
+.passwrap .btn{width:100%;max-width:340px}
+
+footer{background:var(--ink);color:#fff;padding:12px 16px;font-family:Montserrat;font-size:11px;font-weight:600;letter-spacing:.06em}
+footer .in{max-width:760px;margin:0 auto;display:flex;align-items:center;gap:14px}
+footer .num{font-weight:900;font-size:22px;color:var(--red-br);line-height:1}
+footer .doc{flex:1;text-transform:uppercase}
+
+@media (max-width:480px){
+  .opts.two{grid-template-columns:1fr}
+  .nav .btn{flex:1}
+  .nav .spacer{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+@media print{.prog,.nav,.say-btn{display:none!important}}
+</style>
+</head>
+<body>
+
+<header class="band">
+  <div class="band-in">
+    <div class="kicker">KHS Cougar News · 04 Story Packages</div>
+    <span class="chip">MICRO-LESSON 10</span>
+    <h1>Two-Column Script</h1>
+    <div class="sub">Video left · audio right · beginning, middle, end</div>
+  </div>
+</header>
+
+<nav class="prog" aria-label="Progress">
+  <div class="prog-in" id="prog"></div>
+</nav>
+
+<main id="app" tabindex="-1"></main>
+
+<footer>
+  <div class="in"><span class="num">04</span><span class="doc">Based on Feature – Guide</span><span>~9 min</span></div>
+</footer>
+
+<script>
+(function(){
+"use strict";
+
+/* ---------- content (from Feature – Guide: The parts, §6 Pick sound bites, §7 Write the script, sample two-column script) ---------- */
+const SAMPLE = [
+  ["Tight: drill bit going into metal","NAT POP: drill, 2 sec"],
+  ["Wide: 4 students around a robot frame","VO: Three weeks ago, this robot was in pieces."],
+  ["Medium: a freshman tightens a wheel","VO: A crash bent the frame. The freshmen offered to rebuild it."],
+  ["Interview. Lower third: Maya Torres, 9th grade","BITE: \"I had never held a wrench before this year. Now I'm the one they ask.\""],
+  ["Wide: robot rolls across the floor","NAT: wheels, team cheers"]
+];
+const PARTS = [
+  ["Voice-over (VO)","Your recorded voice. Carries the facts."],
+  ["Sound bite","A short interview clip. Carries feeling and opinion."],
+  ["B-roll","Video of the story happening."],
+  ["Nat sound","Real sound from the scene: a whistle, a drill, a crowd."],
+  ["Lower third","Name and grade or title at the bottom of the screen."]
+];
+
+/* Practice story (made up): focus "Garden feeds cafeteria" */
+const QUIZ = {
+  col: { n:2, h:"Which column?", intro:"Everything the viewer sees goes on the left. Everything they hear goes on the right.", lbl:"Line", two:true,
+    opts:[{k:"v",l:"Video",e:"What we see"},{k:"a",l:"Audio",e:"What we hear"}], items:[
+    {stem:"Tight: hands pull a carrot from the dirt", a:"v", why:"A shot is something we see. Video column."},
+    {stem:"NAT POP: hose spraying, 2 sec", a:"a", why:"Nat sound is something we hear. Audio column."},
+    {stem:"VO: Every Friday, the lunch line serves food grown 100 feet away.", a:"a", why:"The voice-over is heard. Audio column."},
+    {stem:"Interview. Lower third: Jordan Reyes, 10th grade", a:"v", why:"The interview shot and the lower third are seen. Video column."},
+    {stem:"BITE: \"I never ate vegetables until I grew them.\"", a:"a", why:"The bite is what they say. Audio column."},
+    {stem:"Wide: garden beds behind the cafeteria", a:"v", why:"A shot. Video column."},
+    {stem:"NAT: lunch line chatter, low under the VO", a:"a", why:"Sound. Audio column."},
+    {stem:"Medium: a cafeteria worker carries a crate of lettuce", a:"v", why:"A shot. Video column."}]},
+  vob: { n:3, h:"VO or bite?", intro:"Facts go in the VO. Feelings go in sound bites.", lbl:"Line", two:true,
+    opts:[{k:"vo",l:"VO",e:"A fact"},{k:"bite",l:"Bite",e:"A feeling"}], items:[
+    {stem:"The garden club planted 12 beds in August.", a:"vo", why:"A fact. You say it in the VO."},
+    {stem:"\"Watching a kid try a tomato he grew is the best part of my day.\"", a:"bite", why:"A feeling only that person could say. That's a bite."},
+    {stem:"The cafeteria serves the lettuce every Friday.", a:"vo", why:"A fact. VO."},
+    {stem:"\"I didn't think anyone would care. Now people stop me in the hall.\"", a:"bite", why:"A memory and a feeling. Bite."},
+    {stem:"Club members water the beds before first period.", a:"vo", why:"A fact. VO."},
+    {stem:"\"This garden is the reason I come to school early.\"", a:"bite", why:"A reason, in their words. Bite."}]},
+  bme: { n:4, h:"Beginning, middle or end?", intro:"Every feature has a beginning, a middle and an end. Where does each piece go?", lbl:"Piece",
+    opts:[{k:"b",l:"Beginning"},{k:"m",l:"Middle"},{k:"e",l:"End"}], items:[
+    {stem:"Your best b-roll and a pop of nat sound", a:"b", why:"Beginning: best b-roll and a pop of nat sound."},
+    {stem:"VO, bite, VO, bite", a:"m", why:"The middle moves back and forth between VO and bites."},
+    {stem:"A strong bite, nat sound or what happens next", a:"e", why:"End on a strong bite, nat sound or what happens next."},
+    {stem:"Hook viewers in 10 seconds", a:"b", why:"The beginning has to hook viewers fast."},
+    {stem:"Gold coins: a surprise, a laugh, a great shot", a:"m", why:"Add gold coins along the way through the middle."},
+    {stem:"VO: Next spring, the club plans to double the garden.", a:"e", why:"What happens next. That's an ending."}]}
+};
+
+/* Build it: put the garden script rows in order */
+const ROWS = [
+  {v:"Tight: hands pull a carrot from the dirt", a:"NAT POP: roots tearing, 2 sec", part:"Beginning · nat pop"},
+  {v:"Wide: garden beds behind the cafeteria", a:"VO: Behind the cafeteria, a garden grows part of your lunch.", part:"Beginning · hook"},
+  {v:"Medium: club members water beds at sunrise", a:"VO: It started in August, when the garden club planted 12 beds.", part:"Middle · VO"},
+  {v:"Interview. Lower third: Jordan Reyes, 10th grade", a:"BITE: \"I never ate vegetables until I grew them.\"", part:"Middle · bite"},
+  {v:"Medium: a cafeteria worker carries a crate of lettuce", a:"VO: Now, every Friday, the cafeteria serves what they grow.", part:"Middle · VO"},
+  {v:"Interview. Lower third: Ana Ruiz, cafeteria manager", a:"BITE: \"Kids actually eat the salad when they know who grew it.\"", part:"End · strong bite"}
+];
+const SHUFFLE = [3,5,0,4,1,2];
+
+const WORDS = [
+  ["two-column script","Video on the left, audio on the right, lined up row by row."],
+  ["voice-over (VO)","Your recorded voice. It carries the facts."],
+  ["nat pop","A short burst of real sound at full volume."],
+  ["gold coin","A small reward for viewers: a surprise, a laugh, a great shot."],
+  ["say dog, see dog","When the VO names something, the video shows it."]
+];
+
+/* ---------- state ---------- */
+const ORDER_Q = ["col","vob","bme"];
+const STEPS = ["Start","Which column?","VO or bite?","Beginning · middle · end","Build it","Your turn","Done"];
+const S = {step:0, idx:{}, ans:{}, picked:[], orderChecked:false, mine:{focus:"",r:[["",""],["",""],["",""]]}, name:""};
+const KEY = "khscn-ml-10";
+function load(){ try{ const d=JSON.parse(localStorage.getItem(KEY)||"{}"); if(d.lang) S.lang=d.lang; if(d.name) S.name=d.name;
+  if(!S.name){ for(const k of ["khscn-ml-09","khscn-ml-08","khscn-ml-07","khscn-ml-06","khscn-ml-05","khscn-ml-04","khscn-ml-03","khscn-ml-02","khscn-ml-01"]){ const o=JSON.parse(localStorage.getItem(k)||"{}"); if(o.name){S.name=o.name;break;} } } }catch(e){} S.lang=S.lang||{}; }
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify({lang:S.lang,name:S.name})); }catch(e){} }
+load();
+ORDER_Q.forEach(k=>{S.idx[k]=0;S.ans[k]=[];});
+
+/* ---------- helpers ---------- */
+const app = document.getElementById("app");
+const esc = s => String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const canSpeak = "speechSynthesis" in window;
+function speak(t){ if(!canSpeak) return; try{ speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(t); u.rate=.92; speechSynthesis.speak(u);}catch(e){} }
+const sayBtn = t => canSpeak ? `<button class="say-btn" data-say="${esc(t)}" aria-label="Listen"><span aria-hidden="true">🔊</span> Listen</button>` : "";
+function go(n){ if(canSpeak) speechSynthesis.cancel(); S.step=n; render(); window.scrollTo({top:0}); app.focus({preventScroll:true}); }
+function renderProg(){
+  document.getElementById("prog").innerHTML =
+    STEPS.map((_,i)=>`<span class="seg ${i<S.step?"done":i===S.step?"now":""}"></span>`).join("") +
+    `<span class="lbl">${S.step+1}/${STEPS.length} · ${esc(STEPS[S.step])}</span>`;
+}
+const fmt = s => esc(s).replace(/^(NAT POP|NAT|VO|BITE):/,'<b>$1:</b>');
+function quizScreen(key, stepNo){
+  const Q=QUIZ[key], i=S.idx[key], it=Q.items[i], ans=S.ans[key][i], has=ans!==undefined;
+  const opts=it.opts||Q.opts, right=has&&ans===it.a, ansLabel=(opts.find(o=>o.k===it.a)||{}).l;
+  return `
+  <h2><span class="n">${Q.n}</span>${esc(Q.h)}</h2>
+  <p>${esc(Q.intro)}</p>
+  <div class="q" style="margin-top:14px">
+    <div class="qn">${Q.lbl} ${i+1} of ${Q.items.length}</div>
+    <p class="stem">${fmt(it.stem)} ${sayBtn(it.stem)}</p>
+    <div class="opts ${Q.two?"two":"three"}">${opts.map(o=>{
+      let c=""; if(has){ c = o.k===it.a?"right":(o.k===ans?"wrong":"dim"); }
+      return `<button class="opt ${c}" data-q="${key}" data-k="${o.k}" ${has?"disabled":""}>${o.e?`<span class="e">${esc(o.e)}</span>`:""}${esc(o.l)}</button>`;}).join("")}
+    </div>
+    <div class="fb ${has?(right?"ok show":"no show"):""}" aria-live="polite">
+      ${has?`<span class="v">${right?"Yes.":"Not quite: "+esc(ansLabel)+"."}</span>${esc(it.why)}`:""}
+    </div>
+  </div>
+  <div class="nav"><button class="btn ghost" data-go="${stepNo-1}">Back</button><span class="spacer"></span>
+    ${has?`<button class="btn" data-nextq="${key}" data-step="${stepNo}">${i<Q.items.length-1?"Next":"Next step"}</button>`:""}</div>`;
+}
+const scriptTable = rows => `<table class="script"><thead><tr><th>Video</th><th>Audio</th></tr></thead><tbody>${rows.map(([v,a])=>`<tr><td>${esc(v)}</td><td>${fmt(a)}</td></tr>`).join("")}</tbody></table>`;
+
+/* ---------- screens ---------- */
+const screens = [
+/* 0 start */
+() => `
+  <div class="stack">
+    <h2><span class="n">1</span>Two columns</h2>
+    <p class="lead">A feature script has two columns. <b>Video</b> on the left: what we see. <b>Audio</b> on the right: what we hear. Each row lines up. ${sayBtn("A feature script has two columns. Video on the left: what we see. Audio on the right: what we hear. Each row lines up.")}</p>
+    <p class="muted">Sample from the Feature – Guide (made-up story, focus: Rookies rebuild robot)</p>
+    ${scriptTable(SAMPLE)}
+    <table><thead><tr><th>Part</th><th>What it does</th></tr></thead>
+      <tbody>${PARTS.map(([p,d])=>`<tr><td class="k">${esc(p)}</td><td>${esc(d)}</td></tr>`).join("")}</tbody></table>
+    <div class="callout"><span class="tag">The rule</span>Facts go in the VO. Feelings go in sound bites. ${sayBtn("Facts go in the VO. Feelings go in sound bites.")}</div>
+    <details>
+      <summary>Words to know</summary>
+      <table>
+        <thead><tr><th>Word</th><th>What it means</th><th>In my language</th></tr></thead>
+        <tbody>${WORDS.map(([w,m],i)=>`<tr><td class="k">${esc(w)}</td><td>${esc(m)}</td><td><input data-lang="${i}" aria-label="${esc(w)} in my language" value="${esc(S.lang[i]||"")}"></td></tr>`).join("")}</tbody>
+      </table>
+    </details>
+  </div>
+  <div class="nav"><span class="spacer"></span><button class="btn" data-go="1">Start</button></div>`,
+() => quizScreen("col",1),
+() => quizScreen("vob",2),
+() => quizScreen("bme",3),
+
+/* 4 build it */
+() => {
+  const done=S.orderChecked, left=SHUFFLE.filter(k=>!S.picked.includes(k));
+  return `
+  <h2><span class="n">5</span>Build it</h2>
+  <p>Focus: <b>Garden feeds cafeteria.</b> Tap the rows in script order: beginning, middle, end.</p>
+  <ol class="order" style="margin-top:14px">
+    ${ROWS.map((_,slot)=>{
+      const k=S.picked[slot];
+      if(k===undefined) return `<li class="slot empty"><span class="sn">${slot+1}</span><span class="muted">Tap a row below</span></li>`;
+      const right=k===slot, r=ROWS[k];
+      return `<li class="slot ${done?(right?"right":"wrong"):""}"><span class="sn">${slot+1}</span><span class="row2"><span class="vc">${esc(r.v)}</span><span class="ac">${fmt(r.a)}</span>${done?`<span class="why">${right?"✓ "+esc(r.part):"Should be: "+esc(ROWS[slot].part)}</span>`:""}</span>
+        ${!done&&slot===S.picked.length-1?`<button class="undo" data-undo aria-label="Undo">Undo</button>`:""}</li>`;
+    }).join("")}
+  </ol>
+  ${!done&&left.length?`<div class="opts one" style="margin-top:12px">${left.map(k=>`<button class="opt rowopt" data-pick="${k}"><span class="vc">${esc(ROWS[k].v)}</span><span class="ac">${fmt(ROWS[k].a)}</span></button>`).join("")}</div>`:""}
+  ${done?`<div class="fb show ${S.picked.every((k,s)=>k===s)?"ok":"no"}" aria-live="polite"><span class="v">${S.picked.filter((k,s)=>k===s).length} of ${ROWS.length} in the right spot</span>
+    Beginning: a nat pop and your best b-roll. Middle: VO, bite, VO. End: a strong bite. Read the audio column alone. It should make sense with your eyes closed.</div>`:""}
+  <div class="nav"><button class="btn ghost" data-go="3">Back</button><span class="spacer"></span>
+    ${done?`<button class="btn" data-go="5">Next</button>`:`<button class="btn" data-ordercheck ${S.picked.length<ROWS.length?"disabled":""}>Check</button>`}</div>`;
+},
+
+/* 5 your turn */
+() => {
+  const m=S.mine, labels=[["Beginning · video","Your best shot of the action"],["Beginning · audio","NAT POP: the sound, 2 sec"],["Middle · video","A shot that matches your VO"],["Middle · audio","VO: one fact, short and active"],["Interview · video","Interview. Lower third: name, grade or title"],["Interview · audio","BITE: \"a feeling, in their words\""]];
+  return `
+  <h2><span class="n">6</span>Your turn</h2>
+  <p>Start the two-column script for your feature: the opening row, one VO row and one bite row.</p>
+  <div class="stack" style="margin-top:14px">
+    <div><label class="fld" for="focus">My focus (noun, verb, noun)</label>
+      <input class="inp" id="focus" maxlength="60" placeholder="Example: Rookies rebuild robot" value="${esc(m.focus)}"></div>
+    ${m.r.map((row,i)=>`<div class="tworow">
+      ${[0,1].map(c=>{const [l,ph]=labels[i*2+c]; return `<div><label class="fld" for="r${i}${c}">${l}</label><input class="inp" id="r${i}${c}" data-r="${i}" data-c="${c}" maxlength="140" placeholder="${esc(ph)}" value="${esc(row[c])}"></div>`;}).join("")}
+    </div>`).join("")}
+    <div id="meter"></div>
+  </div>
+  <div class="nav"><button class="btn ghost" data-go="4">Back</button><span class="spacer"></span><button class="btn" data-go="6">Finish</button></div>`;
+},
+
+/* 6 done */
+() => {
+  let got=0, tot=0;
+  ORDER_Q.forEach(k=>{ const it=QUIZ[k].items; got+=it.filter((q,i)=>S.ans[k][i]===q.a).length; tot+=it.length; });
+  got+=S.orderChecked?S.picked.filter((k,s)=>k===s).length:0; tot+=ROWS.length;
+  S.result={got,tot,when:S.result&&S.result.got===got?S.result.when:new Date()};
+  const any=S.mine.r.some(r=>r[0].trim()||r[1].trim());
+  return `
+  <h2><span class="n">7</span>Done</h2>
+  <div class="score"><span class="big">${got}/${tot}</span><span class="muted">first tries correct</span></div>
+  <div class="stack" style="margin-top:16px">
+    <div><label class="fld" for="nm">Your name</label>
+      <input class="inp" id="nm" maxlength="60" value="${esc(S.name)}" placeholder="First and last name"></div>
+    <div class="passwrap">
+      <img id="passImg" class="pass-img" alt="Your press pass">
+      <button class="btn" id="dlPass" ${S.name.trim()?"":"disabled"}>${S.name.trim()?"Download press pass":"Type your name first"}</button>
+      <a class="btn ghost" href="https://khspress.fillout.com/certificate-upload" target="_blank" rel="noopener" style="text-decoration:none">Submit press pass ↗</a>
+      <p class="muted" style="text-align:center">Download it first, then upload the PNG on the submit form.</p>
+    </div>
+    ${any?`<div class="box"><span class="tag">My script start</span>${scriptTable(S.mine.r.filter(r=>r[0].trim()||r[1].trim()))}<button class="btn ghost" data-copy style="margin-top:10px;width:100%">Copy as a table</button><p class="muted" style="margin-top:6px">Paste into a Google Doc. It pastes as a two-column table.</p></div>`:""}
+    <div class="callout"><span class="tag">Remember</span>Video left, audio right. Facts in the VO, feelings in bites. Beginning: best b-roll + a nat pop. Middle: VO, bite, VO, bite, with gold coins. End: a strong bite, nat sound or what happens next.</div>
+  </div>
+  <div class="nav"><button class="btn ghost" data-restart>Try again</button><span class="spacer"></span><button class="btn ghost" data-go="5">Back</button></div>`;
+}
+];
+
+function meter(){
+  const el=document.getElementById("meter"); if(!el) return;
+  const m=S.mine, r=m.r; let cls="wait", msg;
+  const filled=r.flat().filter(s=>s.trim()).length;
+  if(filled<6) msg=`${filled} of 6 boxes filled.`;
+  else if(!/^\s*nat/i.test(r[0][1])) msg="Open with a nat pop. Start the first audio box with \"NAT POP:\".";
+  else if(/["“]/.test(r[1][1])) msg="Your VO row has a quote in it. Quotes and feelings go in a bite. Facts go in the VO.";
+  else if(!/["“]/.test(r[2][1])) msg="Put the bite in quotation marks: their exact words.";
+  else if(!/lower third/i.test(r[2][0])) msg="Add the lower third to the interview row: name + grade, or name + title.";
+  else { cls="go"; msg="<b>That's a strong start.</b> Keep going: VO, bite, VO, bite. Then end on a strong bite."; }
+  el.innerHTML=`<div class="meter ${cls}" aria-live="polite">${msg}</div>`;
+}
+function copyDraft(btn){
+  const rows=S.mine.r.filter(r=>r[0].trim()||r[1].trim());
+  const html=`<table border="1"><tr><th>Video</th><th>Audio</th></tr>${rows.map(([v,a])=>`<tr><td>${esc(v)}</td><td>${esc(a)}</td></tr>`).join("")}</table>`;
+  const text=["Video\tAudio",...rows.map(([v,a])=>v+"\t"+a)].join("\n");
+  const done=()=>{ btn.textContent="Copied"; setTimeout(()=>btn.textContent="Copy as a table",1800); };
+  try{ if(navigator.clipboard&&window.ClipboardItem&&window.isSecureContext){
+    navigator.clipboard.write([new ClipboardItem({"text/html":new Blob([html],{type:"text/html"}),"text/plain":new Blob([text],{type:"text/plain"})})]).then(done,fallback); return; } }catch(e){}
+  fallback();
+  function fallback(){ const ta=document.createElement("textarea"); ta.value=text; ta.style.position="fixed"; ta.style.opacity="0"; document.body.appendChild(ta); ta.select(); try{document.execCommand("copy"); done();}catch(e){} ta.remove(); }
+}
+
+/* ---------- press pass PNG ---------- */
+const MODULE = {num:"10", title:"Two-Column Script", skill:"Video left · audio right · beginning, middle, end"};
+function rr(c,x,y,w,h,r){c.beginPath();c.moveTo(x+r,y);c.arcTo(x+w,y,x+w,y+h,r);c.arcTo(x+w,y+h,x,y+h,r);c.arcTo(x,y+h,x,y,r);c.arcTo(x,y,x+w,y,r);c.closePath();}
+function track(c,t,x,y,sp,align){ // letter-spaced text
+  const w=[...t].reduce((a,ch)=>a+c.measureText(ch).width+sp,-sp);
+  let cx = align==="center"? x-w/2 : align==="right"? x-w : x;
+  c.textAlign="left"; for(const ch of t){c.fillText(ch,cx,y);cx+=c.measureText(ch).width+sp;}
+}
+function passId(name,when,got){
+  let h=2166136261; for(const ch of name+"|"+when.toISOString()+"|"+got+"|"+MODULE.num){h^=ch.charCodeAt(0);h=Math.imul(h,16777619);}
+  const s=(h>>>0).toString(36).toUpperCase().padStart(7,"0"); return s.slice(0,4)+"-"+s.slice(4,7);
+}
+let fontsReady=null;
+function loadFonts(){
+  if(!fontsReady){ fontsReady = (document.fonts? Promise.all(["900 40px Montserrat","800 40px Montserrat","700 40px Montserrat","400 40px Lexend","600 40px Lexend"].map(f=>document.fonts.load(f).catch(()=>{}))) : Promise.resolve()).then(()=>new Promise(r=>setTimeout(r,0))); }
+  return fontsReady;
+}
+function drawPass(){
+  const W=1080,H=1500,R=56, c=document.createElement("canvas"); c.width=W; c.height=H; const x=c.getContext("2d");
+  const {got,tot,when}=S.result, name=(S.name.trim()||"Your name");
+  const MS="Montserrat, Arial Black, sans-serif", LX="Lexend, Arial, sans-serif";
+  // card
+  rr(x,0,0,W,H,R); x.save(); x.clip();
+  x.fillStyle="#fff"; x.fillRect(0,0,W,H);
+  const g=x.createLinearGradient(0,0,0,560); g.addColorStop(0,"#6F1A1D"); g.addColorStop(.55,"#A61E1E"); g.addColorStop(1,"#DD2A2A");
+  x.fillStyle=g; x.fillRect(0,0,W,560);
+  // subtle diagonal stripes in band
+  x.globalAlpha=.06; x.fillStyle="#fff"; for(let i=-600;i<W;i+=70){x.beginPath();x.moveTo(i,560);x.lineTo(i+560,0);x.lineTo(i+590,0);x.lineTo(i+30,560);x.fill();} x.globalAlpha=1;
+  // footer
+  x.fillStyle="#1E1E21"; x.fillRect(0,H-150,W,150);
+  x.restore();
+  // lanyard slot (punch out)
+  x.save(); x.globalCompositeOperation="destination-out"; rr(x,W/2-110,46,220,38,19); x.fill(); x.restore();
+  // band text
+  x.fillStyle="#fff"; x.globalAlpha=.9; x.font=`700 30px ${MS}`; track(x,"KHS COUGAR NEWS",W/2,150,9,"center"); x.globalAlpha=1;
+  x.font=`900 200px ${MS}`; x.textAlign="center";
+  x.fillStyle="rgba(60,20,20,.55)"; x.fillText("PRESS",W/2+6,346); x.fillText("PASS",W/2+6,516);
+  x.fillStyle="#fff"; x.fillText("PRESS",W/2,340); x.fillText("PASS",W/2,510);
+  // body
+  const L=90;
+  x.fillStyle="#4A4A50"; x.font=`800 28px ${MS}`; track(x,"ISSUED TO",L,650,6);
+  let fs=96; x.font=`800 ${fs}px ${MS}`; while(x.measureText(name.toUpperCase()).width>W-2*L && fs>40){fs-=4; x.font=`800 ${fs}px ${MS}`;}
+  x.fillStyle="#1E1E21"; x.textAlign="left"; x.fillText(name.toUpperCase(),L,650+20+fs*.85);
+  x.fillStyle="#E6DCDA"; x.fillRect(L,800,W-2*L,4);
+  x.fillStyle="#4A4A50"; x.font=`800 28px ${MS}`; track(x,"CLEARED IN · MICRO-LESSON "+MODULE.num,L,872,6);
+  x.fillStyle="#6F1A1D"; let tf=62; x.font=`800 ${tf}px ${MS}`; while(x.measureText(MODULE.title.toUpperCase()).width>W-2*L && tf>36){tf-=2; x.font=`800 ${tf}px ${MS}`;} x.fillText(MODULE.title.toUpperCase(),L,948);
+  x.fillStyle="#4A4A50"; x.font=`400 34px ${LX}`; x.fillText(MODULE.skill,L,1002);
+  // score + date
+  x.fillStyle="#4A4A50"; x.font=`800 28px ${MS}`; track(x,"SCORE",L,1100,6); track(x,"DATE",430,1100,6);
+  x.fillStyle="#B3201F"; x.font=`900 92px ${MS}`; x.fillText(`${got}/${tot}`,L,1195);
+  x.fillStyle="#1E1E21"; x.font=`800 50px ${MS}`; x.fillText(when.toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"}),430,1185);
+  x.fillStyle="#4A4A50"; x.font=`400 30px ${LX}`; x.fillText(when.toLocaleTimeString("en-US",{hour:"numeric",minute:"2-digit"}),430,1232);
+  // stamp
+  x.save(); x.translate(905,1160); x.rotate(-.2); x.strokeStyle="#B3201F"; x.fillStyle="#B3201F"; x.globalAlpha=.9;
+  x.lineWidth=7; x.beginPath(); x.arc(0,0,105,0,Math.PI*2); x.stroke(); x.lineWidth=3; x.beginPath(); x.arc(0,0,88,0,Math.PI*2); x.stroke();
+  x.font=`900 34px ${MS}`; x.textAlign="center"; x.fillText("ON",0,-14); x.fillText("AIR",0,26); x.font=`800 16px ${MS}`; x.fillText("★ CLEARED ★",0,58); x.restore();
+  // footer text
+  x.textAlign="left"; x.fillStyle="#DD2A2A"; x.font=`900 72px ${MS}`; x.fillText(MODULE.num,L,H-50);
+  x.fillStyle="#fff"; x.font=`700 26px ${MS}`; track(x,"KHS COUGAR NEWS · MICRO-LEARNING",L+120,H-84,4);
+  x.globalAlpha=.7; x.font=`600 24px ${MS}`; track(x,"PASS ID "+passId(name,when,got),L+120,H-48,4); x.globalAlpha=1;
+  return c;
+}
+function updatePass(){
+  const img=document.getElementById("passImg"); if(!img) return;
+  loadFonts().then(()=>{ try{ img.src=drawPass().toDataURL("image/png"); }catch(e){} });
+}
+function downloadPass(){
+  loadFonts().then(()=>{
+    const c=drawPass(), slug=(S.name.trim()||"student").replace(/[^a-z0-9]+/gi,"-").replace(/^-|-$/g,"");
+    const fn=`Press-Pass-${MODULE.num}-${slug}.png`;
+    c.toBlob(b=>{
+      if(!b) return;
+      const url=URL.createObjectURL(b), a=document.createElement("a");
+      a.href=url; a.download=fn; document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(()=>URL.revokeObjectURL(url),4000);
+    },"image/png");
+  });
+}
+
+function render(){
+  renderProg();
+  app.innerHTML = screens[S.step]();
+  if(S.step===5) meter();
+  if(S.step===6) updatePass();
+}
+
+/* ---------- events ---------- */
+app.addEventListener("click", e=>{
+  const t=e.target.closest("button"); if(!t) return;
+  if(t.dataset.say!==undefined){ speak(t.dataset.say); return; }
+  if(t.id==="dlPass"){ downloadPass(); return; }
+  if(t.hasAttribute("data-copy")){ copyDraft(t); return; }
+  if(t.dataset.go!==undefined){ go(+t.dataset.go); return; }
+  if(t.dataset.q){ const k=t.dataset.q; S.ans[k][S.idx[k]] = t.dataset.k; render(); return; }
+  if(t.dataset.nextq){ const k=t.dataset.nextq; if(S.idx[k]<QUIZ[k].items.length-1){ S.idx[k]++; render(); window.scrollTo({top:0}); app.focus(); } else go(+t.dataset.step+1); return; }
+  if(t.dataset.pick){ S.picked.push(+t.dataset.pick); render(); return; }
+  if(t.hasAttribute("data-undo")){ S.picked.pop(); render(); return; }
+  if(t.hasAttribute("data-ordercheck")){ S.orderChecked=true; render(); return; }
+  if(t.hasAttribute("data-restart")){ ORDER_Q.forEach(k=>{S.idx[k]=0;S.ans[k]=[];}); S.picked=[]; S.orderChecked=false; S.result=null; go(0); }
+});
+app.addEventListener("input", e=>{
+  const t=e.target;
+  if(t.dataset.lang!==undefined){ S.lang[t.dataset.lang]=t.value; save(); return; }
+  if(t.id==="focus"){ S.mine.focus=t.value; return; }
+  if(t.dataset.r!==undefined){ S.mine.r[+t.dataset.r][+t.dataset.c]=t.value; meter(); return; }
+  if(t.id==="nm"){ S.name=t.value; save(); const b=document.getElementById("dlPass"); if(b){ const ok=!!t.value.trim(); b.disabled=!ok; b.textContent=ok?"Download press pass":"Type your name first"; }
+    clearTimeout(S._pt); S._pt=setTimeout(updatePass,200); }
+});
+
+render();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,634 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Open It Up</title>
+<meta name="description" content="KHS Cougar News micro-lesson: open questions, follow-ups and interview order.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;700&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --red-dk:#6F1A1D; --red:#B3201F; --red-br:#DD2A2A; --ink:#1E1E21; --ink2:#4A4A50;
+  --line:#E6DCDA; --tint:#FBEFEE; --sand:#F6F2F0; --link:#1A5FB4; --ok:#1d7a3a; --ok-bg:#E8F4EC;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font-family:Lexend,system-ui,sans-serif;color:var(--ink);background:#fff;font-size:17px;line-height:1.55;min-height:100vh;display:flex;flex-direction:column}
+button{font:inherit;color:inherit;cursor:pointer}
+input{font:inherit}
+:focus-visible{outline:3px solid var(--link);outline-offset:2px}
+
+/* header band, after switcher.png */
+.band{background:linear-gradient(180deg,var(--red-dk) 0%,#A61E1E 55%,var(--red-br) 100%);color:#fff;padding:22px 16px 18px}
+.band-in{max-width:760px;margin:0 auto;position:relative}
+.kicker{font-family:Montserrat;font-weight:700;font-size:11px;letter-spacing:.2em;text-transform:uppercase;opacity:.88;padding-right:150px}
+.band h1{font-family:Montserrat;font-weight:900;font-size:clamp(28px,7vw,44px);line-height:1.02;text-transform:uppercase;margin-top:6px;text-shadow:2px 2px 0 rgba(60,20,20,.55)}
+.band .sub{font-weight:300;font-size:16px;margin-top:6px;opacity:.95}
+.chip{position:absolute;top:-2px;right:0;background:#fff;color:var(--red-dk);font-family:Montserrat;font-weight:800;font-size:10px;letter-spacing:.14em;padding:4px 9px;border-radius:3px}
+
+/* progress */
+.prog{background:var(--ink);color:#fff;padding:10px 16px}
+.prog-in{max-width:760px;margin:0 auto;display:flex;gap:6px;align-items:center}
+.prog .seg{flex:1;height:6px;border-radius:3px;background:#46464c}
+.prog .seg.done{background:var(--red-br)}
+.prog .seg.now{background:#fff}
+.prog .lbl{font-family:Montserrat;font-weight:700;font-size:11px;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap;margin-left:8px;opacity:.85}
+
+main{flex:1;width:100%;max-width:760px;margin:0 auto;padding:24px 16px 32px}
+h2{font-family:Montserrat;font-weight:800;font-size:20px;color:var(--red-dk);text-transform:uppercase;letter-spacing:.05em;display:flex;align-items:center;gap:10px;margin-bottom:12px}
+h2 .n{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;background:var(--red);color:#fff;font-size:15px;letter-spacing:0;flex:none}
+h3{font-family:Montserrat;font-weight:800;font-size:16px;margin-bottom:4px}
+p+p{margin-top:10px}
+.lead{font-size:18px}
+b{font-weight:600}
+.muted{color:var(--ink2);font-size:15px}
+
+.box{background:var(--sand);border-radius:8px;padding:14px 16px}
+.callout{background:var(--tint);border-left:5px solid var(--red);border-radius:0 8px 8px 0;padding:12px 16px;margin:16px 0}
+.tag{font-family:Montserrat;font-weight:800;font-size:11px;letter-spacing:.16em;color:var(--red-dk);text-transform:uppercase;display:block;margin-bottom:2px}
+.stack>*+*{margin-top:14px}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:10px 22px;border-radius:8px;border:0;background:var(--red);color:#fff;font-family:Montserrat;font-weight:800;font-size:15px;letter-spacing:.06em;text-transform:uppercase}
+.btn:hover{background:var(--red-dk)}
+.btn[disabled]{background:#c9c3c1;cursor:not-allowed}
+.btn.ghost{background:#fff;color:var(--red-dk);border:2px solid var(--red)}
+.btn.ghost:hover{background:var(--tint)}
+.nav{display:flex;justify-content:space-between;gap:12px;margin-top:24px;flex-wrap:wrap}
+.nav .spacer{flex:1}
+.say-btn{border:1.5px solid var(--line);background:#fff;border-radius:20px;padding:3px 10px;font-size:13px;font-weight:600;color:var(--ink2);display:inline-flex;align-items:center;gap:5px;vertical-align:middle}
+.say-btn:hover{border-color:var(--red);color:var(--red-dk)}
+
+/* value cards */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px}
+.vcard{text-align:left;background:var(--sand);border:2px solid transparent;border-radius:10px;padding:14px;min-height:150px;display:flex;flex-direction:column;gap:6px;transition:border-color .15s,background .15s}
+.vcard:hover{border-color:var(--line)}
+.vcard .easy{font-family:Montserrat;font-weight:900;font-size:12px;letter-spacing:.14em;color:var(--red)}
+.vcard .nm{font-family:Montserrat;font-weight:800;font-size:18px}
+.vcard .hint{font-size:13px;color:var(--ink2);margin-top:auto}
+.vcard .more{display:none;font-size:15px}
+.vcard.open{background:#fff;border-color:var(--red)}
+.vcard.open .more{display:block}
+.vcard.open .hint{display:none}
+.vcard .ex{color:var(--ink2);font-size:14px;margin-top:4px}
+.count{font-family:Montserrat;font-weight:800;font-size:13px;letter-spacing:.1em;color:var(--ink2);text-transform:uppercase;margin:14px 0 0}
+
+/* question */
+.q{background:var(--sand);border-radius:10px;padding:18px 18px 16px}
+.q .qn{font-family:Montserrat;font-weight:800;font-size:12px;letter-spacing:.14em;color:var(--ink2);text-transform:uppercase}
+.q .stem{font-size:19px;font-weight:600;margin:6px 0 4px}
+.opts{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-top:14px}
+.opts.two{grid-template-columns:1fr 1fr}
+.opts.one{grid-template-columns:1fr}
+.opt{text-align:left;background:#fff;border:2px solid var(--line);border-radius:8px;padding:10px 12px;min-height:48px;font-size:15px}
+.opt .e{display:block;font-family:Montserrat;font-weight:900;font-size:11px;letter-spacing:.12em;color:var(--red)}
+.opt:hover:not([disabled]){border-color:var(--red)}
+.opt[disabled]{cursor:default}
+.opt.right{border-color:var(--ok);background:var(--ok-bg)}
+.opt.wrong{border-color:var(--red);background:var(--tint)}
+.opt.dim{opacity:.55}
+.opt.pitch{font-size:16px;padding:14px}
+.opt.pitch b{font-family:Montserrat;font-weight:800;color:var(--red-dk);margin-right:6px}
+.fb{margin-top:14px;border-radius:8px;padding:12px 14px;display:none}
+.fb.show{display:block}
+.fb.ok{background:var(--ok-bg);border-left:5px solid var(--ok)}
+.fb.no{background:var(--tint);border-left:5px solid var(--red)}
+.fb .v{font-family:Montserrat;font-weight:900;font-size:12px;letter-spacing:.12em;text-transform:uppercase;display:block;margin-bottom:2px}
+.fb.ok .v{color:var(--ok)} .fb.no .v{color:var(--red)}
+.pills{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.pill{font-family:Montserrat;font-weight:800;font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding:3px 9px;border-radius:20px;background:var(--red);color:#fff}
+.pill.ink{background:var(--ink)}
+
+/* your turn */
+label.fld{display:block;font-weight:600;margin-bottom:6px}
+.inp{width:100%;border:2px solid var(--line);border-radius:8px;padding:12px;font-size:16px;background:#fff}
+.inp:focus{border-color:var(--red);outline:none}
+.checks{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px}
+.ck{display:flex;align-items:center;gap:10px;background:#fff;border:2px solid var(--line);border-radius:8px;padding:10px 12px;min-height:48px;cursor:pointer;font-size:15px}
+.ck input{width:20px;height:20px;accent-color:var(--red);flex:none}
+.ck:has(input:checked){border-color:var(--red);background:var(--tint)}
+.meter{margin-top:14px;border-radius:8px;padding:12px 14px;background:var(--sand)}
+.meter.go{background:var(--ok-bg);border-left:5px solid var(--ok)}
+.meter.wait{border-left:5px solid #b9b2b0}
+.pitchline{font-size:16px;background:#fff;border:2px dashed var(--line);border-radius:8px;padding:12px;margin-top:10px;white-space:pre-wrap}
+
+/* words to know */
+table{width:100%;border-collapse:collapse;font-size:15px}
+th{font-family:Montserrat;font-weight:800;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--red-dk);text-align:left;padding:8px;border-bottom:2px solid var(--red)}
+td{padding:8px;border-bottom:1px solid var(--line);vertical-align:top}
+td.k{font-family:Montserrat;font-weight:800;white-space:nowrap}
+td input{width:100%;min-width:90px;border:0;border-bottom:1.5px solid #9a9a9a;padding:4px 2px;font-size:15px;background:transparent}
+details{margin-top:18px}
+summary{font-family:Montserrat;font-weight:800;font-size:14px;letter-spacing:.1em;text-transform:uppercase;color:var(--red-dk);cursor:pointer;padding:6px 0;min-height:40px;display:flex;align-items:center}
+
+.walk{display:grid;gap:8px}
+.wk{text-align:left;width:100%;align-items:flex-start}
+.wk .box2{width:22px;height:22px;border:2px solid var(--red);border-radius:4px;flex:none;display:inline-flex;align-items:center;justify-content:center;font-weight:700;color:#fff;margin-top:2px}
+.wk.on{border-color:var(--red);background:var(--tint)}
+.wk.on .box2{background:var(--red)}
+.wk.right{border-color:var(--ok);background:var(--ok-bg)}
+.wk.wrong{border-color:var(--red);background:var(--tint)}
+.wk .why{display:block;font-size:14px;color:var(--ink2);margin-top:4px}
+.wk[disabled]{cursor:default}
+.write{border-bottom:1.5px solid #9a9a9a;padding:0 4px;font-weight:600}
+
+.cols2{display:grid;grid-template-columns:1fr 1.6fr;gap:10px}
+.stepf{display:flex;gap:12px;align-items:flex-start}
+.stepf>div{flex:1;min-width:0}
+.stepf .sn{flex:none;width:30px;height:30px;border-radius:50%;background:var(--ink);color:#fff;font-family:Montserrat;font-weight:800;font-size:14px;display:flex;align-items:center;justify-content:center;margin-top:2px}
+.stepf .fld{display:block;font-weight:600;margin-bottom:6px}
+.frame{display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center}
+.frame .inp{flex:1 1 180px;width:auto}
+.frame span{font-weight:600;color:var(--red-dk)}
+@media (max-width:480px){.cols2{grid-template-columns:1fr}}
+
+.cols2.eq{grid-template-columns:1fr 1fr}
+.good::before{content:"OPEN  ";font-family:Montserrat;font-weight:900;color:var(--ok);font-size:11px;letter-spacing:.1em}
+.bad::before{content:"YES/NO  ";font-family:Montserrat;font-weight:900;color:var(--red);font-size:11px;letter-spacing:.1em}
+.strike{text-decoration:line-through;text-decoration-color:var(--red);text-decoration-thickness:2px;color:var(--ink2)}
+ol.order{list-style:none;display:grid;gap:8px}
+.slot{display:flex;gap:10px;align-items:flex-start;background:#fff;border:2px solid var(--line);border-radius:8px;padding:10px 12px;min-height:48px;font-size:15px}
+.slot.empty{border-style:dashed;background:var(--sand)}
+.slot>span:nth-child(2){flex:1}
+.slot .sn{flex:none;width:26px;height:26px;border-radius:50%;background:var(--ink);color:#fff;font-family:Montserrat;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center}
+.slot.right{border-color:var(--ok);background:var(--ok-bg)}
+.slot.wrong{border-color:var(--red);background:var(--tint)}
+.slot .why{display:block;font-size:13px;color:var(--ink2);margin-top:4px}
+.undo{flex:none;border:1.5px solid var(--line);background:#fff;border-radius:20px;padding:2px 10px;font-size:13px;font-weight:600;color:var(--ink2)}
+.qcheck{font-size:14px;margin-top:6px;min-height:0}
+.qcheck.ok{color:var(--ok)} .qcheck.ok::before{content:"✓ "}
+.qcheck.no{color:var(--red)} .qcheck.no::before{content:"! "}
+@media (max-width:480px){.cols2.eq{grid-template-columns:1fr}}
+
+/* done */
+.score{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.big{font-family:Montserrat;font-weight:900;font-size:56px;color:var(--red);line-height:1}
+.dark{background:var(--ink);color:#fff;border-radius:10px;padding:18px}
+.dark .tag{color:#ff8d8d}
+.dark .who{font-family:Montserrat;font-weight:800;font-size:22px;margin-top:4px}
+.dark .row{display:flex;justify-content:space-between;gap:12px;border-top:1px solid #3a3a40;padding-top:8px;margin-top:8px;font-size:15px}
+
+.passwrap{display:flex;flex-direction:column;align-items:center;gap:12px}
+.pass-img{width:100%;max-width:340px;display:block;filter:drop-shadow(0 8px 18px rgba(30,30,33,.25))}
+.passwrap .btn{width:100%;max-width:340px}
+
+footer{background:var(--ink);color:#fff;padding:12px 16px;font-family:Montserrat;font-size:11px;font-weight:600;letter-spacing:.06em}
+footer .in{max-width:760px;margin:0 auto;display:flex;align-items:center;gap:14px}
+footer .num{font-weight:900;font-size:22px;color:var(--red-br);line-height:1}
+footer .doc{flex:1;text-transform:uppercase}
+
+@media (max-width:480px){
+  .opts.two{grid-template-columns:1fr}
+  .nav .btn{flex:1}
+  .nav .spacer{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+@media print{.prog,.nav,.say-btn{display:none!important}}
+</style>
+</head>
+<body>
+
+<header class="band">
+  <div class="band-in">
+    <div class="kicker">KHS Cougar News · 02 Interviews</div>
+    <span class="chip">MICRO-LESSON 04</span>
+    <h1>Open It Up</h1>
+    <div class="sub">Open questions · follow-ups · question order</div>
+  </div>
+</header>
+
+<nav class="prog" aria-label="Progress">
+  <div class="prog-in" id="prog"></div>
+</nav>
+
+<main id="app" tabindex="-1"></main>
+
+<footer>
+  <div class="in"><span class="num">02</span><span class="doc">Based on Interviews – Guide</span><span>~9 min</span></div>
+</footer>
+
+<script>
+(function(){
+"use strict";
+
+/* ---------- content (from Interviews – Guide + Interview Questions – Template) ---------- */
+const STARTERS = ["Why…","How…","Describe…","Explain…"];
+
+/* Practice 1: open or yes/no? Made-up questions. */
+const SORT = [
+  {s:"Did you like the trip?", open:false, why:"They can answer \"yes\" and stop. Try: \"What was the best part of the trip?\""},
+  {s:"Why did you decide to try out this year?", open:true, why:"\"Why\" makes them explain. You can't answer with only yes or no."},
+  {s:"Was the game hard?", open:false, why:"\"Yes.\" Done. Try: \"What made the game hard?\""},
+  {s:"Describe the moment the final buzzer went off.", open:true, why:"\"Describe\" asks for a story. That's where feelings come out."},
+  {s:"Are you excited about prom?", open:false, why:"A yes/no question. Try: \"How are you getting ready for prom?\""},
+  {s:"How did your team get ready for state?", open:true, why:"\"How\" gets them talking about what they did."},
+  {s:"Do you think the new rule is fair?", open:false, why:"Yes or no. Try: \"How does the new rule change your day?\""},
+  {s:"Explain how the new hall pass app works.", open:true, why:"\"Explain\" gets facts in their own words."}
+];
+
+/* Practice 2: fix it. Pick the best open rewrite. */
+const FIX = [
+  {s:"Did you have fun at the competition?", opts:[
+    {t:"Was the competition fun or boring?", r:"yn", why:"Still closed. They pick one word and stop."},
+    {t:"What was the best moment of the competition for you?", r:"ok", why:"Open, short and one question."},
+    {t:"Did you have fun, and did you win, and what's next?", r:"many", why:"Three questions at once. Ask one question at a time."}]},
+  {s:"Is the new schedule confusing?", opts:[
+    {t:"How has the new schedule changed your day?", r:"ok", why:"Open. It gets a real example from their day."},
+    {t:"Is the schedule confusing, and who made it, and when did it start?", r:"many", why:"Too many questions at once. Keep it short."},
+    {t:"The new schedule is confusing, right?", r:"yn", why:"Still yes/no. They just agree with you."}]},
+  {s:"Were you nervous before your solo?", opts:[
+    {t:"You were nervous, right?", r:"yn", why:"Still yes/no."},
+    {t:"Were you nervous or calm?", r:"yn", why:"Still closed. One word answers it."},
+    {t:"Describe how you felt right before your solo.", r:"ok", why:"\"Describe\" invites a feeling. That's a sound bite."}]},
+  {s:"Do you like coaching?", opts:[
+    {t:"Do you like coaching more than teaching?", r:"yn", why:"Still yes/no."},
+    {t:"Why did you become a coach?", r:"ok", why:"Open, short and personal. A story only they can tell."},
+    {t:"How long have you coached, where, and why do you like it?", r:"many", why:"Three questions at once. They'll only answer one."}]}
+];
+
+/* Practice 3: follow up. What do you do next? */
+const NEXT = [
+  {sit:"Your source says: \"Honestly, the whole week was kind of crazy.\"", opts:[
+    "\"Cool. Next question: when did you start?\"",
+    "\"What do you mean by crazy?\"",
+    "\"Uh-huh, uh-huh.\""], a:1,
+   why:"A follow-up is a new question about what they just said. \"Crazy\" needs an example."},
+  {sit:"Your source gives a short answer, stops and looks like they're thinking.", opts:[
+    "Stay silent. Count to 3 in your head.",
+    "Jump to the next question.",
+    "Say \"Okay, great!\""], a:0,
+   why:"People often fill the silence with their best answer."},
+  {sit:"Your source says the fundraiser raised \"about 2,400 dollars, and it ends October 30th.\"", opts:[
+    "Write down what you think you heard.",
+    "Say \"Great!\" and move on.",
+    "\"So that's $2,400, and it ends October 30. Is that right?\""], a:2,
+   why:"Check facts. Repeat names, dates and numbers back to them."},
+  {sit:"Your source talks for 45 seconds without stopping.", opts:[
+    "Use the whole 45 seconds in your story.",
+    "\"Can you say that again in one or two sentences?\"",
+    "Cut them off in the middle of a sentence."], a:1,
+   why:"A sound bite is 8–12 seconds. Ask for a shorter version."},
+  {sit:"Your source is telling a great story. What do you do while they talk?", opts:[
+    "Nod, and stay quiet.",
+    "Say \"wow\" and \"uh-huh\" so they know you're listening.",
+    "Look down and read your next question."], a:0,
+   why:"Your voice on the recording ruins the clip. Nod instead, and look at the person, not your paper."}
+];
+
+/* Practice 4: put a news interview in order (21-question format, news = 5–8 questions). */
+const ORDER = [
+  {t:"What is your name, and how do you spell it?", job:"#1 · Name"},
+  {t:"How long have you been on the robotics team?", job:"Warm-up"},
+  {t:"Are you on the team that's going to state?", job:"Transition"},
+  {t:"When is the state competition?", job:"Facts"},
+  {t:"Why does going to state matter to you?", job:"How + why"},
+  {t:"Is there anything you would like to add? Is there anyone else I should interview?", job:"#20 · Anything else"},
+  {t:"Thank you for your help with the story. How can I contact you if I need to check anything?", job:"#21 · Thank you"}
+];
+const SHUFFLE = [4,0,6,2,5,1,3]; // fixed mixed order shown to students
+
+const WORDS = [
+  ["open question","A question you can't answer with only \"yes\" or \"no.\""],
+  ["follow-up","A new question about what the person just said."],
+  ["source","A person who gives you information."],
+  ["transition question","A question that moves from easy talk to your topic."],
+  ["the 5 W's","Who, what, when, where, why."]
+];
+
+/* ---------- state ---------- */
+const STEPS = ["Start","Open or closed?","Fix it","Follow up","Put in order","Your turn","Done"];
+const S = {step:0, sIdx:0, sAns:[], fIdx:0, fAns:[], xIdx:0, xAns:[], picked:[], orderChecked:false, mine:{story:"",q:["","",""],fu:""}, name:""};
+const KEY = "khscn-ml-04";
+function load(){ try{ const d=JSON.parse(localStorage.getItem(KEY)||"{}"); if(d.lang) S.lang=d.lang; if(d.name) S.name=d.name;
+  if(!S.name){ for(const k of ["khscn-ml-03","khscn-ml-02","khscn-ml-01"]){ const o=JSON.parse(localStorage.getItem(k)||"{}"); if(o.name){S.name=o.name;break;} } } }catch(e){} S.lang=S.lang||{}; }
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify({lang:S.lang,name:S.name})); }catch(e){} }
+load();
+
+/* ---------- helpers ---------- */
+const app = document.getElementById("app");
+const esc = s => String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const canSpeak = "speechSynthesis" in window;
+function speak(t){ if(!canSpeak) return; try{ speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(t); u.rate=.92; speechSynthesis.speak(u);}catch(e){} }
+const sayBtn = t => canSpeak ? `<button class="say-btn" data-say="${esc(t)}" aria-label="Listen"><span aria-hidden="true">🔊</span> Listen</button>` : "";
+function go(n){ if(canSpeak) speechSynthesis.cancel(); S.step=n; render(); window.scrollTo({top:0}); app.focus({preventScroll:true}); }
+function renderProg(){
+  document.getElementById("prog").innerHTML =
+    STEPS.map((_,i)=>`<span class="seg ${i<S.step?"done":i===S.step?"now":""}"></span>`).join("") +
+    `<span class="lbl">${S.step+1}/${STEPS.length} · ${esc(STEPS[S.step])}</span>`;
+}
+const RLABEL = {yn:"Still yes/no", many:"Too many at once", ok:"Open"};
+const YN = /^\s*(did|do|does|is|are|was|were|can|could|will|would|have|has|had|should|shall|may|might|isn't|aren't|don't|doesn't|didn't|wasn't|weren't)\b/i;
+function checkQ(q){
+  const t=q.trim(); if(!t) return null;
+  if(YN.test(t)) return {ok:false,msg:"Starts like a yes/no question. Try Why, How, Describe or Explain."};
+  if(/,\s*right\??\s*$/i.test(t)) return {ok:false,msg:"Ending with \"right?\" makes it yes/no."};
+  if((t.match(/\?/g)||[]).length>1 || /\?\s*and\b|\band (what|why|how|when|where|who)\b/i.test(t)) return {ok:false,msg:"Two questions in one. Ask one question at a time."};
+  if(t.split(/\s+/).length>18) return {ok:false,msg:"Long. Keep it short so they remember it."};
+  if(/^\s*(why|how|describe|explain)\b/i.test(t)) return {ok:true,msg:"Open. Good sound bite question."};
+  return {ok:true,msg:"Open. For your best bites, try starting with Why, How, Describe or Explain."};
+}
+
+/* ---------- screens ---------- */
+const screens = [
+/* 0 start */
+() => `
+  <div class="stack">
+    <h2><span class="n">1</span>Get them talking</h2>
+    <p class="lead">An <b>open question</b> needs more than "yes" or "no." It gets the person talking. ${sayBtn("An open question needs more than yes or no. It gets the person talking.")}</p>
+    <div class="cols2 eq">
+      <div class="box"><span class="good">"How did the team get ready for the game?"</span></div>
+      <div class="box"><span class="bad">"Did the team practice?"</span></div>
+      <div class="box"><span class="good">"Why did you start the club?"</span></div>
+      <div class="box"><span class="bad">"Do you like the club?"</span></div>
+    </div>
+    <div class="callout"><span class="tag">Start with</span>
+      <div class="pills" style="margin-top:4px">${STARTERS.map(s=>`<span class="pill">${s}</span>`).join("")}</div>
+      <p style="margin-top:8px">Ask <b>one question at a time</b>. Keep it short. ${sayBtn("Start with why, how, describe or explain. Ask one question at a time. Keep it short.")}</p>
+    </div>
+    <details>
+      <summary>Words to know</summary>
+      <table>
+        <thead><tr><th>Word</th><th>What it means</th><th>In my language</th></tr></thead>
+        <tbody>${WORDS.map(([w,m],i)=>`<tr><td class="k">${esc(w)}</td><td>${esc(m)}</td><td><input data-lang="${i}" aria-label="${esc(w)} in my language" value="${esc(S.lang[i]||"")}"></td></tr>`).join("")}</tbody>
+      </table>
+    </details>
+  </div>
+  <div class="nav"><span class="spacer"></span><button class="btn" data-go="1">Start</button></div>`,
+
+/* 1 sort */
+() => {
+  const i=S.sIdx, q=SORT[i], ans=S.sAns[i];
+  return `
+  <h2><span class="n">2</span>Open or closed?</h2>
+  <p>Can they answer with only "yes" or "no"?</p>
+  <div class="q" style="margin-top:14px">
+    <div class="qn">Question ${i+1} of ${SORT.length}</div>
+    <p class="stem">"${esc(q.s)}" ${sayBtn(q.s)}</p>
+    <div class="opts two">
+      ${[[true,"Open","Gets them talking"],[false,"Yes/no","One word answers it"]].map(([val,l,sub])=>{
+        let c=""; if(ans!==undefined){ c = val===q.open?"right":(val===ans?"wrong":"dim"); }
+        return `<button class="opt ${c}" data-sort="${val}" ${ans!==undefined?"disabled":""}><span class="e">${sub}</span>${l}</button>`;}).join("")}
+    </div>
+    <div class="fb ${ans!==undefined?(ans===q.open?"ok show":"no show"):""}" aria-live="polite">
+      ${ans!==undefined?`<span class="v">${ans===q.open?"Right.":"Look again."}</span>${esc(q.why)}`:""}
+    </div>
+  </div>
+  <div class="nav"><button class="btn ghost" data-go="0">Back</button><span class="spacer"></span>
+    ${ans!==undefined?`<button class="btn" data-next="sort">${i<SORT.length-1?"Next":"Next step"}</button>`:""}</div>`;
+},
+
+/* 2 fix it */
+() => {
+  const i=S.fIdx, q=FIX[i], ans=S.fAns[i];
+  return `
+  <h2><span class="n">3</span>Fix it</h2>
+  <p>This question is yes/no. Pick the best rewrite: <b>open, short, one question.</b></p>
+  <div class="q" style="margin-top:14px">
+    <div class="qn">Fix ${i+1} of ${FIX.length}</div>
+    <p class="stem"><span class="strike">"${esc(q.s)}"</span></p>
+    <div class="opts one">${q.opts.map((o,j)=>{
+      let c=""; if(ans!==undefined){ c = o.r==="ok"?"right":(j===ans?"wrong":"dim"); }
+      return `<button class="opt pitch ${c}" data-fix="${j}" ${ans!==undefined?"disabled":""}>${ans!==undefined?`<span class="e">${RLABEL[o.r]}</span>`:""}"${esc(o.t)}"</button>`;}).join("")}
+    </div>
+    ${ans!==undefined?`<div class="fb show ${q.opts[ans].r==="ok"?"ok":"no"}" aria-live="polite">
+      <span class="v">${q.opts[ans].r==="ok"?"That's it.":RLABEL[q.opts[ans].r]+"."}</span>${esc(q.opts[ans].why)}</div>`:""}
+  </div>
+  <div class="nav"><button class="btn ghost" data-go="1">Back</button><span class="spacer"></span>
+    ${ans!==undefined?`<button class="btn" data-next="fix">${i<FIX.length-1?"Next fix":"Next"}</button>`:""}</div>`;
+},
+
+/* 3 follow up */
+() => {
+  const i=S.xIdx, q=NEXT[i], ans=S.xAns[i];
+  return `
+  <h2><span class="n">4</span>Follow up</h2>
+  <p>Your list is a plan, not a script. Listen, then decide what to do next.</p>
+  <div class="q" style="margin-top:14px">
+    <div class="qn">Moment ${i+1} of ${NEXT.length}</div>
+    <p class="stem">${esc(q.sit)} ${sayBtn(q.sit)}</p>
+    <div class="opts one">${q.opts.map((o,j)=>{
+      let c=""; if(ans!==undefined){ c = j===q.a?"right":(j===ans?"wrong":"dim"); }
+      return `<button class="opt ${c}" data-next-move="${j}" ${ans!==undefined?"disabled":""}>${esc(o)}</button>`;}).join("")}
+    </div>
+    <div class="fb ${ans!==undefined?(ans===q.a?"ok show":"no show"):""}" aria-live="polite">
+      ${ans!==undefined?`<span class="v">${ans===q.a?"Yes.":"Not this time."}</span>${esc(q.why)}`:""}
+    </div>
+  </div>
+  <div class="nav"><button class="btn ghost" data-go="2">Back</button><span class="spacer"></span>
+    ${ans!==undefined?`<button class="btn" data-next="move">${i<NEXT.length-1?"Next moment":"Next"}</button>`:""}</div>`;
+},
+
+/* 4 put in order */
+() => {
+  const done=S.orderChecked, left=SHUFFLE.filter(k=>!S.picked.includes(k));
+  return `
+  <h2><span class="n">5</span>Put it in order</h2>
+  <p>A news interview uses the 21-question order, but only 5 to 8 questions. <b>Tap the questions in the order you'd ask them.</b> Story: the robotics team goes to state.</p>
+  <ol class="order" style="margin-top:14px">
+    ${ORDER.map((_,slot)=>{
+      const k=S.picked[slot];
+      if(k===undefined) return `<li class="slot empty"><span class="sn">${slot+1}</span><span class="muted">Tap a question below</span></li>`;
+      const right = k===slot;
+      return `<li class="slot ${done?(right?"right":"wrong"):""}"><span class="sn">${slot+1}</span><span>${esc(ORDER[k].t)}${done?`<span class="why">${right?"✓ ":"Should be: "}${esc(right?ORDER[k].job:ORDER[slot].job+" · \""+ORDER[slot].t+"\"")}</span>`:""}</span>
+        ${!done&&slot===S.picked.length-1?`<button class="undo" data-undo aria-label="Undo">Undo</button>`:""}</li>`;
+    }).join("")}
+  </ol>
+  ${!done&&left.length?`<div class="opts one" style="margin-top:12px">${left.map(k=>`<button class="opt" data-pick="${k}">${esc(ORDER[k].t)}</button>`).join("")}</div>`:""}
+  ${done?`<div class="fb show ${S.picked.every((k,s)=>k===s)?"ok":"no"}" aria-live="polite"><span class="v">${S.picked.filter((k,s)=>k===s).length} of ${ORDER.length} in the right spot</span>
+    Start easy. Get the facts. Then get the how and why. Always end with #20 and #21. Warm-up and transition questions can be yes/no. Your best sound bites come from how and why.</div>`:""}
+  <div class="nav"><button class="btn ghost" data-go="3">Back</button><span class="spacer"></span>
+    ${done?`<button class="btn" data-go="5">Next</button>`:`<button class="btn" data-ordercheck ${S.picked.length<ORDER.length?"disabled":""}>Check</button>`}</div>`;
+},
+
+/* 5 your turn */
+() => {
+  const m=S.mine;
+  return `
+  <h2><span class="n">6</span>Your turn</h2>
+  <p>Write 3 how + why questions for your next story. These go in rows 13–19 of the Interview Questions – Template. Write them yourself.</p>
+  <div class="stack" style="margin-top:14px">
+    <div>
+      <label class="fld" for="story">My story</label>
+      <input class="inp" id="story" maxlength="120" placeholder="Example: drumline moves practice to 6 a.m." value="${esc(m.story)}">
+    </div>
+    ${m.q.map((q,j)=>`<div>
+      <label class="fld" for="q${j}">Question ${j+1}</label>
+      <input class="inp" id="q${j}" data-q="${j}" maxlength="160" placeholder="${STARTERS[j]}" value="${esc(q)}">
+      <div class="qcheck" id="qc${j}" aria-live="polite"></div>
+    </div>`).join("")}
+    <div>
+      <label class="fld" for="fu">One follow-up you can use in any interview</label>
+      <input class="inp" id="fu" maxlength="120" placeholder="Example: Can you give me an example?" value="${esc(m.fu)}">
+    </div>
+    <div class="box"><span class="tag">Say it</span>"Please answer in a full sentence. Start with: ___." ${sayBtn("Please answer in a full sentence. Start with blank.")}</div>
+  </div>
+  <div class="nav"><button class="btn ghost" data-go="4">Back</button><span class="spacer"></span><button class="btn" data-go="6">Finish</button></div>`;
+},
+
+/* 6 done */
+() => {
+  const n1=SORT.filter((q,i)=>S.sAns[i]===q.open).length;
+  const n2=FIX.filter((q,i)=>S.fAns[i]!==undefined&&q.opts[S.fAns[i]].r==="ok").length;
+  const n3=NEXT.filter((q,i)=>S.xAns[i]===q.a).length;
+  const n4=S.orderChecked?S.picked.filter((k,s)=>k===s).length:0;
+  const tot=SORT.length+FIX.length+NEXT.length+ORDER.length, got=n1+n2+n3+n4;
+  S.result={got,tot,when:S.result&&S.result.got===got?S.result.when:new Date()};
+  const qs=S.mine.q.filter(q=>q.trim());
+  return `
+  <h2><span class="n">7</span>Done</h2>
+  <div class="score"><span class="big">${got}/${tot}</span><span class="muted">first tries correct</span></div>
+  <div class="stack" style="margin-top:16px">
+    <div>
+      <label class="fld" for="nm">Your name</label>
+      <input class="inp" id="nm" maxlength="60" value="${esc(S.name)}" placeholder="First and last name">
+    </div>
+    <div class="passwrap">
+      <img id="passImg" class="pass-img" alt="Your press pass">
+      <button class="btn" id="dlPass" ${S.name.trim()?"":"disabled"}>${S.name.trim()?"Download press pass":"Type your name first"}</button>
+      <a class="btn ghost" href="https://khspress.fillout.com/certificate-upload" target="_blank" rel="noopener" style="text-decoration:none">Submit press pass ↗</a>
+      <p class="muted" style="text-align:center">Download it first, then upload the PNG on the submit form.</p>
+    </div>
+    ${qs.length?`<div class="box"><span class="tag">Your questions</span>${draftHTML()}<button class="btn ghost" data-copy style="margin-top:10px;width:100%">Copy questions</button></div>`:""}
+    <div class="callout"><span class="tag">Remember</span>Open questions. One at a time. Listen, follow up, then stay silent and count to 3. Next, finish your Interview Questions – Template. News: 5 to 8. Feature: all 21.</div>
+  </div>
+  <div class="nav"><button class="btn ghost" data-restart>Try again</button><span class="spacer"></span><button class="btn ghost" data-go="5">Back</button></div>`;
+}
+];
+
+function draftText(){
+  const m=S.mine, qs=m.q.filter(q=>q.trim());
+  return [`Story: ${m.story||"—"}`, ...qs.map((q,i)=>`${13+i}. ${q.trim()}`), m.fu?`Follow-up: ${m.fu.trim()}`:""].filter(Boolean).join("\n");
+}
+function draftHTML(){ return `<div class="pitchline">${esc(draftText())}</div>`; }
+function meter(){
+  S.mine.q.forEach((q,j)=>{ const el=document.getElementById("qc"+j); if(!el) return; const r=checkQ(q);
+    el.className="qcheck"+(r?(r.ok?" ok":" no"):""); el.textContent=r?r.msg:""; });
+}
+function copyDraft(btn){
+  const t=draftText(), done=()=>{ btn.textContent="Copied"; setTimeout(()=>btn.textContent="Copy questions",1800); };
+  try{ if(navigator.clipboard&&window.isSecureContext){ navigator.clipboard.writeText(t).then(done,fallback); return; } }catch(e){}
+  fallback();
+  function fallback(){ const ta=document.createElement("textarea"); ta.value=t; ta.style.position="fixed"; ta.style.opacity="0"; document.body.appendChild(ta); ta.select(); try{document.execCommand("copy"); done();}catch(e){} ta.remove(); }
+}
+
+/* ---------- press pass PNG ---------- */
+const MODULE = {num:"04", title:"Open It Up", skill:"Open questions · follow-ups · question order"};
+function rr(c,x,y,w,h,r){c.beginPath();c.moveTo(x+r,y);c.arcTo(x+w,y,x+w,y+h,r);c.arcTo(x+w,y+h,x,y+h,r);c.arcTo(x,y+h,x,y,r);c.arcTo(x,y,x+w,y,r);c.closePath();}
+function track(c,t,x,y,sp,align){ // letter-spaced text
+  const w=[...t].reduce((a,ch)=>a+c.measureText(ch).width+sp,-sp);
+  let cx = align==="center"? x-w/2 : align==="right"? x-w : x;
+  c.textAlign="left"; for(const ch of t){c.fillText(ch,cx,y);cx+=c.measureText(ch).width+sp;}
+}
+function passId(name,when,got){
+  let h=2166136261; for(const ch of name+"|"+when.toISOString()+"|"+got+"|"+MODULE.num){h^=ch.charCodeAt(0);h=Math.imul(h,16777619);}
+  const s=(h>>>0).toString(36).toUpperCase().padStart(7,"0"); return s.slice(0,4)+"-"+s.slice(4,7);
+}
+let fontsReady=null;
+function loadFonts(){
+  if(!fontsReady){ fontsReady = (document.fonts? Promise.all(["900 40px Montserrat","800 40px Montserrat","700 40px Montserrat","400 40px Lexend","600 40px Lexend"].map(f=>document.fonts.load(f).catch(()=>{}))) : Promise.resolve()).then(()=>new Promise(r=>setTimeout(r,0))); }
+  return fontsReady;
+}
+function drawPass(){
+  const W=1080,H=1500,R=56, c=document.createElement("canvas"); c.width=W; c.height=H; const x=c.getContext("2d");
+  const {got,tot,when}=S.result, name=(S.name.trim()||"Your name");
+  const MS="Montserrat, Arial Black, sans-serif", LX="Lexend, Arial, sans-serif";
+  // card
+  rr(x,0,0,W,H,R); x.save(); x.clip();
+  x.fillStyle="#fff"; x.fillRect(0,0,W,H);
+  const g=x.createLinearGradient(0,0,0,560); g.addColorStop(0,"#6F1A1D"); g.addColorStop(.55,"#A61E1E"); g.addColorStop(1,"#DD2A2A");
+  x.fillStyle=g; x.fillRect(0,0,W,560);
+  // subtle diagonal stripes in band
+  x.globalAlpha=.06; x.fillStyle="#fff"; for(let i=-600;i<W;i+=70){x.beginPath();x.moveTo(i,560);x.lineTo(i+560,0);x.lineTo(i+590,0);x.lineTo(i+30,560);x.fill();} x.globalAlpha=1;
+  // footer
+  x.fillStyle="#1E1E21"; x.fillRect(0,H-150,W,150);
+  x.restore();
+  // lanyard slot (punch out)
+  x.save(); x.globalCompositeOperation="destination-out"; rr(x,W/2-110,46,220,38,19); x.fill(); x.restore();
+  // band text
+  x.fillStyle="#fff"; x.globalAlpha=.9; x.font=`700 30px ${MS}`; track(x,"KHS COUGAR NEWS",W/2,150,9,"center"); x.globalAlpha=1;
+  x.font=`900 200px ${MS}`; x.textAlign="center";
+  x.fillStyle="rgba(60,20,20,.55)"; x.fillText("PRESS",W/2+6,346); x.fillText("PASS",W/2+6,516);
+  x.fillStyle="#fff"; x.fillText("PRESS",W/2,340); x.fillText("PASS",W/2,510);
+  // body
+  const L=90;
+  x.fillStyle="#4A4A50"; x.font=`800 28px ${MS}`; track(x,"ISSUED TO",L,650,6);
+  let fs=96; x.font=`800 ${fs}px ${MS}`; while(x.measureText(name.toUpperCase()).width>W-2*L && fs>40){fs-=4; x.font=`800 ${fs}px ${MS}`;}
+  x.fillStyle="#1E1E21"; x.textAlign="left"; x.fillText(name.toUpperCase(),L,650+20+fs*.85);
+  x.fillStyle="#E6DCDA"; x.fillRect(L,800,W-2*L,4);
+  x.fillStyle="#4A4A50"; x.font=`800 28px ${MS}`; track(x,"CLEARED IN · MICRO-LESSON "+MODULE.num,L,872,6);
+  x.fillStyle="#6F1A1D"; x.font=`800 62px ${MS}`; x.fillText(MODULE.title.toUpperCase(),L,948);
+  x.fillStyle="#4A4A50"; x.font=`400 34px ${LX}`; x.fillText(MODULE.skill,L,1002);
+  // score + date
+  x.fillStyle="#4A4A50"; x.font=`800 28px ${MS}`; track(x,"SCORE",L,1100,6); track(x,"DATE",430,1100,6);
+  x.fillStyle="#B3201F"; x.font=`900 92px ${MS}`; x.fillText(`${got}/${tot}`,L,1195);
+  x.fillStyle="#1E1E21"; x.font=`800 50px ${MS}`; x.fillText(when.toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"}),430,1185);
+  x.fillStyle="#4A4A50"; x.font=`400 30px ${LX}`; x.fillText(when.toLocaleTimeString("en-US",{hour:"numeric",minute:"2-digit"}),430,1232);
+  // stamp
+  x.save(); x.translate(905,1160); x.rotate(-.2); x.strokeStyle="#B3201F"; x.fillStyle="#B3201F"; x.globalAlpha=.9;
+  x.lineWidth=7; x.beginPath(); x.arc(0,0,105,0,Math.PI*2); x.stroke(); x.lineWidth=3; x.beginPath(); x.arc(0,0,88,0,Math.PI*2); x.stroke();
+  x.font=`900 34px ${MS}`; x.textAlign="center"; x.fillText("ON",0,-14); x.fillText("AIR",0,26); x.font=`800 16px ${MS}`; x.fillText("★ CLEARED ★",0,58); x.restore();
+  // footer text
+  x.textAlign="left"; x.fillStyle="#DD2A2A"; x.font=`900 72px ${MS}`; x.fillText(MODULE.num,L,H-50);
+  x.fillStyle="#fff"; x.font=`700 26px ${MS}`; track(x,"KHS COUGAR NEWS · MICRO-LEARNING",L+120,H-84,4);
+  x.globalAlpha=.7; x.font=`600 24px ${MS}`; track(x,"PASS ID "+passId(name,when,got),L+120,H-48,4); x.globalAlpha=1;
+  return c;
+}
+function updatePass(){
+  const img=document.getElementById("passImg"); if(!img) return;
+  loadFonts().then(()=>{ try{ img.src=drawPass().toDataURL("image/png"); }catch(e){} });
+}
+function downloadPass(){
+  loadFonts().then(()=>{
+    const c=drawPass(), slug=(S.name.trim()||"student").replace(/[^a-z0-9]+/gi,"-").replace(/^-|-$/g,"");
+    const fn=`Press-Pass-${MODULE.num}-${slug}.png`;
+    c.toBlob(b=>{
+      if(!b) return;
+      const url=URL.createObjectURL(b), a=document.createElement("a");
+      a.href=url; a.download=fn; document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(()=>URL.revokeObjectURL(url),4000);
+    },"image/png");
+  });
+}
+
+function render(){
+  renderProg();
+  app.innerHTML = screens[S.step]();
+  if(S.step===5) meter();
+  if(S.step===6) updatePass();
+}
+
+/* ---------- events ---------- */
+app.addEventListener("click", e=>{
+  const t=e.target.closest("button"); if(!t) return;
+  if(t.dataset.say!==undefined){ speak(t.dataset.say); return; }
+  if(t.id==="dlPass"){ downloadPass(); return; }
+  if(t.hasAttribute("data-copy")){ copyDraft(t); return; }
+  if(t.dataset.go!==undefined){ go(+t.dataset.go); return; }
+  if(t.dataset.sort){ S.sAns[S.sIdx]=t.dataset.sort==="true"; render(); return; }
+  if(t.dataset.fix){ S.fAns[S.fIdx]=+t.dataset.fix; render(); return; }
+  if(t.dataset.nextMove){ S.xAns[S.xIdx]=+t.dataset.nextMove; render(); return; }
+  if(t.dataset.pick){ S.picked.push(+t.dataset.pick); render(); return; }
+  if(t.hasAttribute("data-undo")){ S.picked.pop(); render(); return; }
+  if(t.hasAttribute("data-ordercheck")){ S.orderChecked=true; render(); return; }
+  if(t.dataset.next==="sort"){ if(S.sIdx<SORT.length-1){S.sIdx++; render(); app.focus();} else go(2); return; }
+  if(t.dataset.next==="fix"){ if(S.fIdx<FIX.length-1){S.fIdx++; render(); app.focus();} else go(3); return; }
+  if(t.dataset.next==="move"){ if(S.xIdx<NEXT.length-1){S.xIdx++; render(); app.focus();} else go(4); return; }
+  if(t.hasAttribute("data-restart")){ S.sIdx=0; S.sAns=[]; S.fIdx=0; S.fAns=[]; S.xIdx=0; S.xAns=[]; S.picked=[]; S.orderChecked=false; S.result=null; go(0); }
+});
+app.addEventListener("input", e=>{
+  const t=e.target;
+  if(t.dataset.lang!==undefined){ S.lang[t.dataset.lang]=t.value; save(); return; }
+  if(t.dataset.q!==undefined){ S.mine.q[+t.dataset.q]=t.value; meter(); return; }
+  if(t.id==="story"){ S.mine.story=t.value; return; }
+  if(t.id==="fu"){ S.mine.fu=t.value; return; }
+  if(t.id==="nm"){ S.name=t.value; save(); const b=document.getElementById("dlPass"); if(b){ const ok=!!t.value.trim(); b.disabled=!ok; b.textContent=ok?"Download press pass":"Type your name first"; }
+    clearTimeout(S._pt); S._pt=setTimeout(updatePass,200); }
+});
+
+render();
+})();
+</script>
+</body>
+</html>

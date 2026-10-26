@@ -1,0 +1,546 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shoot It Right</title>
+<meta name="description" content="KHS Cougar News micro-lesson: the shooting rules, shot counts and saving footage.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;700&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --red-dk:#6F1A1D; --red:#B3201F; --red-br:#DD2A2A; --ink:#1E1E21; --ink2:#4A4A50;
+  --line:#E6DCDA; --tint:#FBEFEE; --sand:#F6F2F0; --link:#1A5FB4; --ok:#1d7a3a; --ok-bg:#E8F4EC;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font-family:Lexend,system-ui,sans-serif;color:var(--ink);background:#fff;font-size:17px;line-height:1.55;min-height:100vh;display:flex;flex-direction:column}
+button{font:inherit;color:inherit;cursor:pointer}
+input{font:inherit}
+:focus-visible{outline:3px solid var(--link);outline-offset:2px}
+
+/* header band, after switcher.png */
+.band{background:linear-gradient(180deg,var(--red-dk) 0%,#A61E1E 55%,var(--red-br) 100%);color:#fff;padding:22px 16px 18px}
+.band-in{max-width:760px;margin:0 auto;position:relative}
+.kicker{font-family:Montserrat;font-weight:700;font-size:11px;letter-spacing:.2em;text-transform:uppercase;opacity:.88;padding-right:150px}
+.band h1{font-family:Montserrat;font-weight:900;font-size:clamp(28px,7vw,44px);line-height:1.02;text-transform:uppercase;margin-top:6px;text-shadow:2px 2px 0 rgba(60,20,20,.55)}
+.band .sub{font-weight:300;font-size:16px;margin-top:6px;opacity:.95}
+.chip{position:absolute;top:-2px;right:0;background:#fff;color:var(--red-dk);font-family:Montserrat;font-weight:800;font-size:10px;letter-spacing:.14em;padding:4px 9px;border-radius:3px}
+
+/* progress */
+.prog{background:var(--ink);color:#fff;padding:10px 16px}
+.prog-in{max-width:760px;margin:0 auto;display:flex;gap:6px;align-items:center}
+.prog .seg{flex:1;height:6px;border-radius:3px;background:#46464c}
+.prog .seg.done{background:var(--red-br)}
+.prog .seg.now{background:#fff}
+.prog .lbl{font-family:Montserrat;font-weight:700;font-size:11px;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap;margin-left:8px;opacity:.85}
+
+main{flex:1;width:100%;max-width:760px;margin:0 auto;padding:24px 16px 32px}
+h2{font-family:Montserrat;font-weight:800;font-size:20px;color:var(--red-dk);text-transform:uppercase;letter-spacing:.05em;display:flex;align-items:center;gap:10px;margin-bottom:12px}
+h2 .n{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;background:var(--red);color:#fff;font-size:15px;letter-spacing:0;flex:none}
+h3{font-family:Montserrat;font-weight:800;font-size:16px;margin-bottom:4px}
+p+p{margin-top:10px}
+.lead{font-size:18px}
+b{font-weight:600}
+.muted{color:var(--ink2);font-size:15px}
+
+.box{background:var(--sand);border-radius:8px;padding:14px 16px}
+.callout{background:var(--tint);border-left:5px solid var(--red);border-radius:0 8px 8px 0;padding:12px 16px;margin:16px 0}
+.tag{font-family:Montserrat;font-weight:800;font-size:11px;letter-spacing:.16em;color:var(--red-dk);text-transform:uppercase;display:block;margin-bottom:2px}
+.stack>*+*{margin-top:14px}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:10px 22px;border-radius:8px;border:0;background:var(--red);color:#fff;font-family:Montserrat;font-weight:800;font-size:15px;letter-spacing:.06em;text-transform:uppercase}
+.btn:hover{background:var(--red-dk)}
+.btn[disabled]{background:#c9c3c1;cursor:not-allowed}
+.btn.ghost{background:#fff;color:var(--red-dk);border:2px solid var(--red)}
+.btn.ghost:hover{background:var(--tint)}
+.nav{display:flex;justify-content:space-between;gap:12px;margin-top:24px;flex-wrap:wrap}
+.nav .spacer{flex:1}
+.say-btn{border:1.5px solid var(--line);background:#fff;border-radius:20px;padding:3px 10px;font-size:13px;font-weight:600;color:var(--ink2);display:inline-flex;align-items:center;gap:5px;vertical-align:middle}
+.say-btn:hover{border-color:var(--red);color:var(--red-dk)}
+
+/* value cards */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px}
+.vcard{text-align:left;background:var(--sand);border:2px solid transparent;border-radius:10px;padding:14px;min-height:150px;display:flex;flex-direction:column;gap:6px;transition:border-color .15s,background .15s}
+.vcard:hover{border-color:var(--line)}
+.vcard .easy{font-family:Montserrat;font-weight:900;font-size:12px;letter-spacing:.14em;color:var(--red)}
+.vcard .nm{font-family:Montserrat;font-weight:800;font-size:18px}
+.vcard .hint{font-size:13px;color:var(--ink2);margin-top:auto}
+.vcard .more{display:none;font-size:15px}
+.vcard.open{background:#fff;border-color:var(--red)}
+.vcard.open .more{display:block}
+.vcard.open .hint{display:none}
+.vcard .ex{color:var(--ink2);font-size:14px;margin-top:4px}
+.count{font-family:Montserrat;font-weight:800;font-size:13px;letter-spacing:.1em;color:var(--ink2);text-transform:uppercase;margin:14px 0 0}
+
+/* question */
+.q{background:var(--sand);border-radius:10px;padding:18px 18px 16px}
+.q .qn{font-family:Montserrat;font-weight:800;font-size:12px;letter-spacing:.14em;color:var(--ink2);text-transform:uppercase}
+.q .stem{font-size:19px;font-weight:600;margin:6px 0 4px}
+.opts{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-top:14px}
+.opts.two{grid-template-columns:1fr 1fr}
+.opts.one{grid-template-columns:1fr}
+.opt{text-align:left;background:#fff;border:2px solid var(--line);border-radius:8px;padding:10px 12px;min-height:48px;font-size:15px}
+.opt .e{display:block;font-family:Montserrat;font-weight:900;font-size:11px;letter-spacing:.12em;color:var(--red)}
+.opt:hover:not([disabled]){border-color:var(--red)}
+.opt[disabled]{cursor:default}
+.opt.right{border-color:var(--ok);background:var(--ok-bg)}
+.opt.wrong{border-color:var(--red);background:var(--tint)}
+.opt.dim{opacity:.55}
+.opt.pitch{font-size:16px;padding:14px}
+.opt.pitch b{font-family:Montserrat;font-weight:800;color:var(--red-dk);margin-right:6px}
+.fb{margin-top:14px;border-radius:8px;padding:12px 14px;display:none}
+.fb.show{display:block}
+.fb.ok{background:var(--ok-bg);border-left:5px solid var(--ok)}
+.fb.no{background:var(--tint);border-left:5px solid var(--red)}
+.fb .v{font-family:Montserrat;font-weight:900;font-size:12px;letter-spacing:.12em;text-transform:uppercase;display:block;margin-bottom:2px}
+.fb.ok .v{color:var(--ok)} .fb.no .v{color:var(--red)}
+.pills{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.pill{font-family:Montserrat;font-weight:800;font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding:3px 9px;border-radius:20px;background:var(--red);color:#fff}
+.pill.ink{background:var(--ink)}
+
+/* your turn */
+label.fld{display:block;font-weight:600;margin-bottom:6px}
+.inp{width:100%;border:2px solid var(--line);border-radius:8px;padding:12px;font-size:16px;background:#fff}
+.inp:focus{border-color:var(--red);outline:none}
+.checks{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px}
+.ck{display:flex;align-items:center;gap:10px;background:#fff;border:2px solid var(--line);border-radius:8px;padding:10px 12px;min-height:48px;cursor:pointer;font-size:15px}
+.ck input{width:20px;height:20px;accent-color:var(--red);flex:none}
+.ck:has(input:checked){border-color:var(--red);background:var(--tint)}
+.meter{margin-top:14px;border-radius:8px;padding:12px 14px;background:var(--sand)}
+.meter.go{background:var(--ok-bg);border-left:5px solid var(--ok)}
+.meter.wait{border-left:5px solid #b9b2b0}
+.pitchline{font-size:16px;background:#fff;border:2px dashed var(--line);border-radius:8px;padding:12px;margin-top:10px;white-space:pre-wrap}
+
+/* words to know */
+table{width:100%;border-collapse:collapse;font-size:15px}
+th{font-family:Montserrat;font-weight:800;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--red-dk);text-align:left;padding:8px;border-bottom:2px solid var(--red)}
+td{padding:8px;border-bottom:1px solid var(--line);vertical-align:top}
+td.k{font-family:Montserrat;font-weight:800;white-space:nowrap}
+td input{width:100%;min-width:90px;border:0;border-bottom:1.5px solid #9a9a9a;padding:4px 2px;font-size:15px;background:transparent}
+details{margin-top:18px}
+summary{font-family:Montserrat;font-weight:800;font-size:14px;letter-spacing:.1em;text-transform:uppercase;color:var(--red-dk);cursor:pointer;padding:6px 0;min-height:40px;display:flex;align-items:center}
+
+.walk{display:grid;gap:8px}
+.wk{text-align:left;width:100%;align-items:flex-start}
+.wk .box2{width:22px;height:22px;border:2px solid var(--red);border-radius:4px;flex:none;display:inline-flex;align-items:center;justify-content:center;font-weight:700;color:#fff;margin-top:2px}
+.wk.on{border-color:var(--red);background:var(--tint)}
+.wk.on .box2{background:var(--red)}
+.wk.right{border-color:var(--ok);background:var(--ok-bg)}
+.wk.wrong{border-color:var(--red);background:var(--tint)}
+.wk .why{display:block;font-size:14px;color:var(--ink2);margin-top:4px}
+.wk[disabled]{cursor:default}
+.write{border-bottom:1.5px solid #9a9a9a;padding:0 4px;font-weight:600}
+
+.cols2{display:grid;grid-template-columns:1fr 1.6fr;gap:10px}
+.stepf{display:flex;gap:12px;align-items:flex-start}
+.stepf>div{flex:1;min-width:0}
+.stepf .sn{flex:none;width:30px;height:30px;border-radius:50%;background:var(--ink);color:#fff;font-family:Montserrat;font-weight:800;font-size:14px;display:flex;align-items:center;justify-content:center;margin-top:2px}
+.stepf .fld{display:block;font-weight:600;margin-bottom:6px}
+.frame{display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center}
+.frame .inp{flex:1 1 180px;width:auto}
+.frame span{font-weight:600;color:var(--red-dk)}
+@media (max-width:480px){.cols2{grid-template-columns:1fr}}
+
+.cols2.eq{grid-template-columns:1fr 1fr}
+.good::before{content:"OPEN  ";font-family:Montserrat;font-weight:900;color:var(--ok);font-size:11px;letter-spacing:.1em}
+.bad::before{content:"YES/NO  ";font-family:Montserrat;font-weight:900;color:var(--red);font-size:11px;letter-spacing:.1em}
+.strike{text-decoration:line-through;text-decoration-color:var(--red);text-decoration-thickness:2px;color:var(--ink2)}
+ol.order{list-style:none;display:grid;gap:8px}
+.slot{display:flex;gap:10px;align-items:flex-start;background:#fff;border:2px solid var(--line);border-radius:8px;padding:10px 12px;min-height:48px;font-size:15px}
+.slot.empty{border-style:dashed;background:var(--sand)}
+.slot>span:nth-child(2){flex:1}
+.slot .sn{flex:none;width:26px;height:26px;border-radius:50%;background:var(--ink);color:#fff;font-family:Montserrat;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center}
+.slot.right{border-color:var(--ok);background:var(--ok-bg)}
+.slot.wrong{border-color:var(--red);background:var(--tint)}
+.slot .why{display:block;font-size:13px;color:var(--ink2);margin-top:4px}
+.undo{flex:none;border:1.5px solid var(--line);background:#fff;border-radius:20px;padding:2px 10px;font-size:13px;font-weight:600;color:var(--ink2)}
+.qcheck{font-size:14px;margin-top:6px;min-height:0}
+.qcheck.ok{color:var(--ok)} .qcheck.ok::before{content:"✓ "}
+.qcheck.no{color:var(--red)} .qcheck.no::before{content:"! "}
+@media (max-width:480px){.cols2.eq{grid-template-columns:1fr}}
+
+.rules{display:grid;gap:8px}
+.len{display:inline-block;font-family:Montserrat;font-weight:900;font-size:13px;background:var(--ink);color:#fff;border-radius:4px;padding:1px 7px;vertical-align:middle}
+.tc{background:#fff;border:2px solid var(--line);border-radius:8px;padding:12px 14px;font-size:16px}
+.tcrow{display:flex;justify-content:space-between;font-family:Montserrat;font-weight:800;font-size:12px;letter-spacing:.1em;color:var(--red-dk);margin-bottom:6px}
+
+svg.shot{display:block;width:100%;height:auto;border-radius:6px;background:#ddd}
+.shotwrap{max-width:520px;margin:6px auto 0}
+.wmt{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.wmt figure{margin:0}.wmt figcaption{font-size:13px;margin-top:4px;line-height:1.3}
+.shotgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+.shotcard{margin:0;background:var(--sand);border-radius:10px;padding:8px}
+.shotcard figcaption{display:flex;gap:10px;align-items:flex-start;font-size:14px;margin-top:8px;line-height:1.4}
+.big-l{font-family:Montserrat;font-weight:900;font-size:28px;color:var(--red);line-height:1;flex:none;width:26px}
+.shotopts{grid-template-columns:repeat(auto-fill,minmax(140px,1fr))}
+.planrow{display:flex;gap:10px;align-items:flex-start}
+.planrow>div{flex:1;min-width:0}
+.pl{flex:none;width:30px;height:30px;border-radius:50%;background:var(--red);color:#fff;font-family:Montserrat;font-weight:900;font-size:14px;display:flex;align-items:center;justify-content:center;margin-top:2px}
+@media (max-width:480px){.wmt{grid-template-columns:1fr 1fr 1fr;gap:6px}.wmt figcaption{font-size:11px}.shotopts{grid-template-columns:1fr 1fr}}
+
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.stats>div{background:var(--ink);color:#fff;border-radius:8px;padding:10px;text-align:center}
+.stats .kv{display:block;font-family:Montserrat;font-weight:700;font-size:10px;letter-spacing:.12em;text-transform:uppercase;opacity:.75}
+.stats .sv{display:block;font-family:Montserrat;font-weight:900;font-size:17px;color:#fff;margin-top:2px}
+ol.rulelist{padding-left:22px;display:grid;gap:6px;font-size:16px}
+ol.rulelist li::marker{font-family:Montserrat;font-weight:800;color:var(--red)}
+.checks.one-col{grid-template-columns:1fr}
+@media (max-width:480px){.stats{grid-template-columns:1fr 1fr}}
+
+/* done */
+.score{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.big{font-family:Montserrat;font-weight:900;font-size:56px;color:var(--red);line-height:1}
+.dark{background:var(--ink);color:#fff;border-radius:10px;padding:18px}
+.dark .tag{color:#ff8d8d}
+.dark .who{font-family:Montserrat;font-weight:800;font-size:22px;margin-top:4px}
+.dark .row{display:flex;justify-content:space-between;gap:12px;border-top:1px solid #3a3a40;padding-top:8px;margin-top:8px;font-size:15px}
+
+.passwrap{display:flex;flex-direction:column;align-items:center;gap:12px}
+.pass-img{width:100%;max-width:340px;display:block;filter:drop-shadow(0 8px 18px rgba(30,30,33,.25))}
+.passwrap .btn{width:100%;max-width:340px}
+
+footer{background:var(--ink);color:#fff;padding:12px 16px;font-family:Montserrat;font-size:11px;font-weight:600;letter-spacing:.06em}
+footer .in{max-width:760px;margin:0 auto;display:flex;align-items:center;gap:14px}
+footer .num{font-weight:900;font-size:22px;color:var(--red-br);line-height:1}
+footer .doc{flex:1;text-transform:uppercase}
+
+@media (max-width:480px){
+  .opts.two{grid-template-columns:1fr}
+  .nav .btn{flex:1}
+  .nav .spacer{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+@media print{.prog,.nav,.say-btn{display:none!important}}
+</style>
+</head>
+<body>
+
+<header class="band">
+  <div class="band-in">
+    <div class="kicker">KHS Cougar News · 03 Shooting</div>
+    <span class="chip">MICRO-LESSON 07</span>
+    <h1>Shoot It Right</h1>
+    <div class="sub">Steady shots · real sound · enough of them</div>
+  </div>
+</header>
+
+<nav class="prog" aria-label="Progress">
+  <div class="prog-in" id="prog"></div>
+</nav>
+
+<main id="app" tabindex="-1"></main>
+
+<footer>
+  <div class="in"><span class="num">03</span><span class="doc">Based on B-Roll – Guide</span><span>~8 min</span></div>
+</footer>
+
+<script>
+(function(){
+"use strict";
+
+/* ---------- content (from B-Roll – Guide §1 Plan, §3 Say dog see dog, §5 Shooting rules, §6 Before you leave) ---------- */
+const RULES = [
+  {k:"tripod", l:"Use a tripod",                 d:"Every shot. No tripod? Brace the camera on something solid."},
+  {k:"roll",   l:"Roll first, then wait",        d:"Press record. Hold the shot for a slow count of 10."},
+  {k:"zoom",   l:"Don't zoom or pan while recording", d:"Stop recording. Change the shot. Then roll again."},
+  {k:"feet",   l:"Move your feet, not the zoom", d:"Walk closer for the tight shot. It stays sharp and steady."},
+  {k:"nat",    l:"Record nat sound",             d:"Wear headphones. Stay quiet while you record."},
+  {k:"faces",  l:"Shoot faces, not backs",       d:"Walk around to the front."},
+  {k:"stage",  l:"Never stage it",               d:"Shoot what really happens. Don't ask people to fake an action."},
+  {k:"subject",l:"Film your interview subject in action", d:"Get 3 shots of them doing what they talk about."},
+  {k:"tights", l:"Get extra tight shots",        d:"Editors run out of tights first."},
+  {k:"play",   l:"Play back one clip",           d:"Before you leave each place: steady, in focus, has sound."}
+];
+const R = Object.fromEntries(RULES.map(r=>[r.k,r]));
+const BREAK_OPTS = [{k:"ok",l:"Follows the rules",e:"✓"}].concat(["tripod","roll","zoom","feet","nat","faces","stage","play"].map(k=>({k,l:R[k].l})));
+
+const QUIZ = {
+  brk: { n:2, h:"Rule or break?", intro:"Which rule does this break? One follows every rule.", lbl:"Moment", cls:"two", opts:BREAK_OPTS, items:[
+    {stem:"You zoom in slowly on the drum major while the camera is recording.", a:"zoom", why:"Stop recording, change the shot, then roll again."},
+    {stem:"You walk with the camera in your hand. The picture shakes.", a:"tripod", why:"The rubric takes points for each shaky shot. Use a tripod, or brace the camera on something solid."},
+    {stem:"You record for 3 seconds and stop.", a:"roll", why:"Hold every shot for a slow count of 10. Short clips are hard to edit."},
+    {stem:"The chef already stirred the pot, so you ask her to do it again for the camera.", a:"stage", why:"Never stage it. Faking an action makes the story untrue. Wait for the next real moment."},
+    {stem:"You whisper to your partner while you record the choir.", a:"nat", why:"Stay quiet while you record. Your voice ruins the nat sound."},
+    {stem:"You film the lunch line from behind.", a:"faces", why:"Walk around to the front. Viewers connect with faces and eyes."},
+    {stem:"You zoom all the way in for your tight shot instead of walking closer.", a:"feet", why:"Move your feet, not the zoom. The picture stays sharp and steady."},
+    {stem:"You leave the gym without watching any of your clips.", a:"play", why:"Play back one clip before you leave each place. Check that it is steady, in focus and has sound."},
+    {stem:"Camera on a tripod, headphones on, you hold the shot for a slow count of 10.", a:"ok", why:"Steady, long enough, and you're checking the sound. That's the job."}]},
+  count: { n:3, h:"Count it", intro:"Each shot stays on screen 3 to 4 seconds, so you use many shots fast. How many do you need?", lbl:"Question", one:true, items:[
+    {stem:"How many shots do you plan on your shot list for a news story?", a:1, opts:[{k:0,l:"3 to 5"},{k:1,l:"8 to 10"},{k:2,l:"30 or more"}], why:"Plan 8 to 10 shots for a news story. You bring back more."},
+    {stem:"How many shots do you bring back for a :30 news story?", a:0, opts:[{k:0,l:"15"},{k:1,l:"10"},{k:2,l:"30"}], why:":30 story → 15 shots."},
+    {stem:"How many shots for a :45 news story?", a:2, opts:[{k:0,l:"10"},{k:1,l:"30"},{k:2,l:"20"}], why:":45 story → 20 shots."},
+    {stem:"How many shots for a :60 news story?", a:1, opts:[{k:0,l:"20"},{k:1,l:"30"},{k:2,l:"60"}], why:":60 story → 30 shots."},
+    {stem:"You have 12 shots for a :45 story. You plan to use your best shot twice. Is that OK?", a:2, opts:[{k:0,l:"Yes, if it's a great shot"},{k:1,l:"Yes, viewers won't notice"},{k:2,l:"No. Using the same shot twice costs points. Shoot more."}], why:"Shoot more than you think you need. Using the same shot twice costs points."},
+    {stem:"Which shots do editors run out of first?", a:0, opts:[{k:0,l:"Tight shots"},{k:1,l:"Wide shots"},{k:2,l:"Interview shots"}], why:"Get extra tight shots: hands, tools, eyes and details."}]},
+  dog: { n:4, h:"Say dog, see dog", intro:"Good b-roll shows what the words say. Match every line of the script to shots.", lbl:"Script line", one:true, items:[
+    {stem:"\"The cafeteria adds a salad bar this week.\"", a:2, opts:[
+      {k:0,l:"the front of the school · the principal's office · a hallway"},
+      {k:1,l:"students sitting in class · a bus pulling up"},
+      {k:2,l:"wide of the salad bar · a student fills a tray · tight of tongs in the lettuce"}], why:"The words say salad bar. The video shows the salad bar."},
+    {stem:"\"Seniors decorate their parking spots before Friday.\"", a:0, opts:[
+      {k:0,l:"wide of the lot · a senior paints a spot · tight of the brush and chalk"},
+      {k:1,l:"the senior class sponsor at her desk"},
+      {k:2,l:"a calendar page with Friday circled"}], why:"Show the action: people decorating spots."},
+    {stem:"\"Choir rehearses three nights a week for the concert.\"", a:1, opts:[
+      {k:0,l:"the empty auditorium · the concert poster"},
+      {k:1,l:"wide of the choir room · the director's hands keep time · tight of singers' faces"},
+      {k:2,l:"students walking in the hallway"}], why:"Say choir rehearses, see choir rehearsing. Faces, not backs."}]},
+  save: { n:5, h:"Save it", intro:"Cards get erased. Events don't happen twice.", lbl:"Question", one:true, items:[
+    {stem:"The same day you shoot, where do you copy your footage?", a:1, opts:[{k:0,l:"To one place"},{k:1,l:"To two places"},{k:2,l:"Leave it on the card"}], why:"Copy your footage to two places before you clear the card."},
+    {stem:"You copied your footage. What do you do before you clear the card?", a:0, opts:[{k:0,l:"Open one clip from each copy to check that it plays"},{k:1,l:"Clear it right away"},{k:2,l:"Wait until next week"}], why:"Open one clip from each copy. Then you know it's safe."},
+    {stem:"Before you leave the location, what should you have?", a:2, opts:[{k:0,l:"One great wide shot"},{k:1,l:"Only your interview"},{k:2,l:"W, M and T for every action, some WALLDO shots, extra tights, and your interview subject in action"}], why:"That's the guide's before-you-leave check."}]}
+};
+const LEAVE = ["Wide, medium and tight for every action.","Some WALLDO shots.","Extra tight shots.","My interview subject in action.","I played back one clip: steady, in focus, has sound."];
+const TARGET = {":30":15, ":45":20, ":60":30};
+
+const WORDS = [
+  ["tripod","The stand with three legs that holds the camera still."],
+  ["roll","Start recording."],
+  ["zoom / pan / tilt","Make the picture closer or wider / turn left or right / point up or down."],
+  ["nat sound","Natural sound: the real sound of the place."],
+  ["stage","Ask people to fake or repeat an action for the camera."]
+];
+
+/* ---------- state ---------- */
+const ORDER_Q = ["brk","count","dog","save"];
+const STEPS = ["Start","Rule or break?","Count it","Say dog, see dog","Save it","Pack-out check","Done"];
+const S = {step:0, idx:{}, ans:{}, mine:{len:"",checks:[],story:""}, name:""};
+const KEY = "khscn-ml-07";
+function load(){ try{ const d=JSON.parse(localStorage.getItem(KEY)||"{}"); if(d.lang) S.lang=d.lang; if(d.name) S.name=d.name;
+  if(!S.name){ for(const k of ["khscn-ml-06","khscn-ml-05","khscn-ml-04","khscn-ml-03","khscn-ml-02","khscn-ml-01"]){ const o=JSON.parse(localStorage.getItem(k)||"{}"); if(o.name){S.name=o.name;break;} } } }catch(e){} S.lang=S.lang||{}; }
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify({lang:S.lang,name:S.name})); }catch(e){} }
+load();
+ORDER_Q.forEach(k=>{S.idx[k]=0;S.ans[k]=[];});
+
+/* ---------- helpers ---------- */
+const app = document.getElementById("app");
+const esc = s => String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const canSpeak = "speechSynthesis" in window;
+function speak(t){ if(!canSpeak) return; try{ speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(t); u.rate=.92; speechSynthesis.speak(u);}catch(e){} }
+const sayBtn = t => canSpeak ? `<button class="say-btn" data-say="${esc(t)}" aria-label="Listen"><span aria-hidden="true">🔊</span> Listen</button>` : "";
+function go(n){ if(canSpeak) speechSynthesis.cancel(); S.step=n; render(); window.scrollTo({top:0}); app.focus({preventScroll:true}); }
+function renderProg(){
+  document.getElementById("prog").innerHTML =
+    STEPS.map((_,i)=>`<span class="seg ${i<S.step?"done":i===S.step?"now":""}"></span>`).join("") +
+    `<span class="lbl">${S.step+1}/${STEPS.length} · ${esc(STEPS[S.step])}</span>`;
+}
+function quizScreen(key, stepNo){
+  const Q=QUIZ[key], i=S.idx[key], it=Q.items[i], ans=S.ans[key][i], has=ans!==undefined;
+  const opts=it.opts||Q.opts, right=has&&ans===it.a, ansLabel=(opts.find(o=>o.k===it.a)||{}).l;
+  return `
+  <h2><span class="n">${Q.n}</span>${esc(Q.h)}</h2>
+  <p>${esc(Q.intro)}</p>
+  <div class="q" style="margin-top:14px">
+    <div class="qn">${Q.lbl} ${i+1} of ${Q.items.length}</div>
+    <p class="stem">${esc(it.stem)} ${sayBtn(it.stem)}</p>
+    <div class="opts ${Q.one?"one":Q.cls||""}">${opts.map(o=>{
+      let c=""; if(has){ c = o.k===it.a?"right":(o.k===ans?"wrong":"dim"); }
+      return `<button class="opt ${c}" data-q="${key}" data-k="${o.k}" ${has?"disabled":""}>${o.e?`<span class="e">${esc(o.e)}</span>`:""}${esc(o.l)}</button>`;}).join("")}
+    </div>
+    <div class="fb ${has?(right?"ok show":"no show"):""}" aria-live="polite">
+      ${has?`<span class="v">${right?"Yes.":"Not quite: "+esc(ansLabel)+"."}</span>${esc(it.why)}`:""}
+    </div>
+  </div>
+  <div class="nav"><button class="btn ghost" data-go="${stepNo-1}">Back</button><span class="spacer"></span>
+    ${has?`<button class="btn" data-nextq="${key}" data-step="${stepNo}">${i<Q.items.length-1?"Next":"Next step"}</button>`:""}</div>`;
+}
+
+/* ---------- screens ---------- */
+const screens = [
+/* 0 start */
+() => `
+  <div class="stack">
+    <h2><span class="n">1</span>Steady shots · real sound</h2>
+    <p class="lead"><b>B-roll</b> is video of the story happening. Viewers see it while the anchor or a voice-over talks. ${sayBtn("B-roll is video of the story happening. Viewers see it while the anchor or a voice-over talks.")}</p>
+    <div class="stats">
+      <div><span class="kv">Every action</span><span class="sv">W · M · T</span></div>
+      <div><span class="kv">Hold each shot</span><span class="sv">10 sec.</span></div>
+      <div><span class="kv">Camera on</span><span class="sv">Tripod</span></div>
+      <div><span class="kv">Every shot has</span><span class="sv">Nat sound</span></div>
+    </div>
+    <h3 style="margin-top:6px">The shooting rules</h3>
+    <ol class="rulelist">${RULES.map(r=>`<li><b>${esc(r.l)}.</b> ${esc(r.d)}</li>`).join("")}</ol>
+    <details>
+      <summary>Words to know</summary>
+      <table>
+        <thead><tr><th>Word</th><th>What it means</th><th>In my language</th></tr></thead>
+        <tbody>${WORDS.map(([w,m],i)=>`<tr><td class="k">${esc(w)}</td><td>${esc(m)}</td><td><input data-lang="${i}" aria-label="${esc(w)} in my language" value="${esc(S.lang[i]||"")}"></td></tr>`).join("")}</tbody>
+      </table>
+    </details>
+  </div>
+  <div class="nav"><span class="spacer"></span><button class="btn" data-go="1">Start</button></div>`,
+() => quizScreen("brk",1),
+() => quizScreen("count",2),
+() => quizScreen("dog",3),
+() => quizScreen("save",4),
+
+/* 5 pack-out check */
+() => {
+  const m=S.mine;
+  return `
+  <h2><span class="n">6</span>Pack-out check</h2>
+  <p>Use this at your next shoot, before you leave the location.</p>
+  <div class="stack" style="margin-top:14px">
+    <div><label class="fld" for="story">My story</label>
+      <input class="inp" id="story" maxlength="100" placeholder="Example: seniors decorate parking spots" value="${esc(m.story)}"></div>
+    <div><p class="fld" style="font-weight:600;margin-bottom:6px">Story length</p>
+      <div class="opts" style="grid-template-columns:repeat(3,1fr);margin-top:0">${Object.keys(TARGET).map(l=>`<label class="ck"><input type="radio" name="len" data-len="${l}" ${m.len===l?"checked":""}><span>${l}</span></label>`).join("")}</div></div>
+    <div id="target"></div>
+    <div><p class="fld" style="font-weight:600;margin-bottom:6px">Before I leave, I have:</p>
+      <div class="checks one-col">${LEAVE.map((t,i)=>`<label class="ck"><input type="checkbox" data-chk="${i}" ${m.checks.includes(i)?"checked":""}><span>${esc(t)}</span></label>`).join("")}</div></div>
+    <div id="meter"></div>
+  </div>
+  <div class="nav"><button class="btn ghost" data-go="4">Back</button><span class="spacer"></span><button class="btn" data-go="6">Finish</button></div>`;
+},
+
+/* 6 done */
+() => {
+  let got=0, tot=0;
+  ORDER_Q.forEach(k=>{ const it=QUIZ[k].items; got+=it.filter((q,i)=>S.ans[k][i]===q.a).length; tot+=it.length; });
+  S.result={got,tot,when:S.result&&S.result.got===got?S.result.when:new Date()};
+  return `
+  <h2><span class="n">7</span>Done</h2>
+  <div class="score"><span class="big">${got}/${tot}</span><span class="muted">first tries correct</span></div>
+  <div class="stack" style="margin-top:16px">
+    <div><label class="fld" for="nm">Your name</label>
+      <input class="inp" id="nm" maxlength="60" value="${esc(S.name)}" placeholder="First and last name"></div>
+    <div class="passwrap">
+      <img id="passImg" class="pass-img" alt="Your press pass">
+      <button class="btn" id="dlPass" ${S.name.trim()?"":"disabled"}>${S.name.trim()?"Download press pass":"Type your name first"}</button>
+      <a class="btn ghost" href="https://khspress.fillout.com/certificate-upload" target="_blank" rel="noopener" style="text-decoration:none">Submit press pass ↗</a>
+      <p class="muted" style="text-align:center">Download it first, then upload the PNG on the submit form.</p>
+    </div>
+    <div class="box"><span class="tag">Say it · on location</span>
+      <p>"We're recording sound now. Could we have quiet for 10 seconds, please?" ${sayBtn("We're recording sound now. Could we have quiet for 10 seconds, please?")}</p>
+      <p>"Please do what you normally do. Act like we're not here." ${sayBtn("Please do what you normally do. Act like we're not here.")}</p>
+    </div>
+    <div class="callout"><span class="tag">Remember</span>Tripod. Count to 10. No zoom while rolling. Nat sound. Faces, not backs. Never stage it. Same day: copy to two places, then check one clip from each.</div>
+  </div>
+  <div class="nav"><button class="btn ghost" data-restart>Try again</button><span class="spacer"></span><button class="btn ghost" data-go="5">Back</button></div>`;
+}
+];
+
+function meter(){
+  const m=S.mine, tg=document.getElementById("target"), el=document.getElementById("meter"); if(!el) return;
+  tg.innerHTML = m.len?`<div class="box"><span class="tag">Bring back</span><span class="big" style="font-size:40px">${TARGET[m.len]}</span> <span class="muted">shots for a ${m.len} story. Each shot is on screen 3 to 4 seconds.</span></div>`:"";
+  const n=m.checks.length;
+  el.innerHTML = `<div class="meter ${n===LEAVE.length?"go":"wait"}" aria-live="polite">${n===LEAVE.length?"<b>Ready to leave.</b> Same day: copy to two places, and open one clip from each copy.":`${n} of ${LEAVE.length} checked. Don't leave yet. Events don't happen twice.`}</div>`;
+}
+
+/* ---------- press pass PNG ---------- */
+const MODULE = {num:"07", title:"Shoot It Right", skill:"Steady shots · real sound · enough of them"};
+function rr(c,x,y,w,h,r){c.beginPath();c.moveTo(x+r,y);c.arcTo(x+w,y,x+w,y+h,r);c.arcTo(x+w,y+h,x,y+h,r);c.arcTo(x,y+h,x,y,r);c.arcTo(x,y,x+w,y,r);c.closePath();}
+function track(c,t,x,y,sp,align){ // letter-spaced text
+  const w=[...t].reduce((a,ch)=>a+c.measureText(ch).width+sp,-sp);
+  let cx = align==="center"? x-w/2 : align==="right"? x-w : x;
+  c.textAlign="left"; for(const ch of t){c.fillText(ch,cx,y);cx+=c.measureText(ch).width+sp;}
+}
+function passId(name,when,got){
+  let h=2166136261; for(const ch of name+"|"+when.toISOString()+"|"+got+"|"+MODULE.num){h^=ch.charCodeAt(0);h=Math.imul(h,16777619);}
+  const s=(h>>>0).toString(36).toUpperCase().padStart(7,"0"); return s.slice(0,4)+"-"+s.slice(4,7);
+}
+let fontsReady=null;
+function loadFonts(){
+  if(!fontsReady){ fontsReady = (document.fonts? Promise.all(["900 40px Montserrat","800 40px Montserrat","700 40px Montserrat","400 40px Lexend","600 40px Lexend"].map(f=>document.fonts.load(f).catch(()=>{}))) : Promise.resolve()).then(()=>new Promise(r=>setTimeout(r,0))); }
+  return fontsReady;
+}
+function drawPass(){
+  const W=1080,H=1500,R=56, c=document.createElement("canvas"); c.width=W; c.height=H; const x=c.getContext("2d");
+  const {got,tot,when}=S.result, name=(S.name.trim()||"Your name");
+  const MS="Montserrat, Arial Black, sans-serif", LX="Lexend, Arial, sans-serif";
+  // card
+  rr(x,0,0,W,H,R); x.save(); x.clip();
+  x.fillStyle="#fff"; x.fillRect(0,0,W,H);
+  const g=x.createLinearGradient(0,0,0,560); g.addColorStop(0,"#6F1A1D"); g.addColorStop(.55,"#A61E1E"); g.addColorStop(1,"#DD2A2A");
+  x.fillStyle=g; x.fillRect(0,0,W,560);
+  // subtle diagonal stripes in band
+  x.globalAlpha=.06; x.fillStyle="#fff"; for(let i=-600;i<W;i+=70){x.beginPath();x.moveTo(i,560);x.lineTo(i+560,0);x.lineTo(i+590,0);x.lineTo(i+30,560);x.fill();} x.globalAlpha=1;
+  // footer
+  x.fillStyle="#1E1E21"; x.fillRect(0,H-150,W,150);
+  x.restore();
+  // lanyard slot (punch out)
+  x.save(); x.globalCompositeOperation="destination-out"; rr(x,W/2-110,46,220,38,19); x.fill(); x.restore();
+  // band text
+  x.fillStyle="#fff"; x.globalAlpha=.9; x.font=`700 30px ${MS}`; track(x,"KHS COUGAR NEWS",W/2,150,9,"center"); x.globalAlpha=1;
+  x.font=`900 200px ${MS}`; x.textAlign="center";
+  x.fillStyle="rgba(60,20,20,.55)"; x.fillText("PRESS",W/2+6,346); x.fillText("PASS",W/2+6,516);
+  x.fillStyle="#fff"; x.fillText("PRESS",W/2,340); x.fillText("PASS",W/2,510);
+  // body
+  const L=90;
+  x.fillStyle="#4A4A50"; x.font=`800 28px ${MS}`; track(x,"ISSUED TO",L,650,6);
+  let fs=96; x.font=`800 ${fs}px ${MS}`; while(x.measureText(name.toUpperCase()).width>W-2*L && fs>40){fs-=4; x.font=`800 ${fs}px ${MS}`;}
+  x.fillStyle="#1E1E21"; x.textAlign="left"; x.fillText(name.toUpperCase(),L,650+20+fs*.85);
+  x.fillStyle="#E6DCDA"; x.fillRect(L,800,W-2*L,4);
+  x.fillStyle="#4A4A50"; x.font=`800 28px ${MS}`; track(x,"CLEARED IN · MICRO-LESSON "+MODULE.num,L,872,6);
+  x.fillStyle="#6F1A1D"; let tf=62; x.font=`800 ${tf}px ${MS}`; while(x.measureText(MODULE.title.toUpperCase()).width>W-2*L && tf>36){tf-=2; x.font=`800 ${tf}px ${MS}`;} x.fillText(MODULE.title.toUpperCase(),L,948);
+  x.fillStyle="#4A4A50"; x.font=`400 34px ${LX}`; x.fillText(MODULE.skill,L,1002);
+  // score + date
+  x.fillStyle="#4A4A50"; x.font=`800 28px ${MS}`; track(x,"SCORE",L,1100,6); track(x,"DATE",430,1100,6);
+  x.fillStyle="#B3201F"; x.font=`900 92px ${MS}`; x.fillText(`${got}/${tot}`,L,1195);
+  x.fillStyle="#1E1E21"; x.font=`800 50px ${MS}`; x.fillText(when.toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"}),430,1185);
+  x.fillStyle="#4A4A50"; x.font=`400 30px ${LX}`; x.fillText(when.toLocaleTimeString("en-US",{hour:"numeric",minute:"2-digit"}),430,1232);
+  // stamp
+  x.save(); x.translate(905,1160); x.rotate(-.2); x.strokeStyle="#B3201F"; x.fillStyle="#B3201F"; x.globalAlpha=.9;
+  x.lineWidth=7; x.beginPath(); x.arc(0,0,105,0,Math.PI*2); x.stroke(); x.lineWidth=3; x.beginPath(); x.arc(0,0,88,0,Math.PI*2); x.stroke();
+  x.font=`900 34px ${MS}`; x.textAlign="center"; x.fillText("ON",0,-14); x.fillText("AIR",0,26); x.font=`800 16px ${MS}`; x.fillText("★ CLEARED ★",0,58); x.restore();
+  // footer text
+  x.textAlign="left"; x.fillStyle="#DD2A2A"; x.font=`900 72px ${MS}`; x.fillText(MODULE.num,L,H-50);
+  x.fillStyle="#fff"; x.font=`700 26px ${MS}`; track(x,"KHS COUGAR NEWS · MICRO-LEARNING",L+120,H-84,4);
+  x.globalAlpha=.7; x.font=`600 24px ${MS}`; track(x,"PASS ID "+passId(name,when,got),L+120,H-48,4); x.globalAlpha=1;
+  return c;
+}
+function updatePass(){
+  const img=document.getElementById("passImg"); if(!img) return;
+  loadFonts().then(()=>{ try{ img.src=drawPass().toDataURL("image/png"); }catch(e){} });
+}
+function downloadPass(){
+  loadFonts().then(()=>{
+    const c=drawPass(), slug=(S.name.trim()||"student").replace(/[^a-z0-9]+/gi,"-").replace(/^-|-$/g,"");
+    const fn=`Press-Pass-${MODULE.num}-${slug}.png`;
+    c.toBlob(b=>{
+      if(!b) return;
+      const url=URL.createObjectURL(b), a=document.createElement("a");
+      a.href=url; a.download=fn; document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(()=>URL.revokeObjectURL(url),4000);
+    },"image/png");
+  });
+}
+
+function render(){
+  renderProg();
+  app.innerHTML = screens[S.step]();
+  if(S.step===5) meter();
+  if(S.step===6) updatePass();
+}
+
+/* ---------- events ---------- */
+app.addEventListener("click", e=>{
+  const t=e.target.closest("button"); if(!t) return;
+  if(t.dataset.say!==undefined){ speak(t.dataset.say); return; }
+  if(t.id==="dlPass"){ downloadPass(); return; }
+  if(t.dataset.go!==undefined){ go(+t.dataset.go); return; }
+  if(t.dataset.q){ const k=t.dataset.q, raw=t.dataset.k; S.ans[k][S.idx[k]] = isNaN(+raw)?raw:+raw; render(); return; }
+  if(t.dataset.nextq){ const k=t.dataset.nextq; if(S.idx[k]<QUIZ[k].items.length-1){ S.idx[k]++; render(); window.scrollTo({top:0}); app.focus(); } else go(+t.dataset.step+1); return; }
+  if(t.hasAttribute("data-restart")){ ORDER_Q.forEach(k=>{S.idx[k]=0;S.ans[k]=[];}); S.result=null; go(0); }
+});
+app.addEventListener("input", e=>{
+  const t=e.target;
+  if(t.dataset.lang!==undefined){ S.lang[t.dataset.lang]=t.value; save(); return; }
+  if(t.id==="story"){ S.mine.story=t.value; return; }
+  if(t.id==="nm"){ S.name=t.value; save(); const b=document.getElementById("dlPass"); if(b){ const ok=!!t.value.trim(); b.disabled=!ok; b.textContent=ok?"Download press pass":"Type your name first"; }
+    clearTimeout(S._pt); S._pt=setTimeout(updatePass,200); }
+});
+app.addEventListener("change", e=>{
+  const t=e.target;
+  if(t.dataset.len){ S.mine.len=t.dataset.len; meter(); }
+  if(t.dataset.chk!==undefined){ const i=+t.dataset.chk, s=new Set(S.mine.checks); t.checked?s.add(i):s.delete(i); S.mine.checks=[...s]; meter(); }
+});
+
+render();
+})();
+</script>
+</body>
+</html>
